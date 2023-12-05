@@ -1,4 +1,13 @@
-.App {
+.active {
+  border-bottom: 3px;
+  border-color: white;
+  border-style: solid;
+  text-decoration-color: #1c193d;
+  font-weight: bold;
+  color: #1c193d;
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +44,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

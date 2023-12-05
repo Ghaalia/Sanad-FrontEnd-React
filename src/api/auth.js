@@ -16,15 +16,14 @@ const register = async (userInfo) => {
   return data;
 };
 
-const getProfile = async () => {
-  const { data } = await instance.get("");
-
-  return data;
-};
-
 const logout = (setUser) => {
   setUser(false);
   localStorage.removeItem("token");
+};
+
+const getMyProfile = async () => {
+  const { data } = await instance.get("/user/profile");
+  return data;
 };
 
 const storeToken = (token) => {
@@ -44,4 +43,4 @@ const checktoken = () => {
   return false;
 };
 
-export { login, register, checktoken, getProfile, logout };
+export { login, register, checktoken, logout, getMyProfile };
