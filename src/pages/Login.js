@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import sanadLogoRed from "../assets/navbar/sanad_red_logo.svg";
 import topHand from "../assets/navbar/top-hand.svg";
 import bottomHand from "../assets/navbar/bottom-hand.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, ArrowRight } from "lucide-react";
+import UserContext from "../context/UserContext";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../api/auth";
 
 const Login = () => {
+  const [userInfo, setUserInfo] = useState({});
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const { mutate: login_mutate, isPending } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: () => login(userInfo),
+    onSuccess: () => {
+      navigate("/create_event");
+      setUser(true);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login_mutate();
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center ">
       <div className="flex w-full h-full flex-col lg:flex-row md:flex-col ">
@@ -43,26 +67,26 @@ const Login = () => {
         </div>
         <div className="h-1/2 flex justify-center items-center px-[50px] lg:h-full lg:w-1/2 lg:px-[220px]">
           <form
+            onSubmit={handleSubmit}
             className="w-full flex flex-col gap-4 justify-center items-center"
-            // onSubmit={handleFormSubmit}
           >
             <div className="w-full flex flex-col gap-2">
               <label
                 htmlFor="email"
                 className=" text-NavyLight text-sm font-medium"
               >
-                Phone Number
+                Email
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-2 font-medium flex items-center pl-2 text-RedMain">
+                {/* <span className="absolute inset-y-0 left-2 font-medium flex items-center pl-2 text-RedMain">
                   +965
-                </span>
+                </span> */}
                 <input
-                  placeholder="Enter Your Phone Number"
-                  type="number"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  // onChange={handleChange}
+                  placeholder="Enter Your Email"
+                  type="text"
+                  id="email"
+                  name="email"
+                  onChange={handleChange}
                   className="w-full h-[50px] px-4 py-2 pl-[70px] border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                   required
                 />
@@ -80,7 +104,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 name="password"
-                // onChange={handleChange}
+                onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
@@ -88,15 +112,23 @@ const Login = () => {
                 <Eye color="#6B6893" size={28} strokeWidth={1.5} />
               </span>
             </div>
-            <div className="w-full flex justify-center pt-4">
-              <button
-                // onClick={login_mutate}
-                type="submit"
-                className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
-              >
-                LOGIN
-              </button>
-            </div>
+            {isPending ? (
+              <div className="w-full flex justify-center pt-4">
+                <button className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain">
+                  Loading ...
+                </button>
+              </div>
+            ) : (
+              <div className="w-full flex justify-center pt-4">
+                <button
+                  type="submit"
+                  className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
+                >
+                  LOGIN
+                </button>
+              </div>
+            )}
+
             <h1 className="text-center text-red-700 p-5">
               {/* {error?.message} */}
             </h1>

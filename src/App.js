@@ -10,24 +10,28 @@ import Profile from "./pages/Profile";
 import AllEvents from "./pages/AllEvents";
 import CreateEvent from "./pages/CreateEvent";
 import EventDetails from "./pages/EventDetails";
+import { useState } from "react";
+import UserContext from "./context/UserContext";
 
 function App() {
+  const [user, setUser] = useState(false);
   return (
-    <div className="App min-w-screen min-h-screen">
-      <NavBar />
-
-      <Routes>
-        <Route path="/register" Component={Register} />
-        <Route path="/login" Component={Login} />
-        <Route path="/profile" Component={Profile} />
-        <Route path="/requests" Component={NewRequests} />
-        <Route path="/all_organizations" Component={AllOrganizations} />
-        <Route path="/all_users" Component={AllUsers} />
-        <Route path="/all_events" Component={AllEvents} />
-        <Route path="/create_event" Component={CreateEvent} />
-        <Route path="/current_event_details" Component={EventDetails} />
-      </Routes>
-    </div>
+    <UserContext.Provider value={{ user, setUser }}>
+      <div className="App min-w-screen min-h-screen">
+        <NavBar />
+        <Routes>
+          <Route path="/register" Component={Register} />
+          <Route path="/login" Component={Login} />
+          <Route path="/profile" Component={Profile} />
+          <Route path="/requests" Component={NewRequests} />
+          <Route path="/all_organizations" Component={AllOrganizations} />
+          <Route path="/all_users" Component={AllUsers} />
+          <Route path="/all_events" Component={AllEvents} />
+          <Route path="/create_event" Component={CreateEvent} />
+          <Route path="/current_event_details" Component={EventDetails} />
+        </Routes>
+      </div>
+    </UserContext.Provider>
   );
 }
 

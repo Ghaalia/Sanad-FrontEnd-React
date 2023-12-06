@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import sanadLogoRed from "../assets/navbar/sanad_red_logo.svg";
 import topHand from "../assets/navbar/top-hand.svg";
 import bottomHand from "../assets/navbar/bottom-hand.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, LogIn, Mail, Phone } from "lucide-react";
+import UserContext from "../context/UserContext";
+import { useMutation } from "@tanstack/react-query";
+import { register } from "../api/auth";
 
 const Register = () => {
+  const [userInfo, setUserInfo] = useState({});
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    if (e.target.name === "logo") {
+      setUserInfo({ ...userInfo, [e.target.name]: e.target.files[0] });
+    } else {
+      setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    register_mutate();
+  };
+
+  const { mutate: register_mutate, isPending } = useMutation({
+    mutationKey: ["register"],
+    mutationFn: () => register(userInfo),
+    onSuccess: () => {
+      navigate("/create_event");
+      setUser(true);
+    },
+  });
+
+  console.log(userInfo);
+
   return (
     <div className="w-full min-h-screen flex justify-center items-center ">
       <div className="flex w-full h-full flex-col lg:flex-row md:flex-col ">
@@ -41,8 +72,8 @@ const Register = () => {
         </div>
         <div className="h-1/2 lg:pt-[80px] overflow-y-scroll overflow-hidden flex lg:justify-center lg:items-center px-[50px] lg:h-screen lg:w-1/2 lg:px-[180px]">
           <form
+            onSubmit={handleSubmit}
             className="w-full flex flex-col py-[40px] pt-[40px] gap-4 justify-center items-center"
-            // onSubmit={handleFormSubmit}
           >
             <div className="w-full flex flex-col gap-2">
               <div className="w-full flex flex-col gap-2 relative">
@@ -51,7 +82,7 @@ const Register = () => {
                   type="text"
                   id="name"
                   name="name"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                   required
                 />
@@ -65,7 +96,7 @@ const Register = () => {
                   type="number"
                   id="phoneNumber"
                   name="phoneNumber"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   className="w-full h-[50px] px-4 py-2 pl-[70px] border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                   required
                 />
@@ -80,7 +111,7 @@ const Register = () => {
                 type="text"
                 id="email"
                 name="email"
-                // onChange={handleChange}
+                onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
@@ -94,7 +125,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 name="password"
-                // onChange={handleChange}
+                onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
@@ -106,9 +137,8 @@ const Register = () => {
               <input
                 placeholder="Confirm Your Password"
                 type="password"
-                id="password"
-                name="password"
-                // onChange={handleChange}
+                id="Confirm password"
+                name="Confirm password"
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
@@ -126,21 +156,26 @@ const Register = () => {
               <input
                 type="file"
                 id="image"
-                name="image"
+                name="logo"
                 placeholder="Upload Profile Photo"
-                // onChange={handleUserImage}
+                onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
             </div>
             <div className="w-full flex justify-center pt-4">
-              <button
-                // onClick={login_mutate}
-                type="submit"
-                className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
-              >
-                REGISTER
-              </button>
+              {isPending ? (
+                <button className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain">
+                  Loading ....
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
+                >
+                  REGISTER
+                </button>
+              )}
             </div>
             <h1 className="text-center text-red-700 p-5">
               {/* {error?.message} */}

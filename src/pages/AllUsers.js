@@ -115,6 +115,7 @@ const AllUsers = () => {
           </div>
         )}
       </div>
+
       <UserProfileModal
         showUserProfileModal={showUserProfileModal}
         handleAcceptedUser={handleAcceptedUser}
