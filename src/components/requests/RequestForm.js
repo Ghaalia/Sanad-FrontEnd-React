@@ -3,14 +3,15 @@ import { Search, ThumbsUp, ThumbsDown, Send } from "lucide-react";
 import contract from "../../assets/new-requests/contract-org.svg";
 import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";
+import { BASE_URL } from "../../api";
 
-const RequestForm = ({ orgById }) => {
+const RequestForm = ({ orgById, setOpenForm }) => {
   const [acceptClicked, setAcceptClicked] = useState(true);
   const [rejectClicked, setRejectClicked] = useState(false);
   const [reasonShow, setReasonShow] = useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState();
   const [showRejectionModal, setShowRejectionModal] = useState();
-  const [isAccepted, setIsAccepted] = useState(orgById);
+  // const [isAccepted, setIsAccepted] = useState(orgById);
 
   // console.log(isAccepted);
 
@@ -37,12 +38,12 @@ const RequestForm = ({ orgById }) => {
 
   //Handle the Rejection  modal : OFF
   const handleCloseRejectionModal = () => {
-    showRejectionModal(false);
+    setShowRejectionModal(false);
   };
 
   //Handle the Rejection modal : ON
   const handleOpenRejectionModal = () => {
-    showRejectionModal(true);
+    setShowRejectionModal(true);
   };
 
   return (
@@ -53,7 +54,11 @@ const RequestForm = ({ orgById }) => {
         {orgById ? orgById.name : "Company Name"}
       </div>
       <div className="w-full h-fit">
-        <img className="w-full" src={contract} alt="SVG" />
+        <img
+          className="w-full"
+          src={`${BASE_URL}/${orgById?.license}`}
+          alt="SVG"
+        />
       </div>
       <div className="w-full h-full bg-white flex flex-row gap-4 px-8 py-2 md:px-20">
         <div
@@ -79,7 +84,7 @@ const RequestForm = ({ orgById }) => {
               ? "bg-RedMain border-RedMain text-white"
               : "border-[#cecece] text-[#cecece]"
           }`}
-          onClick={handleRejectClick}
+          onClick={handleOpenRejectionModal}
         >
           Reject
           <span>
@@ -93,12 +98,14 @@ const RequestForm = ({ orgById }) => {
       </div>
 
       <AcceptModal
+        setOpenForm={setOpenForm}
         showAcceptModal={showAcceptModal}
         handleCloseModal={handleCloseModal}
         orgById={orgById}
       />
 
       <RejectModal
+        setOpenForm={setOpenForm}
         showRejectionModal={showRejectionModal}
         handleCloseRejectionModal={handleCloseRejectionModal}
         orgById={orgById}

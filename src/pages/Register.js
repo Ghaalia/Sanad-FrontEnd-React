@@ -16,6 +16,8 @@ const Register = () => {
   const handleChange = (e) => {
     if (e.target.name === "logo") {
       setUserInfo({ ...userInfo, [e.target.name]: e.target.files[0] });
+    } else if (e.target.name === "license") {
+      setUserInfo({ ...userInfo, [e.target.name]: e.target.files[0] });
     } else {
       setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     }
@@ -34,8 +36,6 @@ const Register = () => {
       setUser(true);
     },
   });
-
-  console.log(userInfo);
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center ">
@@ -155,8 +155,26 @@ const Register = () => {
               </label>
               <input
                 type="file"
-                id="image"
+                id="logo"
                 name="logo"
+                placeholder="Upload Profile Photo"
+                onChange={handleChange}
+                className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
+                required
+              />
+            </div>
+
+            <div className="w-full">
+              <label
+                htmlFor="image"
+                className="block text-NavyMain text-center text-sm font-medium mb-2"
+              >
+                Upload Company License
+              </label>
+              <input
+                type="file"
+                id="license"
+                name="license"
                 placeholder="Upload Profile Photo"
                 onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"

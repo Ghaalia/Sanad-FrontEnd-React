@@ -5,14 +5,19 @@ import { OrgApproveById } from "../../api/organization";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 
-const AcceptModal = ({ showAcceptModal, handleCloseModal, orgById }) => {
+const AcceptModal = ({
+  showAcceptModal,
+  handleCloseModal,
+  orgById,
+  setOpenForm,
+}) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const { mutate: approval, isPending } = useMutation({
     mutationKey: ["approval"],
     mutationFn: () => OrgApproveById(orgById),
     onSuccess: () => {
-      navigate("/create_event");
+      handleCloseModal();
       setUser(true);
     },
   });
@@ -32,7 +37,10 @@ const AcceptModal = ({ showAcceptModal, handleCloseModal, orgById }) => {
             <div> Are you sure you want to Accept {orgById?.name}</div>
             <div> as a Partner? </div>
             <div
-              onClick={approval}
+              onClick={() => {
+                approval();
+                setOpenForm(false);
+              }}
               className={`w-[150px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center align-middle font-semibold items-center border-2 cursor-pointer`}
             >
               Accept

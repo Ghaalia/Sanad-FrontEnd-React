@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { X, ThumbsUp, ThumbsDown } from "lucide-react";
+import { X, ThumbsDown } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
-import { OrgApproveById, OrgRejectById } from "../../api/organization";
+import { OrgRejectById } from "../../api/organization";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 
@@ -9,6 +9,7 @@ const RejectModal = ({
   showRejectionModal,
   handleCloseRejectionModal,
   orgById,
+  setOpenForm,
 }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
@@ -16,7 +17,7 @@ const RejectModal = ({
     mutationKey: ["rejection"],
     mutationFn: () => OrgRejectById(orgById),
     onSuccess: () => {
-      navigate("/create_event");
+      handleCloseRejectionModal();
       setUser(true);
     },
   });
@@ -35,7 +36,10 @@ const RejectModal = ({
             <div> Are you sure you want to Reject {orgById?.name}</div>
             <div> Please write the reason of rejection? </div>
             <div
-              onClick={rejection}
+              onClick={() => {
+                rejection();
+                setOpenForm(false);
+              }}
               className={`w-[150px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center align-middle font-semibold items-center border-2 cursor-pointer`}
             >
               Reject

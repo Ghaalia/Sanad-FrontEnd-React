@@ -1,24 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RequestCompanyItem from "../components/requests/RequestCompanyItem";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllOrganizations } from "../api/organization";
 import RequestForm from "../components/requests/RequestForm";
 import { Search } from "lucide-react";
+import contract from "../assets/new-requests/contract.svg";
 
 const NewRequests = () => {
   const [orgById, setOrgById] = useState(null);
-
+  const [openForm, setOpenForm] = useState(false);
   const { data: organizations, isLoading: isLoading } = useQuery({
     queryKey: ["organizations"],
     queryFn: () => getAllOrganizations(),
   });
 
   if (isLoading) return <p>Loading ...</p>;
-
-  const orgs = organizations?.map((el) => (
-    <RequestCompanyItem organization={el} setOrgById={setOrgById} />
-  ));
 
   return (
     <div className="min-w-screen min-h-screen bg-NavyMain md:px-[100px]">
@@ -46,16 +43,28 @@ const NewRequests = () => {
           </div>
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
             <div className="flex flex-col gap-3 ">
-              {/* <RequestCompanyItem /> */}
-              {orgs}
+              {organizations
+                .filter((el) => el.isAccepted === "Pending")
+                .map((el, index) => (
+                  <RequestCompanyItem
+                    organization={el}
+                    setOrgById={setOrgById}
+                    setOpenForm={setOpenForm}
+                    key={`organization-${index}`}
+                  />
+                ))}
             </div>
           </div>
         </div>
-        <div className="h-full md:min-h-screen p-8 ">
-          <div className="w-full h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 overflow-y-scroll overflow-hidden no-scrollbar">
-            <RequestForm orgById={orgById} />
+        {openForm ? (
+          <div className="h-full md:min-h-screen p-8 ">
+            <div className="w-full h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 overflow-y-scroll overflow-hidden no-scrollbar">
+              <RequestForm orgById={orgById} setOpenForm={setOpenForm} />
+            </div>
           </div>
-        </div>
+        ) : (
+          <img src={contract} />
+        )}
       </div>
     </div>
   );

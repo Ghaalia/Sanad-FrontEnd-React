@@ -1,16 +1,23 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../api";
 
-const RequestCompanyItem = ({ organization, setOrgById }) => {
-  console.log(organization);
+const RequestCompanyItem = ({ organization, setOrgById, setOpenForm }) => {
   return (
     <div
-      onClick={() => setOrgById(organization)}
+      onClick={() => {
+        setOrgById(organization);
+        setOpenForm(true);
+      }}
       className="hover: cursor-pointer"
     >
       <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
-        <div className="bg-white w-[80px] h-[80px] text-sm p-6 flex justify-center items-center text-center ">
-          Company Logo
+        <div className="bg-white w-[80px] h-[80px] text-sm  flex justify-center items-center text-center ">
+          {/* Company Logo */}
+          <img
+            className="w-[80px] h-[80px] object-cover"
+            src={`${BASE_URL}/${organization.logo}`}
+          />
         </div>
         <div className="flex w-full flex-col justify-around">
           <div className="text-white font-semibold">
