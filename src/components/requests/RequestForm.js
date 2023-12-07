@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Search, ThumbsUp, ThumbsDown, Send } from "lucide-react";
 import contract from "../../assets/new-requests/contract-org.svg";
 import AcceptModal from "./AcceptModal";
+import RejectModal from "./RejectModal";
 
 const RequestForm = ({ orgById }) => {
   const [acceptClicked, setAcceptClicked] = useState(true);
   const [rejectClicked, setRejectClicked] = useState(false);
   const [reasonShow, setReasonShow] = useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState();
+  const [showRejectionModal, setShowRejectionModal] = useState();
   const [isAccepted, setIsAccepted] = useState(orgById);
 
   // console.log(isAccepted);
@@ -31,6 +33,16 @@ const RequestForm = ({ orgById }) => {
   //Handle the Accept modal : ON
   const handleOpenModal = () => {
     setShowAcceptModal(true);
+  };
+
+  //Handle the Rejection  modal : OFF
+  const handleCloseRejectionModal = () => {
+    showRejectionModal(false);
+  };
+
+  //Handle the Rejection modal : ON
+  const handleOpenRejectionModal = () => {
+    showRejectionModal(true);
   };
 
   return (
@@ -84,7 +96,12 @@ const RequestForm = ({ orgById }) => {
         showAcceptModal={showAcceptModal}
         handleCloseModal={handleCloseModal}
         orgById={orgById}
-        setIsAccepted={setIsAccepted}
+      />
+
+      <RejectModal
+        showRejectionModal={showRejectionModal}
+        handleCloseRejectionModal={handleCloseRejectionModal}
+        orgById={orgById}
       />
 
       {/* {rejectClicked ? (
