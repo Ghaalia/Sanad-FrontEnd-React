@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { BASE_URL } from "../../api";
 
 const RequestCompanyItem = ({ organization, setOrgById, setOpenForm }) => {
@@ -11,13 +10,9 @@ const RequestCompanyItem = ({ organization, setOrgById, setOpenForm }) => {
       }}
       className="hover: cursor-pointer"
     >
-      <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
-        <div className="bg-white w-[80px] h-[80px] text-sm  flex justify-center items-center text-center ">
-          {/* Company Logo */}
-          <img
-            className="w-[80px] h-[80px] object-cover"
-            src={`${BASE_URL}/${organization.logo}`}
-          />
+      <div className="w-full h-[79px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
+        <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
+          <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />
         </div>
         <div className="flex w-full flex-col justify-around">
           <div className="text-white font-semibold">

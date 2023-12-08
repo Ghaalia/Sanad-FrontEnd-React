@@ -6,16 +6,41 @@ import { getAllOrganizations } from "../api/organization";
 import RequestForm from "../components/requests/RequestForm";
 import { Search } from "lucide-react";
 import contract from "../assets/new-requests/contract.svg";
+import AcceptModal from "../components/requests/AcceptModal";
+import RejectModal from "../components/requests/RejectModal";
 
 const NewRequests = () => {
   const [orgById, setOrgById] = useState(null);
   const [openForm, setOpenForm] = useState(false);
+  const [showAcceptModal, setShowAcceptModal] = useState();
+  const [showRejectionModal, setShowRejectionModal] = useState();
+
   const { data: organizations, isLoading: isLoading } = useQuery({
     queryKey: ["organizations"],
     queryFn: () => getAllOrganizations(),
   });
 
-  if (isLoading) return <p>Loading ...</p>;
+  if (isLoading) return <p className="text-white">Loading ...</p>;
+
+  //Handle the Accept modal : OFF
+  const handleCloseModal = () => {
+    setShowAcceptModal(false);
+  };
+
+  //Handle the Accept modal : ON
+  const handleOpenModal = () => {
+    setShowAcceptModal(true);
+  };
+
+  //Handle the Rejection  modal : OFF
+  const handleCloseRejectionModal = () => {
+    setShowRejectionModal(false);
+  };
+
+  //Handle the Rejection modal : ON
+  const handleOpenRejectionModal = () => {
+    setShowRejectionModal(true);
+  };
 
   return (
     <div className="min-w-screen min-h-screen bg-NavyMain md:px-[100px]">
@@ -57,15 +82,33 @@ const NewRequests = () => {
           </div>
         </div>
         {openForm ? (
-          <div className="h-full md:min-h-screen p-8 ">
-            <div className="w-full h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 overflow-y-scroll overflow-hidden no-scrollbar">
-              <RequestForm orgById={orgById} setOpenForm={setOpenForm} />
-            </div>
-          </div>
+          <RequestForm
+            orgById={orgById}
+            setOpenForm={setOpenForm}
+            handleOpenRejectionModal={handleOpenRejectionModal}
+            handleOpenModal={handleOpenModal}
+          />
         ) : (
-          <img src={contract} />
+          <img
+            className="fixed w-[50%] h-[80%]  top-36 right-5"
+            src={contract}
+          />
         )}
       </div>
+
+      <AcceptModal
+        setOpenForm={setOpenForm}
+        showAcceptModal={showAcceptModal}
+        handleCloseModal={handleCloseModal}
+        orgById={orgById}
+      />
+
+      <RejectModal
+        setOpenForm={setOpenForm}
+        showRejectionModal={showRejectionModal}
+        handleCloseRejectionModal={handleCloseRejectionModal}
+        orgById={orgById}
+      />
     </div>
   );
 };
