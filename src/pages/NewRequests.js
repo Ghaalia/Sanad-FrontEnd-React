@@ -8,6 +8,7 @@ import { Search } from "lucide-react";
 import contract from "../assets/new-requests/contract.svg";
 import AcceptModal from "../components/requests/AcceptModal";
 import RejectModal from "../components/requests/RejectModal";
+import RequestsUserItem from "../components/event-details/RequestsUseritem";
 
 const NewRequests = () => {
   const [orgById, setOrgById] = useState(null);

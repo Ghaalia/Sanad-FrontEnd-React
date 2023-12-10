@@ -1,8 +1,13 @@
 import React from "react";
 import defaultProfilePhoto from "../../assets/all-users/default-profile.svg";
-import { Mail, Phone, XCircle, Trash, Check, SendIcon } from "lucide-react";
+import { Mail, Phone, XCircle, Check, X, CheckCheck, Ban } from "lucide-react";
+import { getUserById } from "../../api/users";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../../api";
 
 const UserProfileModal = ({
+  userById,
+  user,
   showUserProfileModal,
   handleAcceptedUser,
   handleRejectedUser,
@@ -15,7 +20,7 @@ const UserProfileModal = ({
       {showUserProfileModal && (
         <div className="bg-NavyMain bg-opacity-70 w-full h-screen absolute inset-0 flex justify-center items-center pt-[80px]">
           <div className="bg-white h-[72%] w-[350px] rounded-2xl overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.60)] overflow-y-scroll no-scrollbar">
-            <div className="bg-RedMain w-full h-[200px] flex relative ">
+            <div className="shadow-md shadow-gray-400  rounded-xl bg-RedMain w-full h-[200px] flex relative ">
               <div
                 className="absolute top-1 right-1 cursor-pointer"
                 onClick={handleCloseModal}
@@ -25,10 +30,12 @@ const UserProfileModal = ({
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
                   className="w-[100px] h-[100px] rounded-full drop-shadow-md "
-                  src={defaultProfilePhoto}
+                  src={`${BASE_URL}/${userById?.image}`}
                   alt="SVG"
                 />
-                <div className="text-white font-semibold">User Name</div>
+                <div className="text-white font-semibold">
+                  {/* {user.first_name} */}
+                </div>
               </div>
               <div className="w-full flex justify-center items-center">
                 <div className="w-full h-full flex flex-col gap-2 justify-center items-center">
@@ -41,7 +48,7 @@ const UserProfileModal = ({
                   <div className="w-fit flex flex-col text-center text-white text-sm font-semibold">
                     <div>Volunteered</div>
                     <div className="text-NavyMain font-bold text-[24px]">
-                      20
+                      {userById?.volunteer_points}
                     </div>
                     <div>Times</div>
                   </div>
@@ -52,21 +59,23 @@ const UserProfileModal = ({
               <div className="flex gap-8 justify-center text-NavyMain bg-Grey0 rounded-full py-1">
                 <div className="flex flex-col text-center">
                   <div className="text-Grey3 text-sm ">Gender</div>
-                  <p className="font-semibold">Male</p>
+                  <p className="font-semibold">{userById?.gender}</p>
                 </div>
                 <div className="flex flex-col text-center">
                   <div className="text-Grey3 text-sm ">Birth Date</div>
-                  <p className="font-semibold">22-02-1999</p>
+                  <p className="font-semibold">{userById?.dob}</p>
                 </div>
-                <div className="flex flex-col text-center">
+                {/* <div className="flex flex-col text-center">
                   <div className="text-Grey3 text-sm ">Gender</div>
                   <p className="font-semibold">Male</p>
-                </div>
+                </div> */}
               </div>
               <div className="flex justify-between items-center">
                 <div className="text-NavyMain">
                   <div className="text-Grey3 text-sm ">Phone Number</div>
-                  <div className="font-semibold text-md">+965 99887766</div>
+                  <div className="font-semibold text-md">
+                    +965 {userById?.phone_number}
+                  </div>
                 </div>
                 <div className="w-[32px] h-[32px] border-2 border-RedMain rounded-full flex justify-center items-center">
                   <Phone size={20} strokeWidth={2} className="text-RedMain" />
@@ -75,9 +84,7 @@ const UserProfileModal = ({
               <div className="flex justify-between items-center">
                 <div className="text-NavyMain">
                   <div className="text-Grey3 text-sm ">Email</div>
-                  <div className="font-semibold text-md">
-                    user1999@gmail.com
-                  </div>
+                  <div className="font-semibold text-md">{userById?.email}</div>
                 </div>
                 <div className="w-[32px] h-[32px] border-2 border-RedMain rounded-full flex justify-center items-center">
                   <Mail size={20} strokeWidth={2} className="text-RedMain" />
@@ -87,42 +94,23 @@ const UserProfileModal = ({
                 <div className="text-NavyMain">
                   <div className="text-Grey3 text-sm ">Skills / Biography</div>
                   <div className="font-semibold text-md">
-                    I’m good at most sports and speak fluently in both English
-                    and Arabic.
+                    {userById?.skills}
                   </div>
                 </div>
               </div>
               <div className="h-[1px] w-full bg-NavyMain bg-opacity-40"></div>
               <div className="w-full h-fit flex flex-row gap-4 px-8 py-2">
                 <div
-                  className={`w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
-                    acceptedUserShow
-                      ? "bg-RedMain border-RedMain text-white"
-                      : "border-[#cecece] text-[#cecece]"
-                  }`}
-                  onClick={handleAcceptedUser}
-                >
-                  Keep
-                  <span>
-                    <Check
-                      color={acceptedUserShow ? "white" : "#cecece"}
-                      size={20}
-                      strokeWidth={2}
-                    />
-                  </span>
-                </div>
-                <div
-                  className={`w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
-                    rejectedUserShow
-                      ? "bg-RedMain border-RedMain text-white"
-                      : "border-[#cecece] text-[#cecece]"
-                  }`}
+                  className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
+                  // ? "bg-RedMain border-RedMain text-white"
+                  // : "border-[#cecece] text-[#cecece]"
+
                   onClick={handleRejectedUser}
                 >
-                  Delete
+                  Block
                   <span>
-                    <Trash
-                      color={rejectedUserShow ? "white" : "#cecece"}
+                    <Ban
+                      className="text-cecece hover:text-white"
                       size={20}
                       strokeWidth={2}
                     />
@@ -154,8 +142,8 @@ const UserProfileModal = ({
                   type="submit"
                   className="text-white flex justify-center items-center gap-2 w-full text-center rounded-full font-bold text-1xl p-2 pb-2 h-[50px] bg-NavyMain hover:bg-RedMain"
                 >
-                  Post
-                  <SendIcon />
+                  Confirm
+                  <CheckCheck />
                 </button>
               </>
             </div>

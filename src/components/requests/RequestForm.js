@@ -62,21 +62,29 @@ const RequestForm = ({
 
         <div className="w-full h-full bg-white flex flex-row gap-4 px-8 py-2 md:px-20">
           <div
-            className="hover:bg-RedMain hover:border-RedMain hover:text-[#cecece] text-NavyMain w-full h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
+            className="shadow-md shadow-gray-400  hover:bg-RedMain hover:text-white text-cecece w-full h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center cursor-pointer"
             onClick={handleOpenModal}
           >
             Accept
             <span>
-              <ThumbsUp color="#cecece" size={20} strokeWidth={2} />
+              <ThumbsUp
+                className="text-cecece hover:text-white"
+                size={20}
+                strokeWidth={2}
+              />
             </span>
           </div>
           <div
-            className="hover:bg-RedMain hover:border-RedMain hover:text-[#cecece] text-NavyMain w-full h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
+            className="shadow-md shadow-gray-400  hover:bg-RedMain hover:text-white text-cecece w-full h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center cursor-pointer"
             onClick={handleOpenRejectionModal}
           >
             Reject
             <span>
-              <ThumbsDown color="#cecece" size={20} strokeWidth={2} />
+              <ThumbsDown
+                className="text-cecece hover:text-white"
+                size={20}
+                strokeWidth={2}
+              />
             </span>
           </div>
         </div>

@@ -31,22 +31,19 @@ const RejectModal = ({
             >
               <XSquare color={"white"} size={25} strokeWidth={1} />
             </div>
-            <div className="text-center font-semibold text-3xl pt-9 text-white bg-RedMain h-1/4">
+            <div className="shadow-md shadow-gray-400  rounded-2xl text-center font-semibold text-3xl pt-9 text-white bg-RedMain h-1/4">
               Rejection
             </div>
 
             <div className="text-center text-NavyMain flex flex-col font-sans justify-center  content-center h-1/4 text-lg">
               <div> Are you sure you want to Reject</div>
               <div className="font-bold text-RedMain">{orgById?.name}</div>
-              <div className="text-sm">
-                Please write the reason of rejection?
-              </div>
             </div>
-            <div className="flex  justify-center align-middle ">
-              <textarea
-                rows={20}
-                className="text-sm text-[#cecece] border-2 border-[#cecece] w-[80%] max-h-30 rounded-xl p-3"
-              ></textarea>
+            <div className="flex flex-col justify-center align-middle items-center">
+              <label className="text-sm text-gray-600">
+                Please write the reason of rejection?
+              </label>
+              <textarea className="text-sm  border-2 border-[#cecece] w-[80%] max-h-30 rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-[#910808]"></textarea>
             </div>
 
             <div className="absolute  bottom-6 left-1/4">
@@ -55,11 +52,15 @@ const RejectModal = ({
                   rejection();
                   setOpenForm(false);
                 }}
-                className="text-NavyMain hover:bg-RedMain  w-[150px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center align-middle font-semibold items-center border-NavyMain  hover:border-RedMain border-2 cursor-pointer"
+                className="shadow-md shadow-gray-400  hover:bg-RedMain hover:text-white text-cecece w-[160px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center cursor-pointer"
               >
                 Reject
                 <span>
-                  <ThumbsDown color="rgb(27,25,49)" size={20} strokeWidth={2} />
+                  <ThumbsDown
+                    className="hover:text-white"
+                    size={20}
+                    strokeWidth={2}
+                  />
                 </span>
               </div>
             </div>

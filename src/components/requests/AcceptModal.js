@@ -13,6 +13,7 @@ const AcceptModal = ({
 }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+
   const { mutate: approval, isPending } = useMutation({
     mutationKey: ["approval"],
     mutationFn: () => OrgApproveById(orgById),
@@ -34,7 +35,7 @@ const AcceptModal = ({
               <XSquare color={"white"} size={25} strokeWidth={1} />
             </div>
 
-            <div className="text-center font-semibold text-3xl pt-9 text-white bg-RedMain h-1/4">
+            <div className="shadow-md shadow-gray-400  rounded-2xl text-center font-semibold text-3xl pt-9 text-white bg-RedMain h-1/4">
               Acceptance
             </div>
 
@@ -52,11 +53,11 @@ const AcceptModal = ({
                   approval();
                   setOpenForm(false);
                 }}
-                className="text-NavyMain hover:bg-RedMain  w-[150px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center align-middle font-semibold items-center border-NavyMain hover:border-RedMain border-2 cursor-pointer"
+                className="shadow-md shadow-gray-400  hover:bg-RedMain hover:text-white text-cecece w-[160px] h-[30px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center cursor-pointer"
               >
                 Accept
                 <span>
-                  <ThumbsUp color="rgb(27,25,49)" size={20} strokeWidth={2} />
+                  <ThumbsUp className="hover:white" size={20} strokeWidth={2} />
                 </span>
               </div>
             </div>
