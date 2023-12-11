@@ -87,7 +87,7 @@ const Login = () => {
                   id="email"
                   name="email"
                   onChange={handleChange}
-                  className="w-full h-[50px] px-4 py-2 pl-[70px] border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
+                  className="w-full h-[50px] px-4 py-2 pl-[20px] border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                   required
                 />
               </div>
@@ -105,7 +105,7 @@ const Login = () => {
                 id="password"
                 name="password"
                 onChange={handleChange}
-                className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
+                className="w-full h-[50px] text-lg px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
               <span className="absolute inset-y-0 top-6 right-2 flex items-center pr-2">
@@ -122,9 +122,9 @@ const Login = () => {
               <div className="w-full flex justify-center pt-4">
                 <button
                   type="submit"
-                  className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
+                  className="text-white w-full text-center rounded-full font-medium hover:font-bold text-lg p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
                 >
-                  LOGIN
+                  Login
                 </button>
               </div>
             )}
