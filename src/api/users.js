@@ -24,4 +24,21 @@ const updateIngedient = async (ingredientId, name) => {
   return data;
 };
 
-export { getAllUsers, createUser, updateIngedient, getUserById };
+const userUnBlockedById = async (userId) => {
+  const res = await instance.put(`/api/user/UnBlocked`, userId);
+  return res.data;
+};
+
+const userBlockById = async (userId) => {
+  const res = await instance.put(`/api/user/Blocked`, userId);
+  return res.data;
+};
+
+export {
+  getAllUsers,
+  createUser,
+  updateIngedient,
+  getUserById,
+  userUnBlockedById,
+  userBlockById,
+};

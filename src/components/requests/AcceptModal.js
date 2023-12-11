@@ -19,7 +19,7 @@ const AcceptModal = ({
     mutationFn: () => OrgApproveById(orgById),
     onSuccess: () => {
       handleCloseModal();
-      setUser(true);
+      // setUser(true);
     },
   });
 
