@@ -4,6 +4,7 @@ import { Mail, Phone, XCircle, Check, X, CheckCheck, Ban } from "lucide-react";
 import { getUserById } from "../../api/users";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../api";
+import AgeCalculation from "./AgeCalculation";
 
 const UserProfileModal = ({
   userById,
@@ -15,6 +16,7 @@ const UserProfileModal = ({
   rejectedUserShow,
   handleCloseModal,
 }) => {
+  const age = AgeCalculation(userById?.bod);
   return (
     <div>
       {showUserProfileModal && (
@@ -29,9 +31,9 @@ const UserProfileModal = ({
               </div>
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
-                  className="w-[100px] h-[100px] rounded-full drop-shadow-md "
+                  className="w-full "
                   src={`${BASE_URL}/${userById?.image}`}
-                  alt="SVG"
+                  alt="UserProfile"
                 />
                 <div className="text-white font-semibold">
                   {/* {user.first_name} */}
@@ -62,8 +64,8 @@ const UserProfileModal = ({
                   <p className="font-semibold">{userById?.gender}</p>
                 </div>
                 <div className="flex flex-col text-center">
-                  <div className="text-Grey3 text-sm ">Birth Date</div>
-                  <p className="font-semibold">{userById?.dob}</p>
+                  <div className="text-Grey3 text-sm ">Age</div>
+                  <p className="font-semibold">{age}</p>
                 </div>
                 {/* <div className="flex flex-col text-center">
                   <div className="text-Grey3 text-sm ">Gender</div>

@@ -1,7 +1,11 @@
 import React from "react";
-import { ArrowRight, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
+import { BASE_URL } from "../../api";
+import AgeCalculation from "./AgeCalculation";
 
 const UserItem = ({ user, setUserById }) => {
+  const age = AgeCalculation(user.dob);
+
   return (
     <div
       onClick={() => {
@@ -10,7 +14,13 @@ const UserItem = ({ user, setUserById }) => {
       className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden border border-1-white"
     >
       <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
-        User Profile
+        {/* User Profile */}
+
+        <img
+          className="w-full"
+          src={`${BASE_URL}/${user?.image}`}
+          alt="UserProfile"
+        />
       </div>
       <div className="flex w-full flex-col justify-around">
         <div className="text-white font-semibold text-[18px]">
@@ -19,7 +29,8 @@ const UserItem = ({ user, setUserById }) => {
         <div className="flex flex-col md:justify-between">
           <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
             <span className="flex items-center gap-1 justify-between">
-              Age -
+              {/* Age - */}
+              {age}
             </span>
             <span className="flex items-center gap-1 justify-between">
               {/* Gender - */}
