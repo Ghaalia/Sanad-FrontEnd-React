@@ -5,14 +5,27 @@ import UsersSearchBar from "../components/users/UsersSearchBar";
 import UserItem from "../components/users/UserItem";
 import DeletedUserItem from "../components/users/DeletedUserItem";
 import UserProfileModal from "../components/users/UserProfileModal";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "../api/users";
 
 const AllUsers = () => {
+  const [userById, setUserById] = useState(null);
   const [acceptClicked, setAcceptClicked] = useState(true);
   const [deletedClicked, setDeletedClicked] = useState(false);
   const [acceptedUserShow, setAcceptedUserShow] = useState(false);
   const [rejectedUserShow, setRejectedUserShow] = useState(false);
   const [showRejectionReason, setShowRejectionReason] = useState(false);
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+
+  const { data: users, isLoading: isLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => getAllUsers(),
+  });
+  if (isLoading) return <p className="text-white">Loading ...</p>;
+
+  const user = users.map((el, index) => (
+    <UserItem user={el} key={`uesers-${index}`} setUserById={setUserById} />
+  ));
 
   //Handle signed-in users
   const handleAcceptClick = () => {
@@ -97,26 +110,17 @@ const AllUsers = () => {
             onClick={handleOpenModal}
             className="w-full grid grid-cols-1 md:grid-cols-3 gap-3"
           >
-            <UserItem />
-            <UserItem />
-            <UserItem />
-            <UserItem />
-            <UserItem />
-            <UserItem />
+            {user}
           </div>
         ) : (
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-3">
-            <DeletedUserItem />
-            <DeletedUserItem />
-            <DeletedUserItem />
-            <DeletedUserItem />
-            <DeletedUserItem />
             <DeletedUserItem />
           </div>
         )}
       </div>
 
       <UserProfileModal
+        userById={userById}
         showUserProfileModal={showUserProfileModal}
         handleAcceptedUser={handleAcceptedUser}
         acceptedUserShow={acceptedUserShow}

@@ -10,9 +10,15 @@ const login = async (userInfo) => {
 const register = async (userInfo) => {
   console.log(userInfo);
   const formData = new FormData();
+
   for (let key in userInfo) {
-    formData.append(key, userInfo[key]);
+    if (!(key == "logo" || key == "license")) {
+      formData.append(key, userInfo[key]);
+    }
   }
+
+  formData.append("files", userInfo["license"]);
+  formData.append("files", userInfo["logo"]);
   const res = await instance.post(`/api/org/register`, formData);
   return res.data;
 };

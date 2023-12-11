@@ -1,15 +1,18 @@
 import { Undo2, CircleDot } from "lucide-react";
 import React from "react";
+import { BASE_URL } from "../../api";
 
-const DeletedOrgItem = () => {
+const DeletedOrgItem = ({ organization }) => {
   return (
     <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
       <div className="bg-white bg-opacity-30 text-NavyMain text-opacity-30 w-[80px] h-[80px] text-sm p-6 flex justify-center items-center text-center ">
-        Company Logo
+        <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
+          <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />
+        </div>
       </div>
       <div className="flex w-full flex-col justify-around">
         <div className="text-white  font-semibold text-[18px]">
-          Company Name
+          {organization.name}
         </div>
         <div className="flex flex-col md:flex-row md:justify-between">
           <div className="text-white text-opacity-30 font-semibold text-[14px] flex gap-4 justify-between md:justify-start">

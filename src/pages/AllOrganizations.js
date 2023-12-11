@@ -4,11 +4,19 @@ import { ClipboardList, Delete } from "lucide-react";
 import { useState } from "react";
 import AcceptedOrgSearchBar from "../components/organizations.js/AcceptedOrgSearchBar";
 import DeletedOrgItem from "../components/organizations.js/DeletedOrgItem";
+import { useQuery } from "@tanstack/react-query";
+import { getAllOrganizations } from "../api/organization";
 
 const AllOrganizations = () => {
   const [acceptClicked, setAcceptClicked] = useState(true);
   const [deletedClicked, setDeletedClicked] = useState(false);
   const [AcceptedShow, setAcceptedShow] = useState(false);
+
+  const { data: organizations, isLoading: isLoading } = useQuery({
+    queryKey: ["organizations"],
+    queryFn: () => getAllOrganizations(),
+  });
+  if (isLoading) return <p className="text-white">Loading ...</p>;
 
   const handleAcceptClick = () => {
     setAcceptClicked(true);
@@ -52,7 +60,7 @@ const AllOrganizations = () => {
               }`}
               onClick={handleDeletedClick}
             >
-              Deleted
+              Rejected
               <span>
                 <Delete
                   color={deletedClicked ? "white" : "#4D497D"}
@@ -66,21 +74,25 @@ const AllOrganizations = () => {
         </div>
         {acceptClicked ? (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
-            <AcceptedOrgItem />
-            <AcceptedOrgItem />
-            <AcceptedOrgItem />
-            <AcceptedOrgItem />
-            <AcceptedOrgItem />
-            <AcceptedOrgItem />
+            {organizations
+              .filter((el) => el.isAccepted === "Accepted")
+              .map((el, index) => (
+                <AcceptedOrgItem
+                  organization={el}
+                  key={`organization-${index}`}
+                />
+              ))}
           </div>
         ) : (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
-            <DeletedOrgItem />
-            <DeletedOrgItem />
-            <DeletedOrgItem />
-            <DeletedOrgItem />
-            <DeletedOrgItem />
-            <DeletedOrgItem />
+            {organizations
+              .filter((el) => el.isAccepted === "Rejected")
+              .map((el, index) => (
+                <DeletedOrgItem
+                  organization={el}
+                  key={`organization-${index}`}
+                />
+              ))}
           </div>
         )}
       </div>
