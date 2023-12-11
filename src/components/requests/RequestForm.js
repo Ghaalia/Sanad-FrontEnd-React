@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Search,
-  ThumbsUp,
-  ThumbsDown,
-  Send,
-  XCircle,
-  X,
-  Minimize2,
-  XSquare,
-} from "lucide-react";
+import { Search, ThumbsUp, ThumbsDown, XSquare } from "lucide-react";
 import contract from "../../assets/new-requests/contract-org.svg";
 import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";

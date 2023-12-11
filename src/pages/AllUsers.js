@@ -23,7 +23,7 @@ const AllUsers = () => {
   });
   if (isLoading) return <p className="text-white">Loading ...</p>;
 
-  const user = users.map((el, index) => (
+  const user = users?.map((el, index) => (
     <UserItem user={el} key={`uesers-${index}`} setUserById={setUserById} />
   ));
 
