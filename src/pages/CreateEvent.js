@@ -10,8 +10,8 @@ import { getAllCategories } from "../api/category";
 import { createOneEvent } from "../api/event";
 
 const CreateEvent = () => {
-  // const [drafts, setDrafts] = useState(true);
-  // const [posted, setPosted] = useState(false);
+  const [drafts, setDrafts] = useState(true);
+  const [posted, setPosted] = useState(false);
 
   const [eventInfo, setEventInfo] = useState({});
   const navigate = useNavigate();
@@ -37,15 +37,15 @@ const CreateEvent = () => {
     onSuccess: () => {},
   });
 
-  // const handlePostClick = () => {
-  //   setDrafts(true);
-  //   setPosted(false);
-  // };
+  const handlePostClick = () => {
+    setDrafts(true);
+    setPosted(false);
+  };
 
-  // const handleDraftsClick = () => {
-  //   setPosted(true);
-  //   setDrafts(false);
-  // };
+  const handleDraftsClick = () => {
+    setPosted(true);
+    setDrafts(false);
+  };
 
   return (
     <div className="min-w-screen h-screen bg-NavyMain lg:px-[100px]">
