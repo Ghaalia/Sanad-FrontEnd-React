@@ -1,12 +1,20 @@
 import React from "react";
 import { ArrowRight, CircleDot } from "lucide-react";
+import { BASE_URL } from "../../api";
 
 const CurrentEventItem = ({ event }) => {
   return (
     <div className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
-      <p>{event.event_title}</p>
-      {/* <div className="bg-white w-full text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
-        Event Image
+      {/* <p>{event.event_title}</p> */}
+      <div className="bg-white w-full text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
+        {/* <img className="w-[100%]" src={`${BASE_URL}+${event?.event_image}`} /> */}
+        <img
+          className="w-[100%]"
+          src={
+            event?.event_image ||
+            "https://www.sender.net/wp-content/uploads/2021/06/volunteer_newsletter_ideas_examples.png"
+          }
+        />
       </div>
       <div className="flex w-full h-[20%] justify-between px-8 items-center">
         <div className="text-white font-semibold text-[18px]">
@@ -28,7 +36,7 @@ const CurrentEventItem = ({ event }) => {
             <ArrowRight size={28} strokeWidth={2} className="text-white" />
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
