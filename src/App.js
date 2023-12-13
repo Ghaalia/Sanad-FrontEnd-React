@@ -12,6 +12,7 @@ import CreateEvent from "./pages/CreateEvent";
 import EventDetails from "./pages/EventDetails";
 import { useState } from "react";
 import UserContext from "./context/UserContext";
+import OrgDetails from "./pages/OrgDetails";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/all_events" Component={AllEvents} />
           <Route path="/create_event" Component={CreateEvent} />
           <Route path="/current_event_details" Component={EventDetails} />
+          <Route path="/org_details" Component={OrgDetails} />
         </Routes>
       </div>
     </UserContext.Provider>

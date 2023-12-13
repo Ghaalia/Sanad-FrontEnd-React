@@ -4,12 +4,7 @@ import { BASE_URL } from "../../api";
 
 const CurrentEventItem = ({ event }) => {
   return (
-<<<<<<< HEAD
     <div className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
-=======
-    <div className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
-      {/* <p>{event.event_title}</p> */}
->>>>>>> 94200ba378ccfccf276fbbc01fae69bd02a7cd2f
       <div className="bg-white w-full text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
         {/* <img className="w-[100%]" src={`${BASE_URL}+${event?.event_image}`} /> */}
         <img
