@@ -1,7 +1,7 @@
 import { instance } from ".";
 
 const getAllCategories = async () => {
-  const { data } = await instance.get("/categories");
+  const { data } = await instance.get("api/categories");
   return data;
 };
 

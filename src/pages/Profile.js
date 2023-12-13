@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import CreateEventSearchBar from "../components/create-event/CreateEventSearchBar";
 import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
-import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
 import OrgProfileDetails from "../components/profile/OrgProfileDetails";
 import TotalEventsAndUsersFilter from "../components/profile/TotalEventsAndUsersFilter";
