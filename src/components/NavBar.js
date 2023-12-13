@@ -111,7 +111,7 @@ const NavBar = () => {
                   </span>
                 </NavLink>
                 <Link
-                  to="/login"
+                  to="/"
                   className="h-[80px] font-medium w-fit flex items-end pb-2 border-b-[4px] border-transparent"
                 >
                   <span
