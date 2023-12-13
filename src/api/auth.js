@@ -24,7 +24,6 @@ const register = async (userInfo) => {
 };
 
 const logout = (setUser) => {
-  setUser(false);
   localStorage.removeItem("token");
 };
 

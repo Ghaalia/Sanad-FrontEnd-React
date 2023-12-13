@@ -12,7 +12,6 @@ const NavBar = () => {
   const handleLogout = () => {
     console.log("handleLogout");
     logout();
-    setUser(false);
     navigate("/");
   };
 
