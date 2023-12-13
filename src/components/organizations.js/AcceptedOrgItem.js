@@ -1,11 +1,16 @@
 import React from "react";
 import { ArrowRight, CircleDot } from "lucide-react";
 import { BASE_URL } from "../../api";
+import { Link } from "react-router-dom";
 
 const AcceptedOrgItem = ({ organization }) => {
-  console.log(`${BASE_URL}/${organization?.logo}`);
+  // console.log(`${BASE_URL}/${organization?.logo}`);
+
   return (
-    <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
+    <Link
+      to="/org_details"
+      className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black"
+    >
       <div className="bg-white w-[80px] text-NavyMain h-[80px] text-sm p-6 flex justify-center items-center text-center ">
         <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
           <img className="w-[100%]" src={`${organization?.logo}`} />
@@ -50,7 +55,7 @@ const AcceptedOrgItem = ({ organization }) => {
       <div className=" w-fit h-full px-2 flex items-center">
         <ArrowRight size={28} strokeWidth={2} className="text-white" />
       </div>
-    </div>
+    </Link>
   );
 };
 
