@@ -4,10 +4,38 @@ import CreateEventSearchBar from "../components/create-event/CreateEventSearchBa
 import DraftsAndPosted from "../components/create-event/DraftsAndPosted";
 import DraftEventItem from "../components/create-event/DraftEventItem";
 import CreateEventForm from "../components/create-event/CreateEventForm";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAllCategories } from "../api/category";
+import { createOneEvent } from "../api/event";
 
 const CreateEvent = () => {
   const [drafts, setDrafts] = useState(true);
   const [posted, setPosted] = useState(false);
+
+  const [eventInfo, setEventInfo] = useState({});
+  const navigate = useNavigate();
+
+  const handleChnage = (e) => {
+    if (e.target.name == "eventimage") {
+      setEventInfo({ ...eventInfo, [e.target.name]: e.target.files[0] });
+    } else {
+      setEventInfo({ ...eventInfo, [e.target.name]: e.target.value });
+    }
+  };
+  const queryClient = useQueryClient();
+  const [type, setType] = useState();
+
+  const { data: categories, isloading: categoryLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getAllCategories(),
+  });
+
+  const { data: create_mutate } = useMutation({
+    mutationKey: ["createEvent"],
+    mutationFn: () => createOneEvent({ ...eventInfo, category: type }),
+    onSuccess: () => {},
+  });
 
   const handlePostClick = () => {
     setDrafts(true);
