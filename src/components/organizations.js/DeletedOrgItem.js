@@ -4,7 +4,7 @@ import { BASE_URL } from "../../api";
 
 const DeletedOrgItem = ({ organization }) => {
   return (
-    <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
+    <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
       <div className="bg-white bg-opacity-30 text-NavyMain text-opacity-30 w-[80px] h-[80px] text-sm p-6 flex justify-center items-center text-center ">
         <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
           <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />

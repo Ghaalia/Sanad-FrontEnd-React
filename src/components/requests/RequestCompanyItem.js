@@ -10,7 +10,7 @@ const RequestCompanyItem = ({ organization, setOrgById, setOpenForm }) => {
       }}
       className="hover: cursor-pointer"
     >
-      <div className="w-full h-[79px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
+      <div className="w-full h-[79px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
         <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
           <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />
         </div>

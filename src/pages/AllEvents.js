@@ -26,7 +26,7 @@ const AllEvents = () => {
       <div className="w-full h-full pt-8 px-8 flex flex-col gap-4 items-center">
         <h1 className="text-white font-semibold text-2xl pb-4">All Events</h1>
         <div className="w-full flex flex-col gap-4 md:flex-row items-center">
-          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] border border-1-white rounded-full p-1 items-center">
+          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] shadow-md shadow-black rounded-full p-1 items-center">
             <div
               className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
                 acceptClicked
@@ -35,7 +35,7 @@ const AllEvents = () => {
               }`}
               onClick={handleAcceptClick}
             >
-              Current Events
+              Current
               <span>
                 <ClipboardList
                   color={acceptClicked ? "white" : "#4D497D"}
@@ -52,7 +52,7 @@ const AllEvents = () => {
               }`}
               onClick={handleDeletedClick}
             >
-              Past Events
+              Past
               <span>
                 <History
                   color={deletedClicked ? "white" : "#4D497D"}
@@ -66,11 +66,6 @@ const AllEvents = () => {
         </div>
         {acceptClicked ? (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            <CurrentEventItem />
-            <CurrentEventItem />
-            <CurrentEventItem />
-            <CurrentEventItem />
-            <CurrentEventItem />
             <CurrentEventItem />
           </div>
         ) : (

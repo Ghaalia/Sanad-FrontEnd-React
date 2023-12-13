@@ -23,10 +23,6 @@ const AllUsers = () => {
   });
   if (isLoading) return <p className="text-white">Loading ...</p>;
 
-  const user = users?.map((el, index) => (
-    <UserItem user={el} key={`uesers-${index}`} setUserById={setUserById} />
-  ));
-
   //Handle signed-in users
   const handleAcceptClick = () => {
     setAcceptClicked(true);
@@ -67,7 +63,7 @@ const AllUsers = () => {
       <div className="w-full h-full pt-8 px-8 flex flex-col gap-4 items-center">
         <h1 className="text-white font-semibold text-2xl pb-4">All Users</h1>
         <div className="w-full flex flex-col gap-4 md:flex-row items-center">
-          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] border border-1-white rounded-full p-1 items-center">
+          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] shadow-sm shadow-black rounded-full p-1 items-center">
             <div
               className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
                 acceptClicked
@@ -110,11 +106,32 @@ const AllUsers = () => {
             onClick={handleOpenModal}
             className="w-full grid grid-cols-1 md:grid-cols-3 gap-3"
           >
-            {user}
+            {users
+              ?.filter((el) => el.isBlocked === "false")
+              .map((el, index) => (
+                <UserItem
+                  user={el}
+                  key={`uesers-${index}`}
+                  setUserById={setUserById}
+                />
+              ))}
           </div>
         ) : (
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-3">
-            <DeletedUserItem />
+          <div
+            onClick={handleOpenModal}
+            className="w-full grid grid-cols-1 md:grid-cols-3 gap-3"
+          >
+            {users
+              ?.filter((el) => el.isBlocked === "true")
+              .map((el, index) => (
+                <DeletedUserItem
+                  user={el}
+                  key={`uesers-${index}`}
+                  setUserById={setUserById}
+                />
+              ))}
+
+            {/* <DeletedUserItem /> */}
           </div>
         )}
       </div>

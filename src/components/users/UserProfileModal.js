@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import defaultProfilePhoto from "../../assets/all-users/default-profile.svg";
-import { Mail, Phone, XCircle, Check, X, CheckCheck, Ban } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  XCircle,
+  Check,
+  X,
+  CheckCheck,
+  Ban,
+  Undo2,
+} from "lucide-react";
 import { BASE_URL } from "../../api";
 import AgeCalculation from "./AgeCalculation";
 import { useMutation } from "@tanstack/react-query";
@@ -16,6 +25,11 @@ const UserProfileModal = ({
   handleCloseModal,
 }) => {
   const age = AgeCalculation(userById?.dob);
+  const [isButtonClicked, setButtonClicked] = useState(false);
+
+  const handleButtonClick = () => {
+    setButtonClicked(!isButtonClicked);
+  };
 
   const { mutate: block, isPending } = useMutation({
     mutationKey: ["block"],
@@ -38,7 +52,11 @@ const UserProfileModal = ({
                 className="absolute top-1 right-1 cursor-pointer"
                 onClick={handleCloseModal}
               >
-                <XCircle color={"white"} size={23} strokeWidth={1.5} />
+                <X
+                  className="text-white hover:text-RedMain hover:bg-white hover:rounded-full "
+                  size={20}
+                  strokeWidth={1}
+                />
               </div>
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
@@ -121,19 +139,41 @@ const UserProfileModal = ({
               </div>
               <div className="h-[1px] w-full bg-NavyMain bg-opacity-40"></div>
               <div className="w-full h-fit flex flex-row gap-4 px-8 py-2">
-                <div
-                  className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
-                  onClick={handleRejectedUser}
-                >
-                  Block
-                  <span>
-                    <Ban
-                      className="text-cecece hover:text-white"
-                      size={20}
-                      strokeWidth={2}
-                    />
-                  </span>
-                </div>
+                {userById.isBlocked == "false" ? (
+                  <div
+                    className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
+                    onClick={() => {
+                      handleRejectedUser();
+                      handleButtonClick();
+                    }}
+                  >
+                    Block
+                    <span>
+                      <Ban
+                        className="text-cecece hover:text-white"
+                        size={20}
+                        strokeWidth={2}
+                      />
+                    </span>
+                  </div>
+                ) : (
+                  <div
+                    className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
+                    onClick={() => {
+                      handleRejectedUser();
+                      handleButtonClick();
+                    }}
+                  >
+                    UnBlock
+                    <span>
+                      <Undo2
+                        className="text-cecece hover:text-white"
+                        size={20}
+                        strokeWidth={2}
+                      />
+                    </span>
+                  </div>
+                )}
               </div>
               <>
                 {rejectedUserShow ? (
@@ -155,15 +195,18 @@ const UserProfileModal = ({
                 ) : (
                   ""
                 )}
-                <div
-                  onClick={() => {
-                    block();
-                  }}
-                  className="text-white flex justify-center items-center gap-2 w-full text-center rounded-full font-bold text-1xl p-2 pb-2 h-[50px] bg-NavyMain hover:bg-RedMain"
-                >
-                  Confirm
-                  <CheckCheck />
-                </div>
+
+                {isButtonClicked && (
+                  <div
+                    onClick={() => {
+                      block();
+                    }}
+                    className="text-white flex justify-center items-center gap-2 w-full text-center rounded-full font-bold text-1xl p-2 pb-2 h-[50px] bg-NavyMain hover:bg-RedMain"
+                  >
+                    Confirm
+                    <CheckCheck />
+                  </div>
+                )}
               </>
             </div>
           </div>

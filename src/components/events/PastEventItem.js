@@ -3,7 +3,7 @@ import { CircleDot, Undo2 } from "lucide-react";
 
 const PastEventItem = () => {
   return (
-    <div className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden border border-1-white">
+    <div className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
       <div className="bg-white w-full text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
         Event Image
       </div>

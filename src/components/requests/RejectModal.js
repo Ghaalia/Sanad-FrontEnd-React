@@ -29,7 +29,11 @@ const RejectModal = ({
               className="absolute top-1 right-1 cursor-pointer"
               onClick={handleCloseRejectionModal}
             >
-              <XSquare color={"white"} size={25} strokeWidth={1} />
+              <X
+                className="text-white hover:text-RedMain hover:bg-white hover:rounded-full "
+                size={20}
+                strokeWidth={1}
+              />
             </div>
             <div className="shadow-md shadow-gray-400  rounded-2xl text-center font-semibold text-3xl pt-9 text-white bg-RedMain h-1/4">
               Rejection

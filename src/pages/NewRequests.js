@@ -70,8 +70,8 @@ const NewRequests = () => {
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
             <div className="flex flex-col gap-3 ">
               {organizations
-                .filter((el) => el.isAccepted === "Pending")
-                .map((el, index) => (
+                ?.filter((el) => el.isAccepted === "Pending")
+                ?.map((el, index) => (
                   <RequestCompanyItem
                     organization={el}
                     setOrgById={setOrgById}

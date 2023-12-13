@@ -8,7 +8,7 @@ const DraftsAndPosted = ({
   handleDraftsClick,
 }) => {
   return (
-    <div className="w-full h-[50px] flex flex-row gap-4 md:w-full border border-1-white rounded-full p-1 items-center">
+    <div className="w-full h-[50px] flex flex-row gap-4 md:w-full shadow-sm shadow-black rounded-full  p-1 items-center">
       <div
         className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
           drafts

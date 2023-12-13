@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, ThumbsUp, ThumbsDown, XSquare } from "lucide-react";
+import { Search, ThumbsUp, ThumbsDown, XSquare, X } from "lucide-react";
 import contract from "../../assets/new-requests/contract-org.svg";
 import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";
@@ -31,8 +31,8 @@ const RequestForm = ({
   return (
     <div className="h-full md:min-h-screen p-8 ">
       <div className="relative max-w-full max-h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 ">
-        <XSquare
-          className="cursor-pointer absolute top-5 right-5"
+        <X
+          className="cursor-pointer absolute top-5 right-5 hover:bg-white hover:rounded-full"
           onClick={() => setOpenForm(false)}
           color={"rgb(27,25,49)"}
           size={20}

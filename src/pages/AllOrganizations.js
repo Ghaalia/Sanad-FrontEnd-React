@@ -34,7 +34,7 @@ const AllOrganizations = () => {
       <div className="w-full h-full pt-8 px-8 flex flex-col gap-4 items-center">
         <h1 className="text-white font-semibold text-2xl pb-4">All Partners</h1>
         <div className="w-full flex flex-col gap-4 md:flex-row items-center">
-          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] border border-1-white rounded-full p-1 items-center">
+          <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] shadow-sm shadow-black rounded-full p-1 items-center">
             <div
               className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
                 acceptClicked
@@ -75,8 +75,8 @@ const AllOrganizations = () => {
         {acceptClicked ? (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
             {organizations
-              .filter((el) => el.isAccepted === "Accepted")
-              .map((el, index) => (
+              ?.filter((el) => el.isAccepted === "Accepted")
+              ?.map((el, index) => (
                 <AcceptedOrgItem
                   organization={el}
                   key={`organization-${index}`}
@@ -86,8 +86,8 @@ const AllOrganizations = () => {
         ) : (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
             {organizations
-              .filter((el) => el.isAccepted === "Rejected")
-              .map((el, index) => (
+              ?.filter((el) => el.isAccepted === "Rejected")
+              ?.map((el, index) => (
                 <DeletedOrgItem
                   organization={el}
                   key={`organization-${index}`}
