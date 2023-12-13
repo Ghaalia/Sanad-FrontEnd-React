@@ -57,7 +57,7 @@ const Register = () => {
               />
             </div>
             <Link
-              to="/login"
+              to="/"
               className="text-RedMain font-semibold items-center mt-4 lg:mt-8 flex gap-[30px] w-fit bg-white px-4 py-2 rounded-full hover:bg-RedMain hover:text-white"
             >
               Login
