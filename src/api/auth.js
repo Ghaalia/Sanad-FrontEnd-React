@@ -36,6 +36,10 @@ const storeToken = (token) => {
   localStorage.setItem("token", token);
 };
 
+const getUserToken = () => {
+  return localStorage.getItem("token");
+};
+
 const checktoken = () => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -44,9 +48,9 @@ const checktoken = () => {
     if (decode.exp < currentTime) {
       localStorage.removeItem("token");
       return false;
-    } else return true;
+    } else return decode;
   }
   return false;
 };
 
-export { login, register, checktoken, logout };
+export { login, register, checktoken, logout, getUserToken };

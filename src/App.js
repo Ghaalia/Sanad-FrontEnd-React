@@ -27,7 +27,7 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className="App min-w-screen min-h-screen">
-        <NavBar />
+        {user && <NavBar />}
         <Routes>
           <Route path="*" Component={NotFound} />
           <Route path="/" Component={Login} />
@@ -38,8 +38,11 @@ function App() {
           <Route path="/all_users" Component={AllUsers} />
           <Route path="/all_events" Component={AllEvents} />
           <Route path="/create_event" Component={CreateEvent} />
-          <Route path="/current_event_details" Component={EventDetails} />
-          <Route path="/org_details" Component={OrgDetails} />
+          <Route
+            path="/current_event_details/:eventId"
+            Component={EventDetails}
+          />
+          <Route path="/org_details/:orgId" Component={OrgDetails} />
           <Route path="/image-gallery" Component={ImageGallery} />
         </Routes>
       </div>

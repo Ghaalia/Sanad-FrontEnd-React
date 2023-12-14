@@ -7,7 +7,7 @@ import CreateEventForm from "../components/create-event/CreateEventForm";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllCategories } from "../api/category";
-import { createOneEvent } from "../api/event";
+import { createOneEvent, getAllEvents } from "../api/event";
 
 const CreateEvent = () => {
   const [drafts, setDrafts] = useState(true);
@@ -26,9 +26,9 @@ const CreateEvent = () => {
   const queryClient = useQueryClient();
   const [type, setType] = useState();
 
-  const { data: categories, isloading: categoryLoading } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getAllCategories(),
+  const { data: events, isloading } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => getAllEvents(),
   });
 
   const { data: create_mutate } = useMutation({
@@ -64,12 +64,9 @@ const CreateEvent = () => {
           />
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <DraftEventItem />
-              <DraftEventItem />
-              <DraftEventItem />
-              <DraftEventItem />
-              <DraftEventItem />
-              <DraftEventItem />
+              {events?.map((el, index) => (
+                <DraftEventItem event={el} key={`organization-${index}`} />
+              ))}
             </div>
           </div>
         </div>

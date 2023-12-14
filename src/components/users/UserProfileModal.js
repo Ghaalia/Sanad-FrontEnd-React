@@ -139,7 +139,7 @@ const UserProfileModal = ({
               </div>
               <div className="h-[1px] w-full bg-NavyMain bg-opacity-40"></div>
               <div className="w-full h-fit flex flex-row gap-4 px-8 py-2">
-                {userById.isBlocked == "false" ? (
+                {userById?.isBlocked == "false" ? (
                   <div
                     className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
                     onClick={() => {

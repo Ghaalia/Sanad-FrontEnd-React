@@ -100,10 +100,10 @@ const CreateEventForm = () => {
 
   //HANDLE All FIELDS
   const handleTitleChange = (e) => {
-    console.log("New Title:", title);
+    // console.log("New Title:", title);
     setTitle(e.target.value);
   };
-  console.log("Title:", title);
+  // console.log("Title:", title);
 
   const handleEventImage = (e) => {
     const selectedImage = e.target.files[0];
