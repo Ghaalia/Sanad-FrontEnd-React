@@ -14,4 +14,9 @@ const getAllEvents = async () => {
   return res.data;
 };
 
-export { createOneEvent, getAllEvents };
+const getAllparReqsforanEvent = async (eventID) => {
+  const res = await instance.get(`/api/participation/event/${eventID}`);
+  return res.data;
+};
+
+export { createOneEvent, getAllEvents, getAllparReqsforanEvent };

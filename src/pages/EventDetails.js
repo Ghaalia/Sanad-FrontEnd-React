@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import CreateEventSearchBar from "../components/create-event/CreateEventSearchBar";
 import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
@@ -9,6 +10,8 @@ import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
 
 const EventDetails = () => {
+  //const { eventId } = useParams(); // Get the eventId from the URL
+  console.log("hi eventId");
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
 
@@ -17,6 +20,12 @@ const EventDetails = () => {
   const [showRejectionReason, setShowRejectionReason] = useState(false);
 
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+
+  // useEffect(() => {
+  //   // Use the eventId in any way you need, e.g., fetch event details based on eventId
+  //   console.log("Event ID:", eventId);
+  //   // Fetch event details or perform any other actions based on eventId
+  // }, [eventId]);
 
   const handleAcceptedClick = () => {
     setRequests(true);
@@ -60,7 +69,7 @@ const EventDetails = () => {
         <div className="bg-NavyMain h-full md:min-h-screen p-8 lg:p-11 flex flex-col gap-6 items-center">
           <h1 className="flex gap-2 text-white font-normal text-2xl">
             Small Act,
-            <span className="font-bold">Big Impact</span>
+            <span className="font-bold">Big Impact </span>
           </h1>
           <CreateEventSearchBar />
           <RequestsAndAccepted

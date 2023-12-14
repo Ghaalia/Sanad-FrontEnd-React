@@ -8,6 +8,9 @@ import TotalEventsAndUsersFilter from "../components/profile/TotalEventsAndUsers
 import EventsFilter from "../components/profile/EventsFilter";
 import CurrentEventItem from "../components/events/CurrentEventItem";
 import PastEventItem from "../components/events/PastEventItem";
+import { getAllEvents } from "../api/event";
+import { useQuery } from "@tanstack/react-query";
+import DraftEventItem from "../components/create-event/DraftEventItem";
 
 const Profile = () => {
   const [events, setEvents] = useState(true);
@@ -69,6 +72,21 @@ const Profile = () => {
     setRejectedUserShow(false);
   };
 
+  const { data: allevents } = useQuery({
+    queryKey: ["allevents"],
+    queryFn: () => getAllEvents(),
+  });
+
+  const ongoingEvents = allevents.filter(
+    (event) => event.status === "on going"
+  );
+  const incompleteEvents = allevents.filter(
+    (event) => event.status === "in complete"
+  );
+
+  // const Eventlists = events?.map((el, index) => {
+  //   return <CurrentEventItem event={el} key={`organization-${index}`} />;
+  //});
   return (
     <div className="min-w-screen h-screen bg-NavyMain lg:px-[100px]">
       <div className="h-[100vh] lg:grid lg:grid-cols-2 flex flex-col">
@@ -100,22 +118,13 @@ const Profile = () => {
           {events ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
+                {ongoingEvents.map((event) => (
+                  <CurrentEventItem key={event.id} event={event} />
+                ))}
+                Draft Events
+                {incompleteEvents.map((event) => (
+                  <DraftEventItem key={event.id} event={event} />
+                ))}
               </div>
             </div>
           ) : (

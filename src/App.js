@@ -16,6 +16,7 @@ import OrgDetails from "./pages/OrgDetails";
 import { checktoken } from "./api/auth";
 import NotFound from "./pages/NotFound";
 import ImageGallery from "./pages/ImageGallery";
+import HandlingParReqs from "./pages/HandlingParReqs";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -32,13 +33,18 @@ function App() {
           <Route path="*" Component={NotFound} />
           <Route path="/" Component={Login} />
           <Route path="/register" Component={Register} />
-          <Route path="/profile" Component={Profile} />
+          <Route path="/profile/:eventId" Component={Profile} />
           <Route path="/requests" Component={NewRequests} />
           <Route path="/all_organizations" Component={AllOrganizations} />
           <Route path="/all_users" Component={AllUsers} />
           <Route path="/all_events" Component={AllEvents} />
           <Route path="/create_event" Component={CreateEvent} />
-          <Route path="/current_event_details" Component={EventDetails} />
+
+          <Route
+            path="/current_event_details/:eventId"
+            component={EventDetails}
+          />
+
           <Route path="/org_details" Component={OrgDetails} />
           <Route path="/image-gallery" Component={ImageGallery} />
         </Routes>
