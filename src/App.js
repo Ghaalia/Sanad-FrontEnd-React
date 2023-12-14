@@ -41,6 +41,7 @@ function App() {
           <Route path="/current_event_details" Component={EventDetails} />
           <Route path="/org_details" Component={OrgDetails} />
           <Route path="/image-gallery" Component={ImageGallery} />
+          <Route path="/image-gallery/:userId" Component={ImageGallery} />
         </Routes>
       </div>
     </UserContext.Provider>

@@ -11,21 +11,35 @@ import TimePicker from "./TimePicker";
 import mapDemo from "../../assets/create_event/map-big.png";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createEvent } from "../../api/events";
-import CategoryList from "./CategoryList";
 import { getAllCategories } from "../../api/category";
+import StartTimePicker from "./StartTimePicker";
+import EndTimePicker from "./EndTimePicker";
+import StartDatePicker from "./StartDatePicker";
+import EndDatePicker from "./EndDatePicker";
 
 const CreateEventForm = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const [volunteers, setVolunteers] = useState("");
-  const [date, setDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
   const [address, setAddress] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const [showRecipeAddedMessage, setShowRecipeAddedMessage] = useState(false);
+  const [startDay, setStartDay] = useState("");
+  const [startMonth, setStartMonth] = useState("");
+  const [startYear, setStartYear] = useState("");
+
+  const [endDay, setEndDay] = useState("");
+  const [endMonth, setEndMonth] = useState("");
+  const [endYear, setEndYear] = useState("");
+
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+
+  const formattedStartDate = `${startDay}-${startMonth}-${startYear}`;
+  const formattedEndDate = `${endDay}-${endMonth}-${endYear}`;
+
+  const [showEventAddedMessage, setShowEventAddedMessage] = useState(false);
   const [volunteerCounter, setVolunteerCounter] = useState(0);
   const queryClient = useQueryClient();
 
@@ -80,7 +94,8 @@ const CreateEventForm = () => {
       createEvent({
         event_title: title,
         event_image: image,
-        event_date: date,
+        event_start_date: formattedStartDate,
+        event_end_date: formattedEndDate,
         event_start_time: startTime,
         event_end_time: endTime,
         no_of_volunteer: volunteers,
@@ -90,9 +105,9 @@ const CreateEventForm = () => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["createEvent"]);
-      setShowRecipeAddedMessage(true);
+      setShowEventAddedMessage(true);
       setTimeout(() => {
-        setShowRecipeAddedMessage(false);
+        setShowEventAddedMessage(false);
       }, 3000);
       // navigate("/homepage");
     },
@@ -112,18 +127,6 @@ const CreateEventForm = () => {
 
   const handleDescription = (e) => {
     setDescription(e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
-  const handleStartTime = (e) => {
-    setStartTime(e.target.value);
-  };
-
-  const handleEndTime = (e) => {
-    setEndTime(e.target.value);
   };
 
   const handleAddress = (e) => {
@@ -146,7 +149,7 @@ const CreateEventForm = () => {
   //FORM SUBMIT
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", title, description, selectedCategory);
+    // console.log("Form submitted:", title, description, selectedCategory);
     createEvent_mutate();
   };
 
@@ -224,6 +227,7 @@ const CreateEventForm = () => {
             <textarea
               // id="shortDescription"
               name="event_address"
+              placeholder="Block, Street, Building, ect..."
               value={address}
               onChange={handleAddress}
               className="w-full px-4 py-2 border border-[#333333] rounded-md focus:outline-none focus:ring-1 focus:ring-[#910808]"
@@ -264,12 +268,30 @@ const CreateEventForm = () => {
           <div className="flex flex-col gap-2 justify-between items-center">
             <div className="w-full flex gap-2 text-NavyLight text-start font-medium">
               <CalendarCheckIcon size={20} />
-              Event Date
+              Start Date
             </div>
-            <DatePicker />
+            <StartDatePicker
+              setStartDay={setStartDay}
+              setStartMonth={setStartMonth}
+              setStartYear={setStartYear}
+            />
           </div>
           <div className="flex flex-row gap-2 justify-between items-center">
-            <TimePicker />
+            <StartTimePicker onTimeChange={setStartTime} />
+          </div>
+          <div className="flex flex-col gap-2 justify-between items-center">
+            <div className="w-full flex gap-2 text-NavyLight text-start font-medium">
+              <CalendarCheckIcon size={20} />
+              End Date
+            </div>
+            <EndDatePicker
+              setEndDay={setEndDay}
+              setEndMonth={setEndMonth}
+              setEndYear={setEndYear}
+            />
+          </div>
+          <div className="flex flex-row gap-2 justify-between items-center">
+            <EndTimePicker onTimeChange={setEndTime} />
           </div>
         </div>
         <div className="w-full flex gap-4 justify-center pt-10">
@@ -284,8 +306,8 @@ const CreateEventForm = () => {
             <SendIcon />
           </button>
         </div>
-        {showRecipeAddedMessage && (
-          <div className="text-[#910808] text-center mt-4 font-bold">
+        {showEventAddedMessage && (
+          <div className="text-RedMain text-center mt-4 font-bold">
             You successfully added an Event!
           </div>
         )}
