@@ -38,7 +38,7 @@ function App() {
           <Route path="/all_events" Component={AllEvents} />
           <Route path="/create_event" Component={CreateEvent} />
           <Route path="/current_event_details" Component={EventDetails} />
-          <Route path="/image-gallery" Component={ImageGallery} />
+          <Route path="/image-gallery/:userId" Component={ImageGallery} />
         </Routes>
       </div>
     </UserContext.Provider>

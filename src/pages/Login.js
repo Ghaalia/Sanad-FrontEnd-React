@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, ArrowRight } from "lucide-react";
 import UserContext from "../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../api/auth";
+import { checktoken, login } from "../api/auth";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -20,15 +20,15 @@ const Login = () => {
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
     onSuccess: () => {
+      setUser(checktoken());
       navigate("/create_event");
-      setUser(true);
     },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login_mutate();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   login_mutate();
+  // };
 
   return (
     <div className="w-full h-screen flex justify-center items-center ">
@@ -67,7 +67,7 @@ const Login = () => {
         </div>
         <div className="h-1/2 flex justify-center items-center px-[50px] lg:h-full lg:w-1/2 lg:px-[220px]">
           <form
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className="w-full flex flex-col gap-4 justify-center items-center"
           >
             <div className="w-full flex flex-col gap-2">
@@ -121,7 +121,8 @@ const Login = () => {
             ) : (
               <div className="w-full flex justify-center pt-4">
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={login_mutate}
                   className="text-white w-full text-center rounded-full font-medium hover:font-bold text-lg p-2 h-[50px] bg-NavyMain hover:bg-RedMain"
                 >
                   Login

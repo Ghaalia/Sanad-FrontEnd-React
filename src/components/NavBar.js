@@ -102,14 +102,14 @@ const NavBar = () => {
                     Create
                   </span>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   to="/image-gallery"
                   className="h-[80px] font-medium w-fit flex items-end pb-2 border-b-[4px] border-transparent"
                 >
                   <span className="text-white px-4 hover:bg-white hover:bg-opacity-20 hover:px-4 hover:rounded-full">
                     Donation
                   </span>
-                </NavLink>
+                </NavLink> */}
                 <Link
                   to="/"
                   className="h-[80px] font-medium w-fit flex items-end pb-2 border-b-[4px] border-transparent"
