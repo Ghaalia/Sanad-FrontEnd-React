@@ -41,6 +41,27 @@ const UserProfileModal = ({
       console.log(error.response.data.message);
     },
   });
+  // const profielImage = async (user) => {
+  //   if (!userById?.image.includes("http")) {
+  //     return `${BASE_URL}${userById?.image}`;
+  //   } else {
+  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
+  //   }
+  // };
+  // const profileImage = async (userById) => {
+  //   if (!(userById?.image && userById?.image.includes("http"))) {
+  //     return `${BASE_URL}${userById?.image}`;
+  //   } else {
+  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
+  //   }
+  // };
+  // const profileImage = async (userById) => {
+  //   if (!(userById?.image && userById?.image.includes("http"))) {
+  //     return `${BASE_URL}${userById?.image}`;
+  //   } else {
+  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
+  //   }
+  // };
 
   return (
     <div>
@@ -61,8 +82,19 @@ const UserProfileModal = ({
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
                   className="w-full "
-                  src={`${BASE_URL}/${userById?.image}`}
-                  alt="UserProfile"
+                  // src={
+                  //   `${BASE_URL}/${userById?.image}` ||
+                  //   "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
+                  // }
+                  src={
+                    userById?.image
+                      ? `${BASE_URL}/${userById.image}`
+                      : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
+                  }
+                  // src={userById?.image}
+                  // src={profileImage}
+                  // alt="UserProfile"
+                  // src={profileImage(userById)}
                 />
               </div>
               <div className="w-full flex justify-center items-center">
