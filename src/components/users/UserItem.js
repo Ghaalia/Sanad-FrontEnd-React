@@ -25,11 +25,12 @@ const UserItem = ({ user, setUserById }) => {
 
         <img
           className="w-[100%] rounded-full"
-          src={
-            user?.image
-              ? `${BASE_URL}/${user.image}`
-              : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
-          }
+          // src={
+          //   user?.image
+          //     ? `${BASE_URL}/${user.image}`
+          //     : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
+          // }
+          src={user?.image ? `${BASE_URL}/${user.image}` : require("../")}
           // src={user?.image || ""}
           // src={`${BASE_URL}${user.image}`}
           alt="UserProfile"
