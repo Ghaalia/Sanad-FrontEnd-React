@@ -81,15 +81,20 @@ const UserProfileModal = ({
               </div>
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
-                  className="w-full "
+                  className="w-full  "
                   // src={
                   //   `${BASE_URL}/${userById?.image}` ||
                   //   "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
                   // }
+                  // src={
+                  //   userById?.image
+                  //     ? `${BASE_URL}/${userById.image}`
+                  //     : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
+                  // }
                   src={
                     userById?.image
                       ? `${BASE_URL}/${userById.image}`
-                      : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
+                      : require(".././../assets/all-users/profileimg.png")
                   }
                   // src={userById?.image}
                   // src={profileImage}
