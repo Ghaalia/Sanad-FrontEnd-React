@@ -240,6 +240,7 @@ const CreateEventForm = () => {
             </div>
             <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
               <img className="w-full" src={mapDemo} alt="SVG" />
+              {/* <div id="map"></div> */}
             </div>
           </div>
           <div className="flex flex-row justify-between items-center">

@@ -25,6 +25,26 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?AIzaSyCwZtkvVKSzedzs4SKvEamWEVG6q-Zdh8o&callback=initMap"
+    ></script>
+    <script>
+      function initMap() {
+        // Map options
+        let mapOptions = {
+          center: { lat: -34.397, lng: 150.644 }, // Initial map center coordinates
+          zoom: 8, // Initial zoom level
+        };
+
+        // Create the map
+        var map = new google.maps.Map(
+          document.getElementById("map"),
+          mapOptions
+        );
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
