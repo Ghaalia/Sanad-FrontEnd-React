@@ -3,7 +3,7 @@ import sanadLogoRed from "../assets/navbar/sanad_red_logo.svg";
 import topHand from "../assets/navbar/top-hand.svg";
 import bottomHand from "../assets/navbar/bottom-hand.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import UserContext from "../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { checktoken, login } from "../api/auth";
@@ -11,17 +11,34 @@ import { checktoken, login } from "../api/auth";
 const Login = () => {
   const [userInfo, setUserInfo] = useState({});
   const { user, setUser } = useContext(UserContext);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const { mutate: login_mutate, isPending } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
     onSuccess: () => {
-      setUser(checktoken());
-      navigate("/create_event");
+      // if (user.isAdmin) navigate("/requests"); // admin
+      // else navigate("/profile"); // org
+
+      // setUser(checktoken());
+
+      const updatedUser = checktoken();
+      setUser(updatedUser);
+
+      if (updatedUser.isAdmin) {
+        navigate("/requests"); // admin
+      } else {
+        navigate("/profile"); // org
+      }
     },
   });
 
@@ -101,15 +118,22 @@ const Login = () => {
               </label>
               <input
                 placeholder="Enter Your Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 onChange={handleChange}
                 className="w-full h-[50px] text-lg px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
-              <span className="absolute inset-y-0 top-6 right-2 flex items-center pr-2">
-                <Eye color="#6B6893" size={28} strokeWidth={1.5} />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 top-6 right-2 flex items-center pr-2"
+              >
+                {showPassword ? (
+                  <EyeOff color="#6B6893" size={20} strokeWidth={1} />
+                ) : (
+                  <Eye color="#6B6893" size={20} strokeWidth={1} />
+                )}
               </span>
             </div>
             {isPending ? (

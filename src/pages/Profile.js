@@ -89,49 +89,34 @@ const Profile = () => {
             handleEventsClick={handleEventsClick}
             handleVolunteersClick={handleVolunteersClick}
           />
-          <EventsFilter
+          {/* <EventsFilter
             all={all}
             current={current}
             past={past}
             handleAllClick={handleAllClick}
             handleCurrentClick={handleCurrentClick}
             handlePastClick={handlePastClick}
-          />
+          /> */}
           {events ? (
-            <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <CurrentEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
-                <PastEventItem />
+            <>
+              <EventsFilter
+                all={all}
+                current={current}
+                past={past}
+                handleAllClick={handleAllClick}
+                handleCurrentClick={handleCurrentClick}
+                handlePastClick={handlePastClick}
+              />
+              <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <CurrentEventItem />
+                  <PastEventItem />
+                </div>
               </div>
-            </div>
+            </>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
                 <AcceptedUserItem handleOpenModal={handleOpenModal} />
               </div>
             </div>

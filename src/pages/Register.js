@@ -3,13 +3,16 @@ import sanadLogoRed from "../assets/navbar/sanad_red_logo.svg";
 import topHand from "../assets/navbar/top-hand.svg";
 import bottomHand from "../assets/navbar/bottom-hand.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, LogIn, Mail, Phone } from "lucide-react";
+import { Eye, EyeOff, LogIn, Mail, Phone } from "lucide-react";
 import UserContext from "../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "../api/auth";
+import { checktoken, register } from "../api/auth";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -21,10 +24,31 @@ const Register = () => {
     } else {
       setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     }
+    // Check if it's the confirm password field
+    if (e.target.name === "confirmPassword") {
+      setConfirmPassword(e.target.value);
+
+      // Check if the passwords match
+      setPasswordMatchError(
+        (prev) => prev || userInfo.password !== e.target.value
+      );
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if passwords match before submitting
+    if (userInfo.password !== confirmPassword) {
+      setPasswordMatchError(true);
+      return;
+    }
+
+    setPasswordMatchError(false);
     register_mutate();
   };
 
@@ -32,8 +56,8 @@ const Register = () => {
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
     onSuccess: () => {
-      navigate("/create_event");
-      setUser(true);
+      navigate("/");
+      setUser(checktoken());
     },
   });
 
@@ -95,7 +119,7 @@ const Register = () => {
                   placeholder="Enter Phone Number"
                   type="number"
                   id="phoneNumber"
-                  name="phoneNumber"
+                  name="phone_number"
                   onChange={handleChange}
                   className="w-full h-[50px] px-4 py-2 pl-[70px] border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                   required
@@ -122,29 +146,48 @@ const Register = () => {
             <div className="w-full flex flex-col gap-2 relative">
               <input
                 placeholder="Enter a Secure Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
-              <span className="absolute inset-y-0 right-2 flex items-center pr-2">
-                <Eye color="#6B6893" size={28} strokeWidth={1.5} />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-2 flex items-center pr-2"
+              >
+                {showPassword ? (
+                  <EyeOff color="#6B6893" size={25} strokeWidth={1} />
+                ) : (
+                  <Eye color="#6B6893" size={25} strokeWidth={1} />
+                )}
               </span>
             </div>
             <div className="w-full flex flex-col gap-2 relative">
               <input
                 placeholder="Confirm Your Password"
-                type="password"
-                id="Confirm password"
-                name="Confirm password"
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                onChange={handleChange}
                 className="w-full h-[50px] px-4 py-2 border border-NavyLight rounded-full focus:outline-none focus:ring-1 focus:ring-NavyMain"
                 required
               />
-              <span className="absolute inset-y-0 right-2 flex items-center pr-2">
-                <Eye color="#6B6893" size={28} strokeWidth={1.5} />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-2 flex items-center pr-2"
+              >
+                {showPassword ? (
+                  <EyeOff color="#6B6893" size={25} strokeWidth={1} />
+                ) : (
+                  <Eye color="#6B6893" size={25} strokeWidth={1} />
+                )}
               </span>
+
+              {passwordMatchError && (
+                <div className="text-red-500">Passwords do not match</div>
+              )}
             </div>
             <div className="w-full">
               <label

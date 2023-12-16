@@ -1,14 +1,19 @@
 import React from "react";
 import { ArrowRight, CircleDot } from "lucide-react";
 import { BASE_URL } from "../../api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AcceptedOrgItem = ({ organization }) => {
   // console.log(`${BASE_URL}/${organization?.logo}`);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/org_details/${organization?._id}`);
+  };
 
   return (
-    <Link
-      to="/org_details"
+    <div
+      onClick={handleClick}
       className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black"
     >
       <div className="bg-white w-[80px] text-NavyMain h-[80px] text-sm p-6 flex justify-center items-center text-center ">
@@ -55,7 +60,7 @@ const AcceptedOrgItem = ({ organization }) => {
       <div className=" w-fit h-full px-2 flex items-center">
         <ArrowRight size={28} strokeWidth={2} className="text-white" />
       </div>
-    </Link>
+    </div>
   );
 };
 
