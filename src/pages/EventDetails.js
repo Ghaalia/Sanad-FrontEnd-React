@@ -1,10 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 import CreateEventSearchBar from "../components/create-event/CreateEventSearchBar";
 import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
-import AcceptedUser from "../components/event-details/AcceptedUserItem";
-import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
 
@@ -12,41 +10,36 @@ const EventDetails = () => {
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
 
-  const [acceptedUserShow, setAcceptedUserShow] = useState(false);
-  const [rejectedUserShow, setRejectedUserShow] = useState(false);
-  const [showRejectionReason, setShowRejectionReason] = useState(false);
+  const [participationId, setParticipationId] = useState(null);
 
-  const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  // Example useQuery for fetching event details
+  const { data: currentEvent } = useQuery(
+    ["event", currentEventId],
+    fetchEventById
+  );
 
-  const handleAcceptedClick = () => {
-    setRequests(true);
-    setAccepted(false);
-  };
+  // Example useQuery for fetching participation details
+  const { data: participationDetails } = useQuery(
+    ["participation", participationId],
+    fetchParticipationById
+  );
 
-  const handleRequestsClick = () => {
-    setAccepted(true);
-    setRequests(false);
-  };
-
-  //open and close user profile modal
+  // Handle opening and closing user profile modal
   const handleCloseModal = () => {
     setShowUserProfileModal(false);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (participationId) => {
     setShowUserProfileModal(true);
+    setParticipationId(participationId);
   };
 
-  //User Profile (accept / reject)
   const handleRejectedUser = () => {
-    setRejectedUserShow(true);
-    setAcceptedUserShow(false);
-    setShowRejectionReason(true);
+    // Your logic for handling rejected user
   };
 
   const handleAcceptedUser = () => {
-    setAcceptedUserShow(true);
-    setRejectedUserShow(false);
+    // Your logic for handling accepted user
   };
 
   return (
@@ -72,36 +65,21 @@ const EventDetails = () => {
           {requests ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem
+                  handleOpenModal={handleOpenModal}
+                  participationId={participationId}
+                />
+                {/* Repeat for other RequestsUserItem components */}
               </div>
             </div>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
+                <AcceptedUserItem
+                  handleOpenModal={handleOpenModal}
+                  participationId={participationId}
+                />
+                {/* Repeat for other AcceptedUserItem components */}
               </div>
             </div>
           )}
