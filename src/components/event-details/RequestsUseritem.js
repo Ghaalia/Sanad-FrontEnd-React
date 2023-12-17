@@ -1,7 +1,16 @@
 import React from "react";
 import { PauseCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getParticipationsbyId } from "../../api/users";
 
-const RequestsUserItem = ({ handleOpenModal }) => {
+const RequestsUserItem = ({ participation, eventId, handleOpenModal }) => {
+  const { data: participationObj } = useQuery({
+    queryKey: ["participationObj", eventId, participation],
+    queryFn: () => getParticipationsbyId(eventId, participation),
+  });
+
+  console.log(participationObj);
+  //get profile user
   return (
     <div
       onClick={handleOpenModal}
