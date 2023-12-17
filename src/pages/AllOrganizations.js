@@ -75,7 +75,9 @@ const AllOrganizations = () => {
         {acceptClicked ? (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
             {organizations
-              ?.filter((el) => el.isAccepted === "Accepted")
+              ?.filter((el) => {
+                return el.isAccepted === "Accepted" && el.isAdmin === false;
+              })
               ?.map((el, index) => (
                 <AcceptedOrgItem
                   organization={el}
@@ -86,7 +88,9 @@ const AllOrganizations = () => {
         ) : (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
             {organizations
-              ?.filter((el) => el.isAccepted === "Rejected")
+              ?.filter((el) => {
+                return el.isAccepted === "Rejected" && el.isAdmin === false;
+              })
               ?.map((el, index) => (
                 <DeletedOrgItem
                   organization={el}

@@ -9,12 +9,15 @@ import contract from "../assets/new-requests/contract.svg";
 import AcceptModal from "../components/requests/AcceptModal";
 import RejectModal from "../components/requests/RejectModal";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
+import ImageModal from "../components/profile/ImageModal";
+import { BASE_URL } from "../api";
 
 const NewRequests = () => {
   const [orgById, setOrgById] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [showAcceptModal, setShowAcceptModal] = useState();
   const [showRejectionModal, setShowRejectionModal] = useState();
+  const [showImageModal, setShowImageModal] = useState(false);
 
   const { data: organizations, isLoading: isLoading } = useQuery({
     queryKey: ["organizations"],
@@ -22,6 +25,14 @@ const NewRequests = () => {
   });
 
   if (isLoading) return <p className="text-white">Loading ...</p>;
+
+  const handleOpenImageModal = () => {
+    setShowImageModal(true);
+  };
+
+  const handleCloseImageModal = () => {
+    setShowImageModal(false);
+  };
 
   //Handle the Accept modal : OFF
   const handleCloseModal = () => {
@@ -82,19 +93,23 @@ const NewRequests = () => {
             </div>
           </div>
         </div>
-        {openForm ? (
-          <RequestForm
-            orgById={orgById}
-            setOpenForm={setOpenForm}
-            handleOpenRejectionModal={handleOpenRejectionModal}
-            handleOpenModal={handleOpenModal}
-          />
-        ) : (
-          <img
-            className="fixed w-[50%] h-[80%]  top-36 right-5"
-            src={contract}
-          />
-        )}
+
+        <div>
+          {openForm ? (
+            <RequestForm
+              orgById={orgById}
+              setOpenForm={setOpenForm}
+              handleOpenRejectionModal={handleOpenRejectionModal}
+              handleOpenModal={handleOpenModal}
+              handleOpenImageModal={handleOpenImageModal}
+            />
+          ) : (
+            <img
+              className="fixed w-[50%] max-h-[80%] top-36 right-5 object-contain"
+              src={contract}
+            />
+          )}
+        </div>
       </div>
 
       <AcceptModal
@@ -110,6 +125,13 @@ const NewRequests = () => {
         handleCloseRejectionModal={handleCloseRejectionModal}
         orgById={orgById}
       />
+
+      {showImageModal && (
+        <ImageModal
+          imageUrl={`${BASE_URL}/${orgById?.license}`}
+          handleCloseImageModal={handleCloseImageModal}
+        />
+      )}
     </div>
   );
 };
