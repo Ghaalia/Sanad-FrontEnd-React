@@ -2,6 +2,7 @@ import { CalendarCheck, PersonStanding } from "lucide-react";
 import React from "react";
 
 const TotalEventsAndUsersFilter = ({
+  orgById,
   events,
   volunteers,
   handleEventsClick,
@@ -17,6 +18,9 @@ const TotalEventsAndUsersFilter = ({
         }`}
         onClick={handleEventsClick}
       >
+        <span className={`text-[15px]  ${events ? "white" : "#4D497D"}`}>
+          {orgById?.events.length}
+        </span>
         Events
         <span>
           <CalendarCheck
@@ -34,6 +38,9 @@ const TotalEventsAndUsersFilter = ({
         }`}
         onClick={handleVolunteersClick}
       >
+        <span className={`text-[15px]  ${volunteers ? "white" : "#4D497D"}`}>
+          80
+        </span>
         Volunteers
         <span>
           <PersonStanding
