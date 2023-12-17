@@ -7,8 +7,14 @@ import AcceptedUser from "../components/event-details/AcceptedUserItem";
 import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getEventById } from "../api/event";
+import { getParticipationsById } from "../api/participation";
 
 const EventDetails = () => {
+  const { eventId } = useParams();
+
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
 
@@ -17,6 +23,26 @@ const EventDetails = () => {
   const [showRejectionReason, setShowRejectionReason] = useState(false);
 
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+
+  const { data: eventById, isLoading: isLoading1 } = useQuery({
+    queryKey: ["eventById"],
+    queryFn: () => getEventById(eventId),
+  });
+  const listOfParticipations = eventById?.volunteer_list;
+
+  // listOfParticipations?.map((e) => {
+  //   console.log(e.user);
+  // });
+
+  console.log(listOfParticipations);
+
+  // const { data: parById, isLoading: isLoading2 } = useQuery({
+  //   queryKey: ["parById"],
+
+  //   queryFn: () => getParticipationsById(eventId),
+  // });
+
+  // console.log(promises);
 
   const handleAcceptedClick = () => {
     setRequests(true);
@@ -54,7 +80,7 @@ const EventDetails = () => {
       <div className="h-[100vh] mt-[80px] lg:grid lg:grid-cols-2 flex flex-col">
         <div className="h-full md:min-h-screen p-8 md:pt-[100px] ">
           <div className="w-full h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white rounded-lg p-4">
-            <DraftEventDetails />
+            <DraftEventDetails eventById={eventById} />
           </div>
         </div>
         <div className="bg-NavyMain h-full md:min-h-screen p-8 lg:p-11 flex flex-col gap-6 items-center">
@@ -72,36 +98,19 @@ const EventDetails = () => {
           {requests ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
-                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                {listOfParticipations?.map((el) => (
+                  <RequestsUserItem
+                    key={el._id}
+                    participation={el}
+                    handleOpenModal={handleOpenModal}
+                  />
+                ))}
               </div>
             </div>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
+                <AcceptedUserItem handleOpenModal={handleOpenModal} />;
               </div>
             </div>
           )}
