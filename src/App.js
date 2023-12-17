@@ -16,6 +16,7 @@ import OrgDetails from "./pages/OrgDetails";
 import { checktoken } from "./api/auth";
 import NotFound from "./pages/NotFound";
 import ImageGallery from "./pages/ImageGallery";
+import Location from "./components/create-event/Location";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -45,6 +46,7 @@ function App() {
           <Route path="/org_details/:orgId" Component={OrgDetails} />
           <Route path="/image-gallery" Component={ImageGallery} />
           <Route path="/image-gallery/:userId" Component={ImageGallery} />
+          <Route path="/location" Component={Location} />
         </Routes>
       </div>
     </UserContext.Provider>

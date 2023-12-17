@@ -16,6 +16,7 @@ import StartTimePicker from "./StartTimePicker";
 import EndTimePicker from "./EndTimePicker";
 import StartDatePicker from "./StartDatePicker";
 import EndDatePicker from "./EndDatePicker";
+import Location from "./Location";
 
 const CreateEventForm = () => {
   const [title, setTitle] = useState("");
@@ -239,7 +240,7 @@ const CreateEventForm = () => {
               Location
             </div>
             <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
-              <img className="w-full" src={mapDemo} alt="SVG" />
+              {/* <img className="w-full" src={mapDemo} alt="SVG" /> */}
               {/* <div id="map"></div> */}
             </div>
           </div>
