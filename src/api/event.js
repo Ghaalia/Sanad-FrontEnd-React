@@ -1,3 +1,4 @@
+import { async } from "q";
 import { instance } from ".";
 
 const createOneEvent = async (event) => {
@@ -14,4 +15,14 @@ const getAllEvents = async () => {
   return res.data;
 };
 
-export { createOneEvent, getAllEvents };
+const getOneEvent = async (eventId) => {
+  const res = await instance.get(`/api/event/${eventId}`);
+  return res.data;
+};
+
+const getParticipationsByEvent = async (eventId) => {
+  const res = await instance.get(`/participation/event/`, eventId);
+  return res.data;
+};
+
+export { createOneEvent, getAllEvents, getOneEvent, getParticipationsByEvent };
