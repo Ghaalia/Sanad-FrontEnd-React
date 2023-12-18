@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
-const AcceptedUserItem = ({ handleOpenModal }) => {
+const AcceptedUserItem = ({ handleOpenModal, participation }) => {
   return (
     <div
       onClick={handleOpenModal}
@@ -11,7 +11,9 @@ const AcceptedUserItem = ({ handleOpenModal }) => {
         User Profile
       </div>
       <div className="flex w-full flex-col justify-around">
-        <div className="text-white font-semibold text-[18px]">User Name</div>
+        <div className="text-white font-semibold text-[18px]">
+          {participation?.user?.first_name}
+        </div>
         <div className="flex flex-col md:justify-between">
           <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
             <span className="flex items-center gap-1 justify-between">
