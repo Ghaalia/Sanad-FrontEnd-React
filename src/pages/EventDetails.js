@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import CreateEventSearchBar from "../components/create-event/CreateEventSearchBar";
 import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
@@ -7,98 +6,39 @@ import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getEventById } from "../api/event";
-import { getParticipationsById } from "../api/participation";
-import { getEventById } from "../api/event";
+import { getOneEvent } from "../api/event";
+
+import { getAllUsers } from "../api/users";
+import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 
 const EventDetails = () => {
   const { eventId } = useParams();
-
-  //geteventbyID
-
-  const { data: event, isLoading: isLoading } = useQuery({
-    queryKey: ["event"],
-    queryFn: () => getOneEvent(eventId),
-  });
+  const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  const [requests, setRequests] = useState(true);
+  const [accepted, setAccepted] = useState(false);
+  const [participationId, setParticipationId] = useState(null);
 
   const { data: users } = useQuery({
     queryKey: ["users"],
     queryFn: () => getAllUsers(),
   });
-  //console.log(users);
-
-  // const { data: par1 } = useQuery({
-  //   queryKey: ["par1"],
-  //   queryFn: () => getParticipationsByUser(userId),
-  // });
-  // console.log("par1");
-  // console.log(par1);
-
-  // const parId = event?.volunteer_list[0] || [];
-  // console.log(event?.volunteer_list);
-  // console.log("parId is :");
-  // console.log(parId);
-
-  // const { data: participationObj } = useQuery({
-  //   queryKey: ["participationObj"],
-  //   queryFn: () => getParticipationsbyId(parId),
-  // });
-
-  // const { data: participationObj } = useQuery(
-  //   ["participationObj", { parId }], // Set a unique query key based on parId
-  //   () => getParticipationsbyId({ parId }), // Provide the query function
-  //   {
-  //     enabled: !!parId, // Enable the query only when parId is truthy
-  //   }
-  // );
-
-  // console.log("participationObj");
-  // console.log(participationObj?.user);
-  // console.log(participationObj?.status);
-
-  //console.log("event?.volunteer_list[0]");
-  //console.log(event?.volunteer_list[0]);
-  //console.log(event?.volunteer_list);
-  // console.log("event?.volunteer_list[1]");
-  // console.log(event?.volunteer_list[1]);
-  //  const c = await event?.map((el, index) => (
-  //     <RequestsUserItem event={el} key={`participation-${index}`} />
-  //   ));
-
-  const [requests, setRequests] = useState(true);
-  const [accepted, setAccepted] = useState(false);
-
-  const [participationId, setParticipationId] = useState(null);
-
-  // Example useQuery for fetching event details
-  const { data: currentEvent } = useQuery(
-    ["event", currentEventId],
-    fetchEventById
-  );
 
   const { data: eventById, isLoading: isLoading1 } = useQuery({
     queryKey: ["eventById"],
-    queryFn: () => getEventById(eventId),
+    queryFn: () => getOneEvent(eventId),
   });
   const listOfParticipations = eventById?.volunteer_list;
 
-  // listOfParticipations?.map((e) => {
-  //   console.log(e.user);
-  // });
-
-  console.log(listOfParticipations);
-
-  // const { data: parById, isLoading: isLoading2 } = useQuery({
-  //   queryKey: ["parById"],
-
-  //   queryFn: () => getParticipationsById(eventId),
-  // });
-
-  // console.log(promises);
+  // console.log(listOfParticipations);
 
   const handleAcceptedClick = () => {
     setRequests(true);
     setAccepted(false);
+  };
+
+  const handleRequestsClick = () => {
+    setRequests(false);
+    setAccepted(true);
   };
 
   // Handle opening and closing user profile modal
@@ -142,19 +82,29 @@ const EventDetails = () => {
           {requests ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {listOfParticipations?.map((el) => (
-                  <RequestsUserItem
-                    key={el._id}
-                    participation={el}
-                    handleOpenModal={handleOpenModal}
-                  />
-                ))}
+                {listOfParticipations
+                  ?.filter((el) => el.status == "Pending")
+                  ?.map((el) => (
+                    <RequestsUserItem
+                      key={el._id}
+                      participation={el}
+                      handleOpenModal={handleOpenModal}
+                    />
+                  ))}
               </div>
             </div>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />;
+                {listOfParticipations
+                  ?.filter((el) => el.status == "Accepted")
+                  ?.map((el) => (
+                    <AcceptedUserItem
+                      key={el._id}
+                      participation={el}
+                      handleOpenModal={handleOpenModal}
+                    />
+                  ))}
               </div>
             </div>
           )}
@@ -163,8 +113,8 @@ const EventDetails = () => {
       <UserProfileModal
         showUserProfileModal={showUserProfileModal}
         handleAcceptedUser={handleAcceptedUser}
-        acceptedUserShow={acceptedUserShow}
-        rejectedUserShow={rejectedUserShow}
+        // acceptedUserShow={acceptedUserShow}
+        // rejectedUserShow={rejectedUserShow}
         handleCloseModal={handleCloseModal}
         handleRejectedUser={handleRejectedUser}
       />

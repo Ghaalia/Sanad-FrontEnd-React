@@ -15,9 +15,9 @@ const getAllEvents = async () => {
   return res.data;
 };
 
-const getEventById = async (eventId) => {
+const getOneEvent = async (eventId) => {
   const res = await instance.get(`/api/event/${eventId}`);
   return res.data;
 };
 
-export { createOneEvent, getAllEvents, getEventById };
+export { createOneEvent, getAllEvents, getOneEvent };
