@@ -1,9 +1,10 @@
 //// THE BEST WAY SO FAR :::
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import React, { useCallback, useState } from "react";
+import { instance } from "../../api";
 
 const containerStyle = {
-  width: "720px",
+  width: "700px",
   height: "500px",
 };
 
@@ -39,6 +40,28 @@ const Location = () => {
     console.log(clickedLatLng);
     setMarkerPosition(clickedLatLng);
   };
+
+  // const onSaveLocation = async () => {
+  //   try {
+  //     // Make an HTTP POST request to your backend endpoint
+  //     const response = await instance.post("/api/org/create-event", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(markerPosition),
+  //     });
+
+  //     // Check if the request was successful
+  //     if (response.ok) {
+  //       console.log("Location saved successfully");
+  //     } else {
+  //       console.error("Failed to save location");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error saving location:", error);
+  //   }
+  // };
+
   return (
     <div>
       {isLoaded ? (
@@ -55,6 +78,7 @@ const Location = () => {
       ) : (
         <></>
       )}
+      {/* <button onClick={onSaveLocation}>Save Location</button> */}
     </div>
   );
 };
