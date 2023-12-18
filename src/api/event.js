@@ -15,14 +15,9 @@ const getAllEvents = async () => {
   return res.data;
 };
 
-const getOneEvent = async (eventId) => {
+const getEventById = async (eventId) => {
   const res = await instance.get(`/api/event/${eventId}`);
   return res.data;
 };
 
-const getParticipationsByEvent = async (eventId) => {
-  const res = await instance.get(`/participation/event/`, eventId);
-  return res.data;
-};
-
-export { createOneEvent, getAllEvents, getOneEvent, getParticipationsByEvent };
+export { createOneEvent, getAllEvents, getEventById };
