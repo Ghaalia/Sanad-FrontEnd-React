@@ -17,6 +17,7 @@ import { checktoken } from "./api/auth";
 import NotFound from "./pages/NotFound";
 import ImageGallery from "./pages/ImageGallery";
 import Location from "./components/create-event/Location";
+import DemoLocation from "./components/create-event/DemoLocation";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/image-gallery" Component={ImageGallery} />
           <Route path="/image-gallery/:userId" Component={ImageGallery} />
           <Route path="/location" Component={Location} />
+          <Route path="/demo" Component={DemoLocation} />
         </Routes>
       </div>
     </UserContext.Provider>
