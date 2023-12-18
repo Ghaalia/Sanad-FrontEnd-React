@@ -5,6 +5,7 @@ import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
+import { getEventById } from "../api/event";
 
 const EventDetails = () => {
   const { eventId } = useParams();

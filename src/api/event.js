@@ -15,9 +15,7 @@ const getAllEvents = async () => {
   return res.data;
 };
 
-=
 const getEventById = async (eventId) => {
-
   const res = await instance.get(`/api/event/${eventId}`);
   return res.data;
 };
