@@ -18,9 +18,6 @@ const Location = () => {
     googleMapsApiKey: "AIzaSyCwZtkvVKSzedzs4SKvEamWEVG6q-Zdh8o",
   });
 
-  const [map, setMap] = useState(null);
-  const [markerPosition, setMarkerPosition] = useState(center);
-
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
@@ -31,8 +28,10 @@ const Location = () => {
     setMap(null);
   }, []);
 
+  const [map, setMap] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState(center);
+
   const onMapClick = (e) => {
-    console.log(e);
     const clickedLatLng = {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
