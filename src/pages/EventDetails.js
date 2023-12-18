@@ -1,28 +1,80 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 import CreateEventSearchBar from "../components/create-event/CreateEventSearchBar";
 import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
-import AcceptedUser from "../components/event-details/AcceptedUserItem";
-import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getEventById } from "../api/event";
 import { getParticipationsById } from "../api/participation";
+import { getEventById } from "../api/event";
 
 const EventDetails = () => {
   const { eventId } = useParams();
 
+  //geteventbyID
+
+  const { data: event, isLoading: isLoading } = useQuery({
+    queryKey: ["event"],
+    queryFn: () => getOneEvent(eventId),
+  });
+
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => getAllUsers(),
+  });
+  //console.log(users);
+
+  // const { data: par1 } = useQuery({
+  //   queryKey: ["par1"],
+  //   queryFn: () => getParticipationsByUser(userId),
+  // });
+  // console.log("par1");
+  // console.log(par1);
+
+  // const parId = event?.volunteer_list[0] || [];
+  // console.log(event?.volunteer_list);
+  // console.log("parId is :");
+  // console.log(parId);
+
+  // const { data: participationObj } = useQuery({
+  //   queryKey: ["participationObj"],
+  //   queryFn: () => getParticipationsbyId(parId),
+  // });
+
+  // const { data: participationObj } = useQuery(
+  //   ["participationObj", { parId }], // Set a unique query key based on parId
+  //   () => getParticipationsbyId({ parId }), // Provide the query function
+  //   {
+  //     enabled: !!parId, // Enable the query only when parId is truthy
+  //   }
+  // );
+
+  // console.log("participationObj");
+  // console.log(participationObj?.user);
+  // console.log(participationObj?.status);
+
+  //console.log("event?.volunteer_list[0]");
+  //console.log(event?.volunteer_list[0]);
+  //console.log(event?.volunteer_list);
+  // console.log("event?.volunteer_list[1]");
+  // console.log(event?.volunteer_list[1]);
+  //  const c = await event?.map((el, index) => (
+  //     <RequestsUserItem event={el} key={`participation-${index}`} />
+  //   ));
+
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
 
-  const [acceptedUserShow, setAcceptedUserShow] = useState(false);
-  const [rejectedUserShow, setRejectedUserShow] = useState(false);
-  const [showRejectionReason, setShowRejectionReason] = useState(false);
+  const [participationId, setParticipationId] = useState(null);
 
-  const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  // Example useQuery for fetching event details
+  const { data: currentEvent } = useQuery(
+    ["event", currentEventId],
+    fetchEventById
+  );
 
   const { data: eventById, isLoading: isLoading1 } = useQuery({
     queryKey: ["eventById"],
@@ -49,30 +101,22 @@ const EventDetails = () => {
     setAccepted(false);
   };
 
-  const handleRequestsClick = () => {
-    setAccepted(true);
-    setRequests(false);
-  };
-
-  //open and close user profile modal
+  // Handle opening and closing user profile modal
   const handleCloseModal = () => {
     setShowUserProfileModal(false);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (participationId) => {
     setShowUserProfileModal(true);
+    setParticipationId(participationId);
   };
 
-  //User Profile (accept / reject)
   const handleRejectedUser = () => {
-    setRejectedUserShow(true);
-    setAcceptedUserShow(false);
-    setShowRejectionReason(true);
+    // Your logic for handling rejected user
   };
 
   const handleAcceptedUser = () => {
-    setAcceptedUserShow(true);
-    setRejectedUserShow(false);
+    // Your logic for handling accepted user
   };
 
   return (
