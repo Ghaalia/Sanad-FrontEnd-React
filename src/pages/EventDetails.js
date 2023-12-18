@@ -7,13 +7,67 @@ import AcceptedUser from "../components/event-details/AcceptedUserItem";
 import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
 import UserProfileModal from "../components/users/UserProfileModal";
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getEventById } from "../api/event";
 import { getParticipationsById } from "../api/participation";
 
+
 const EventDetails = () => {
   const { eventId } = useParams();
+
+
+  //geteventbyID
+
+  const { data: event, isLoading: isLoading } = useQuery({
+    queryKey: ["event"],
+    queryFn: () => getOneEvent(eventId),
+  });
+
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => getAllUsers(),
+  });
+  //console.log(users);
+
+  // const { data: par1 } = useQuery({
+  //   queryKey: ["par1"],
+  //   queryFn: () => getParticipationsByUser(userId),
+  // });
+  // console.log("par1");
+  // console.log(par1);
+
+  // const parId = event?.volunteer_list[0] || [];
+  // console.log(event?.volunteer_list);
+  // console.log("parId is :");
+  // console.log(parId);
+
+  // const { data: participationObj } = useQuery({
+  //   queryKey: ["participationObj"],
+  //   queryFn: () => getParticipationsbyId(parId),
+  // });
+
+  // const { data: participationObj } = useQuery(
+  //   ["participationObj", { parId }], // Set a unique query key based on parId
+  //   () => getParticipationsbyId({ parId }), // Provide the query function
+  //   {
+  //     enabled: !!parId, // Enable the query only when parId is truthy
+  //   }
+  // );
+
+  // console.log("participationObj");
+  // console.log(participationObj?.user);
+  // console.log(participationObj?.status);
+
+  //console.log("event?.volunteer_list[0]");
+  //console.log(event?.volunteer_list[0]);
+  //console.log(event?.volunteer_list);
+  // console.log("event?.volunteer_list[1]");
+  // console.log(event?.volunteer_list[1]);
+  //  const c = await event?.map((el, index) => (
+  //     <RequestsUserItem event={el} key={`participation-${index}`} />
+  //   ));
 
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
@@ -75,6 +129,13 @@ const EventDetails = () => {
     setRejectedUserShow(false);
   };
 
+  // console.log("volunteer listttttt num 1");
+  // console.log(event?.volunteer_list[0]?._id?.status);
+  // //undefind
+  // const c = event?.volunteer_list.map((participation) => (
+  //   <RequestsUserItem id={_id} key={`event-${index}`} />
+  // ));
+
   return (
     <div className="min-w-screen h-screen bg-NavyMain lg:px-[100px]">
       <div className="h-[100vh] mt-[80px] lg:grid lg:grid-cols-2 flex flex-col">
@@ -98,6 +159,7 @@ const EventDetails = () => {
           {requests ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+
                 {listOfParticipations?.map((el) => (
                   <RequestsUserItem
                     key={el._id}
@@ -105,6 +167,28 @@ const EventDetails = () => {
                     handleOpenModal={handleOpenModal}
                   />
                 ))}
+
+                {event?.volunteer_list?.map((el, index) => (
+                  <RequestsUserItem
+                    eventId={eventId}
+                    participation={el}
+                    key={`event-${index}`}
+                  />
+                ))}
+
+                {/*     event={el} key={`organization-${index}`}
+                 <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} />
+                <RequestsUserItem handleOpenModal={handleOpenModal} /> */}
+
               </div>
             </div>
           ) : (

@@ -34,7 +34,18 @@ const userBlockById = async (userId) => {
   return res.data;
 };
 
+// const getParticipationsbyId = async (parId) => {
+//   const res = await instance.get(`/participations/user`, parId);
+//   return res.data;
+// }; if parId from body
+
+const getParticipationsbyId = async (eventId, parId) => {
+  const res = await instance.get(`/current_event_details/${eventId}`, parId);
+  return res.data;
+};
+
 export {
+  getParticipationsbyId,
   getAllUsers,
   createUser,
   updateIngedient,
