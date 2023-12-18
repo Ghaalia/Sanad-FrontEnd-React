@@ -64,7 +64,7 @@ const Register = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center ">
       <div className="flex w-full h-full flex-col lg:flex-row md:flex-col ">
-        <div className="flex flex-col justify-between h-1/2 lg:w-1/2 md:w-full lg:min-h-screen bg-NavyMain pt-[80px] ">
+        <div className="flex flex-col justify-between h-1/2 lg:w-1/2 md:w-full lg:min-h-screen bg-NavyMain ">
           <div className="w-full flex justify-end">
             <img className="h-[100px] md:h-full" src={topHand} alt="SVG" />
           </div>
@@ -90,11 +90,12 @@ const Register = () => {
               </span>
             </Link>
           </div>
-          <div className="h-fit flex justify-start items-end">
+          <div className="h-fit flex justify-start items-end pt-3">
             <img className="h-[100px] md:h-full " src={bottomHand} alt="SVG" />
           </div>
         </div>
-        <div className="h-1/2 lg:pt-[80px] overflow-y-scroll overflow-hidden flex lg:justify-center lg:items-center px-[50px] lg:h-screen lg:w-1/2 lg:px-[180px]">
+
+        <div className="h-1/2 lg:pt-[180px] lg:pb-[180px] flex lg:justify-center lg:items-center px-[50px] lg:h-screen lg:w-1/2 lg:px-[180px]">
           <form
             onSubmit={handleSubmit}
             className="w-full flex flex-col py-[40px] pt-[40px] gap-4 justify-center items-center"
@@ -238,12 +239,10 @@ const Register = () => {
                 </button>
               )}
             </div>
-            <h1 className="text-center text-red-700 p-5">
-              {/* {error?.message} */}
-            </h1>
+
             <div className="flex flex-row gap-4 justify-center">
               <div className="text-NavyMain">Already a Partner?</div>
-              <Link className="hover:font-bold text-RedMain" to="/login">
+              <Link className="hover:font-bold text-RedMain" to="/">
                 Login
               </Link>
             </div>

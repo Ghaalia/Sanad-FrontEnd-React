@@ -19,4 +19,16 @@ const OrgRejectById = async (orgId) => {
   const res = await instance.put(`/api/org/reject`, orgId);
   return res.data;
 };
-export { getProfile, getAllOrganizations, OrgApproveById, OrgRejectById };
+
+const getOrganizationsById = async (orgId) => {
+  const res = await instance.get(`/api/org/${orgId}`);
+  return res.data;
+};
+
+export {
+  getProfile,
+  getAllOrganizations,
+  OrgApproveById,
+  OrgRejectById,
+  getOrganizationsById,
+};

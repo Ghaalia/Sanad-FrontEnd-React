@@ -1,7 +1,22 @@
 import React from "react";
 import { PauseCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getParticipationsbyId } from "../../api/users";
 
-const RequestsUserItem = ({ handleOpenModal }) => {
+
+const RequestsUserItem = ({ handleOpenModal, participation }) => {
+  console.log(participation);
+
+
+const RequestsUserItem = ({ participation, eventId, handleOpenModal }) => {
+  const { data: participationObj } = useQuery({
+    queryKey: ["participationObj", eventId, participation],
+    queryFn: () => getParticipationsbyId(eventId, participation),
+  });
+
+  console.log(participationObj);
+  //get profile user
+
   return (
     <div
       onClick={handleOpenModal}
@@ -11,7 +26,9 @@ const RequestsUserItem = ({ handleOpenModal }) => {
         User Profile
       </div>
       <div className="flex w-full flex-col justify-around">
-        <div className="text-white font-semibold text-[18px]">User Name</div>
+        <div className="text-white font-semibold text-[18px]">
+          {participation?.user?.first_name}
+        </div>
         <div className="flex flex-col md:justify-between">
           <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
             <span className="flex items-center gap-1 justify-between">
