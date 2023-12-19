@@ -3,7 +3,7 @@ import CreateEventSearchBar from "../components/create-event/CreateEventSearchBa
 import DraftEventDetails from "../components/create-event/DraftEventDetails";
 import RequestsAndAccepted from "../components/event-details/RequestsAndAccepted";
 import RequestsUserItem from "../components/event-details/RequestsUseritem";
-import UserProfileModal from "../components/users/UserProfileModal";
+import HandelParticepantModal from "../components/users/HandelParticepantModal";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getOneEvent } from "../api/event";
@@ -16,17 +16,22 @@ const EventDetails = () => {
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
   const [requests, setRequests] = useState(true);
   const [accepted, setAccepted] = useState(false);
-  const [participationId, setParticipationId] = useState(null);
+  const [participation, setParticipation] = useState(null);
 
   const { data: users } = useQuery({
     queryKey: ["users"],
     queryFn: () => getAllUsers(),
   });
 
-  const { data: eventById, isLoading: isLoading1 } = useQuery({
+  const {
+    data: eventById,
+    isLoading: isLoading1,
+    refetch,
+  } = useQuery({
     queryKey: ["eventById"],
     queryFn: () => getOneEvent(eventId),
   });
+
   const listOfParticipations = eventById?.volunteer_list;
 
   // console.log(listOfParticipations);
@@ -48,7 +53,7 @@ const EventDetails = () => {
 
   const handleOpenModal = (participationId) => {
     setShowUserProfileModal(true);
-    setParticipationId(participationId);
+    // setParticipationId(participationId);
   };
 
   const handleRejectedUser = () => {
@@ -74,6 +79,7 @@ const EventDetails = () => {
           </h1>
           <CreateEventSearchBar />
           <RequestsAndAccepted
+            refetch={refetch}
             requests={requests}
             accepted={accepted}
             handleAcceptedClick={handleAcceptedClick}
@@ -86,9 +92,11 @@ const EventDetails = () => {
                   ?.filter((el) => el.status == "Pending")
                   ?.map((el) => (
                     <RequestsUserItem
+                      refetch={refetch}
                       key={el._id}
-                      participation={el}
+                      Requetsparticipation={el}
                       handleOpenModal={handleOpenModal}
+                      setParticipation={setParticipation}
                     />
                   ))}
               </div>
@@ -100,9 +108,12 @@ const EventDetails = () => {
                   ?.filter((el) => el.status == "Accepted")
                   ?.map((el) => (
                     <AcceptedUserItem
+                      refetch={refetch}
                       key={el._id}
-                      participation={el}
+                      Acceptedparticipation={el}
                       handleOpenModal={handleOpenModal}
+                      handleCloseModal={handleCloseModal}
+                      setParticipation={setParticipation}
                     />
                   ))}
               </div>
@@ -110,9 +121,11 @@ const EventDetails = () => {
           )}
         </div>
       </div>
-      <UserProfileModal
+      <HandelParticepantModal
+        refetch={refetch}
+        participation={participation}
         showUserProfileModal={showUserProfileModal}
-        handleAcceptedUser={handleAcceptedUser}
+        //handleAcceptedUser={handleAcceptedUser}
         // acceptedUserShow={acceptedUserShow}
         // rejectedUserShow={rejectedUserShow}
         handleCloseModal={handleCloseModal}
