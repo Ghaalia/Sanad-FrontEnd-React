@@ -1,17 +1,46 @@
 import React from "react";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Circle } from "lucide-react";
+import { parAttended } from "../../api/participation";
+import { useMutation } from "@tanstack/react-query";
 
-const AcceptedUserItem = ({ handleOpenModal }) => {
+const AcceptedUserItem = ({
+  refetch,
+  setParticipation,
+  handleOpenModal,
+  Acceptedparticipation,
+  handleCloseModal,
+  HandelParticepantModal,
+  showUserProfileModal,
+  handleRejectedUser,
+}) => {
+  setParticipation(Acceptedparticipation);
+
+  const { mutate: attendance } = useMutation({
+    mutationKey: ["attendace"],
+    mutationFn: () => parAttended(Acceptedparticipation),
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      console.log(error.response.data.message);
+    },
+  });
+
   return (
-    <div
-      onClick={handleOpenModal}
-      className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black"
-    >
-      <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
+    <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black">
+      <div
+        onClick={handleOpenModal}
+        className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center "
+      >
         User Profile
       </div>
-      <div className="flex w-full flex-col justify-around">
-        <div className="text-white font-semibold text-[18px]">User Name</div>
+      <div
+        onClick={handleOpenModal}
+        className="flex w-full flex-col justify-around"
+      >
+        <div className="text-white font-semibold text-[18px]">
+          {Acceptedparticipation?.user?.first_name}
+        </div>
         <div className="flex flex-col md:justify-between">
           <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
             <span className="flex items-center gap-1 justify-between">
@@ -27,8 +56,17 @@ const AcceptedUserItem = ({ handleOpenModal }) => {
           </div>
         </div>
       </div>
-      <div className=" w-fit h-full px-4 flex items-center">
-        <CheckCircle size={28} strokeWidth={2} className="text-white" />
+      <div
+        onClick={() => {
+          attendance();
+        }}
+        className=" w-fit h-full px-4 flex items-center"
+      >
+        {Acceptedparticipation?.attended == false ? (
+          <Circle size={28} strokeWidth={2} color={"white"} />
+        ) : (
+          <CheckCircle size={28} strokeWidth={2} color={"white"} />
+        )}
       </div>
     </div>
   );

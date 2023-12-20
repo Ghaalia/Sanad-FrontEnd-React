@@ -2,6 +2,7 @@ import { CheckCircle2, PauseCircle } from "lucide-react";
 import React from "react";
 
 const RequestsAndAccepted = ({
+  refetch,
   requests,
   accepted,
   handleRequestsClick,
