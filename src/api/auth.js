@@ -8,7 +8,6 @@ const login = async (userInfo) => {
 };
 
 const register = async (userInfo) => {
-  // console.log(userInfo);
   const formData = new FormData();
 
   for (let key in userInfo) {

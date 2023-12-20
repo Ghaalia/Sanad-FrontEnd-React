@@ -1,10 +1,20 @@
-import { Undo2, CircleDot } from "lucide-react";
+import { Undo2, CircleDot, ArrowRight } from "lucide-react";
 import React from "react";
 import { BASE_URL } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const DeletedOrgItem = ({ organization }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/org_details/${organization?._id}`);
+  };
+
   return (
-    <div className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
+    <div
+      onClick={handleClick}
+      className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black"
+    >
       <div className="bg-white bg-opacity-30 text-NavyMain text-opacity-30 w-[80px] h-[80px] text-sm p-6 flex justify-center items-center text-center ">
         <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
           <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />
@@ -49,7 +59,7 @@ const DeletedOrgItem = ({ organization }) => {
         </div>
       </div>
       <div className=" w-fit h-full px-2 flex items-center">
-        <Undo2 size={28} strokeWidth={2} className="text-white" />
+        <ArrowRight size={28} strokeWidth={2} className="text-white" />
       </div>
     </div>
   );

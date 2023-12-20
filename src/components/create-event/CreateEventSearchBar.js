@@ -8,7 +8,7 @@ const CreateEventSearchBar = () => {
         type="text"
         id="search"
         className=" text-white w-full h-full bg-transparent px-4 focus:outline-none "
-        placeholder="Search My Events"
+        placeholder="Search Events"
         // onChange={handleSearch}
       />
       <span>

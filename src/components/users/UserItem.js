@@ -35,6 +35,7 @@ const UserItem = ({ user, setUserById }) => {
               ? `${BASE_URL}/${user.image}`
               : require("../../assets/all-users/profileimg.png")
           }
+          // src={user?.image ?? `${BASE_URL}/${user.image}`}
           // src={user?.image || ""}
           // src={`${BASE_URL}${user.image}`}
           alt="UserProfile"

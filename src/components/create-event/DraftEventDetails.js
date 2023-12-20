@@ -12,10 +12,12 @@ import {
 import EventDemoPhoto from "../../assets/event-details/event-image-demo1.svg";
 import mapDemo from "../../assets/create_event/map-big.png";
 
-const DraftEventDetails = () => {
+const DraftEventDetails = ({ eventById }) => {
   return (
     <div className="h-full w-full  overflow-y-scroll overflow-hidden no-scrollbar flex flex-col md:justify-start md:items-center lg:h-screen md:w-full">
-      <h1 className="text-NavyMain font-semibold text-2xl">Event Name</h1>
+      <h1 className="text-NavyMain font-semibold text-2xl">
+        {eventById?.event_title}
+      </h1>
 
       <div className="w-full flex flex-col py-[40px] pt-[40px] gap-4 justify-center items-center">
         <div className="w-full flex flex-col gap-6">
