@@ -13,10 +13,12 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setPasswordMatchError("");
     if (e.target.name === "logo") {
       setUserInfo({ ...userInfo, [e.target.name]: e.target.files[0] });
     } else if (e.target.name === "license") {
@@ -47,8 +49,11 @@ const Register = () => {
       setPasswordMatchError(true);
       return;
     }
-
     setPasswordMatchError(false);
+
+    // Clear success message when the user submits the form again
+    setSuccessMessage("");
+
     register_mutate();
   };
 
@@ -56,8 +61,9 @@ const Register = () => {
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
     onSuccess: () => {
-      navigate("/");
+      // navigate("/");
       setUser(checktoken());
+      setSuccessMessage("Your account is pending approval.");
     },
   });
 
@@ -225,6 +231,11 @@ const Register = () => {
                 required
               />
             </div>
+            {successMessage && (
+              <div className="w-full flex justify-center pt-4">
+                <div className="text-green-500">{successMessage}</div>
+              </div>
+            )}
             <div className="w-full flex justify-center pt-4">
               {isPending ? (
                 <button className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain">

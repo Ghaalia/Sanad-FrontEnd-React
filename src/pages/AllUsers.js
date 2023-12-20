@@ -1,12 +1,14 @@
 import React from "react";
 import { BookCheck, BookX } from "lucide-react";
 import { useState } from "react";
-import UsersSearchBar from "../components/users/UsersSearchBar";
+import UsersSearchBar from "../components/users/SignedUsersSearchBar";
 import UserItem from "../components/users/UserItem";
 import DeletedUserItem from "../components/users/DeletedUserItem";
 import UserProfileModal from "../components/users/UserProfileModal";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../api/users";
+import SignedUsersSearchBar from "../components/users/SignedUsersSearchBar";
+import BlockedUsersSearchBar from "../components/users/BlockedUsersSearchBar";
 
 const AllUsers = () => {
   const [userById, setUserById] = useState(null);
@@ -16,8 +18,14 @@ const AllUsers = () => {
   const [rejectedUserShow, setRejectedUserShow] = useState(false);
   const [showRejectionReason, setShowRejectionReason] = useState(false);
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  const [signedSearchQuery, setSignedSearchQuery] = useState("");
+  const [bannedSearchQuery, setBannedSearchQuery] = useState("");
 
-  const { data: users, isLoading: isLoading } = useQuery({
+  const {
+    data: users,
+    isLoading: isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: () => getAllUsers(),
   });
@@ -27,12 +35,14 @@ const AllUsers = () => {
   const handleAcceptClick = () => {
     setAcceptClicked(true);
     setDeletedClicked(false);
+    setSignedSearchQuery("");
   };
 
   //Handle banned users
   const handleDeletedClick = () => {
     setDeletedClicked(true);
     setAcceptClicked(false);
+    setBannedSearchQuery("");
   };
 
   //User Profile Modal (accept / reject) buttons
@@ -57,6 +67,28 @@ const AllUsers = () => {
   const handleOpenModal = () => {
     setShowUserProfileModal(true);
   };
+
+  const handleSignedSearch = (query) => {
+    setSignedSearchQuery(query);
+  };
+
+  const handleBannedSearch = (query) => {
+    setBannedSearchQuery(query);
+  };
+
+  const filteredSignedUsers = users.filter(
+    (user) =>
+      (user.first_name || user.last_name)
+        .toLowerCase()
+        .includes(signedSearchQuery.toLowerCase()) && user.isBlocked === "false"
+  );
+
+  const filteredBannedUsers = users.filter(
+    (user) =>
+      (user.first_name || user.last_name)
+        .toLowerCase()
+        .includes(bannedSearchQuery.toLowerCase()) && user.isBlocked === "true"
+  );
 
   return (
     <div className="bg-NavyMain min-h-screen pt-[80px] md:px-[120px] flex justify-center">
@@ -99,44 +131,43 @@ const AllUsers = () => {
               </span>
             </div>
           </div>
-          <UsersSearchBar />
+          {acceptClicked ? (
+            <SignedUsersSearchBar onSearch={handleSignedSearch} />
+          ) : (
+            <BlockedUsersSearchBar onSearch={handleBannedSearch} />
+          )}
         </div>
         {acceptClicked ? (
           <div
             onClick={handleOpenModal}
-            className="w-full grid grid-cols-1 md:grid-cols-3 gap-3"
+            className="w-full grid grid-row-1 md:grid-row-3 gap-3 overflow-y-auto max-h-[450px] scroll-y-overflow no-scrollbar"
           >
-            {users
-              ?.filter((el) => el.isBlocked === "false")
-              .map((el, index) => (
-                <UserItem
-                  user={el}
-                  key={`uesers-${index}`}
-                  setUserById={setUserById}
-                />
-              ))}
+            {filteredSignedUsers.map((el, index) => (
+              <UserItem
+                user={el}
+                key={`uesers-${index}`}
+                setUserById={setUserById}
+              />
+            ))}
           </div>
         ) : (
           <div
             onClick={handleOpenModal}
-            className="w-full grid grid-cols-1 md:grid-cols-3 gap-3"
+            className="w-full grid grid-row-1 md:grid-row-3 gap-3 overflow-y-auto max-h-[450px] scroll-y-overflow no-scrollbar"
           >
-            {users
-              ?.filter((el) => el.isBlocked === "true")
-              .map((el, index) => (
-                <DeletedUserItem
-                  user={el}
-                  key={`uesers-${index}`}
-                  setUserById={setUserById}
-                />
-              ))}
-
-            {/* <DeletedUserItem /> */}
+            {filteredBannedUsers.map((el, index) => (
+              <DeletedUserItem
+                user={el}
+                key={`uesers-${index}`}
+                setUserById={setUserById}
+              />
+            ))}
           </div>
         )}
       </div>
 
       <UserProfileModal
+        refetch={refetch}
         userById={userById}
         showUserProfileModal={showUserProfileModal}
         handleAcceptedUser={handleAcceptedUser}

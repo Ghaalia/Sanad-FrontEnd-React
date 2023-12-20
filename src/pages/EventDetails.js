@@ -87,7 +87,7 @@ const EventDetails = () => {
           />
           {requests ? (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
                 {listOfParticipations
                   ?.filter((el) => el.status == "Pending")
                   ?.map((el) => (
@@ -103,7 +103,7 @@ const EventDetails = () => {
             </div>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
                 {listOfParticipations
                   ?.filter((el) => el.status == "Accepted")
                   ?.map((el) => (

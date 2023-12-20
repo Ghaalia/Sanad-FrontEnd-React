@@ -19,7 +19,7 @@ const TotalEventsAndUsersFilter = ({
         onClick={handleEventsClick}
       >
         <span className={`text-[15px]  ${events ? "white" : "#4D497D"}`}>
-          {orgById?.events.length}
+          {orgById?.events?.length}
         </span>
         Events
         <span>

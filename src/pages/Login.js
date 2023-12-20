@@ -12,25 +12,27 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState({});
   const { user, setUser } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrorMessage("");
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const { mutate: login_mutate, isPending } = useMutation({
+  const {
+    mutate: login_mutate,
+    isPending,
+    isError,
+    error,
+  } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
     onSuccess: () => {
-      // if (user.isAdmin) navigate("/requests"); // admin
-      // else navigate("/profile"); // org
-
-      // setUser(checktoken());
-
       const updatedUser = checktoken();
       setUser(updatedUser);
 
@@ -40,12 +42,19 @@ const Login = () => {
         navigate("/profile"); // org
       }
     },
+    onError: (error) => {
+      // Check for specific error messages and update state accordingly
+      if (error.response.data.message == "Email or Password is wrong") {
+        setErrorMessage("Email or Password is incorrect.");
+      } else if (
+        error.response.data.message == "Account is waiting for approval"
+      ) {
+        setErrorMessage("Your account is pending approval.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    },
   });
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   login_mutate();
-  // };
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center ">
@@ -96,9 +105,6 @@ const Login = () => {
                 Email
               </label>
               <div className="relative">
-                {/* <span className="absolute inset-y-0 left-2 font-medium flex items-center pl-2 text-RedMain">
-                  +965
-                </span> */}
                 <input
                   placeholder="Enter Your Email"
                   type="text"
@@ -137,6 +143,11 @@ const Login = () => {
                 )}
               </span>
             </div>
+            {errorMessage && (
+              <div className="w-full flex justify-center pt-4">
+                <div className="text-red-500">{errorMessage}</div>
+              </div>
+            )}
             {isPending ? (
               <div className="w-full flex justify-center pt-4">
                 <button className="text-white w-full text-center rounded-full font-bold text-1xl p-2 h-[50px] bg-NavyMain hover:bg-RedMain">
@@ -155,9 +166,6 @@ const Login = () => {
               </div>
             )}
 
-            <h1 className="text-center text-red-700 p-5">
-              {/* {error?.message} */}
-            </h1>
             <div className="flex flex-row gap-4 justify-center">
               <div className="text-NavyMain">Not a Partner?</div>
               <Link className="hover:font-bold text-RedMain" to="/register">

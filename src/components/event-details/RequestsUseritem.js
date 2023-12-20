@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getParticipationsbyId } from "../../api/users";
 import { BASE_URL } from "../../api";
 
+<<<<<<< HEAD
 const RequestsUserItem = ({
   refetch,
 
@@ -14,10 +15,13 @@ const RequestsUserItem = ({
   console.log(Requetsparticipation);
 
   setParticipation(Requetsparticipation);
+=======
+const RequestsUserItem = ({ handleOpenModal, participation }) => {
+>>>>>>> 18dec
   return (
     <div
       onClick={handleOpenModal}
-      className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden border border-1-white cursor-pointer"
+      className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black"
     >
       <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
         <img

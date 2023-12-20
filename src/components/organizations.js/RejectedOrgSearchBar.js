@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import React from "react";
 
-const AcceptedOrgSearchBar = ({ onSearch }) => {
+const RejectedOrgSearchBar = ({ onSearch }) => {
   const handleSearch = (event) => {
     const query = event.target.value;
     onSearch(query);
@@ -13,7 +13,7 @@ const AcceptedOrgSearchBar = ({ onSearch }) => {
         type="text"
         id="search"
         className=" text-white w-full h-full bg-transparent px-4 focus:outline-none "
-        placeholder="Search Accepted Partners"
+        placeholder="Search Rejected Partners"
         onChange={handleSearch}
       />
       <span>
@@ -28,4 +28,4 @@ const AcceptedOrgSearchBar = ({ onSearch }) => {
   );
 };
 
-export default AcceptedOrgSearchBar;
+export default RejectedOrgSearchBar;
