@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import RequestCompanyItem from "../components/requests/RequestCompanyItem";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllOrganizations } from "../api/organization";
 import RequestForm from "../components/requests/RequestForm";
@@ -15,11 +14,16 @@ import { BASE_URL } from "../api";
 const NewRequests = () => {
   const [orgById, setOrgById] = useState(null);
   const [openForm, setOpenForm] = useState(false);
-  const [showAcceptModal, setShowAcceptModal] = useState();
-  const [showRejectionModal, setShowRejectionModal] = useState();
+  const [showAcceptModal, setShowAcceptModal] = useState(false);
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: organizations, isLoading: isLoading } = useQuery({
+  const {
+    data: organizations,
+    isLoading: isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["organizations"],
     queryFn: () => getAllOrganizations(),
   });
@@ -34,25 +38,29 @@ const NewRequests = () => {
     setShowImageModal(false);
   };
 
-  //Handle the Accept modal : OFF
   const handleCloseModal = () => {
     setShowAcceptModal(false);
   };
 
-  //Handle the Accept modal : ON
   const handleOpenModal = () => {
     setShowAcceptModal(true);
   };
 
-  //Handle the Rejection  modal : OFF
   const handleCloseRejectionModal = () => {
     setShowRejectionModal(false);
   };
 
-  //Handle the Rejection modal : ON
   const handleOpenRejectionModal = () => {
     setShowRejectionModal(true);
   };
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredOrganizations = organizations.filter((org) =>
+    org.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-w-screen min-h-screen bg-NavyMain md:px-[100px]">
@@ -61,13 +69,13 @@ const NewRequests = () => {
           <h1 className="text-white font-semibold text-2xl">
             Organizations Requests
           </h1>
-          <div className="text-white w-full h-[40px] md:h-[50px] flex items-center border bg-white bg-opacity-30 p-2 rounded-full">
+          <div className="text-white w-full h-[40px] md:h-[50px] flex items-center bg-white bg-opacity-30 p-2 rounded-full shadow-sm shadow-black ">
             <input
               type="text"
               id="search"
-              className=" text-white w-full h-full bg-transparent px-4 focus:outline-none "
+              className="text-white w-full h-full bg-transparent px-4 focus:outline-none"
               placeholder="Search for Organizations"
-              // onChange={handleSearch}
+              onChange={handleSearch}
             />
             <span>
               <Search
@@ -78,11 +86,11 @@ const NewRequests = () => {
               />
             </span>
           </div>
-          <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-            <div className="flex flex-col gap-3 ">
-              {organizations
-                ?.filter((el) => el.isAccepted === "Pending")
-                ?.map((el, index) => (
+          <div className="w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
+            <div className="flex flex-col gap-3">
+              {filteredOrganizations
+                .filter((el) => el.isAccepted === "Pending")
+                .map((el, index) => (
                   <RequestCompanyItem
                     organization={el}
                     setOrgById={setOrgById}
@@ -117,6 +125,7 @@ const NewRequests = () => {
         showAcceptModal={showAcceptModal}
         handleCloseModal={handleCloseModal}
         orgById={orgById}
+        refetch={refetch}
       />
 
       <RejectModal
@@ -124,6 +133,7 @@ const NewRequests = () => {
         showRejectionModal={showRejectionModal}
         handleCloseRejectionModal={handleCloseRejectionModal}
         orgById={orgById}
+        refetch={refetch}
       />
 
       {showImageModal && (

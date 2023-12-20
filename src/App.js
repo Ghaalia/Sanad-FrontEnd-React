@@ -17,6 +17,8 @@ import { checktoken } from "./api/auth";
 import NotFound from "./pages/NotFound";
 import ImageGallery from "./pages/ImageGallery";
 import Location from "./components/create-event/Location";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -27,28 +29,35 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <div className="App min-w-screen min-h-screen">
-        {user && <NavBar />}
-        <Routes>
-          <Route path="*" Component={NotFound} />
-          <Route path="/" Component={Login} />
-          <Route path="/register" Component={Register} />
-          <Route path="/profile" Component={Profile} />
-          <Route path="/requests" Component={NewRequests} />
-          <Route path="/all_organizations" Component={AllOrganizations} />
-          <Route path="/all_users" Component={AllUsers} />
-          <Route path="/all_events" Component={AllEvents} />
-          <Route path="/create_event" Component={CreateEvent} />
-          <Route
-            path="/current_event_details/:eventId"
-            Component={EventDetails}
-          />
-          <Route path="/org_details/:orgId" Component={OrgDetails} />
-          <Route path="/image-gallery" Component={ImageGallery} />
-          <Route path="/image-gallery/:userId" Component={ImageGallery} />
-          <Route path="/location" Component={Location} />
-        </Routes>
-      </div>
+      {user && (
+        <NavBar
+          style={{
+            zIndex: 100000,
+          }}
+        />
+      )}
+
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/requests" element={<NewRequests />} />
+        <Route path="/all_organizations" element={<AllOrganizations />} />
+        <Route path="/all_users" element={<AllUsers />} />
+        <Route path="/all_events" element={<AllEvents />} />
+        <Route path="/create_event" element={<CreateEvent />} />
+        <Route
+          path="/current_event_details/:eventId"
+          element={<EventDetails />}
+        />
+        <Route path="/org_details/:orgId" element={<OrgDetails />} />
+        <Route path="/image-gallery" element={<ImageGallery />} />
+        <Route path="/image-gallery/:userId" element={<ImageGallery />} />
+        <Route path="/location" element={<Location />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      <ToastContainer position="bottom-left" style={{ zIndex: 100000 }} />
     </UserContext.Provider>
   );
 }

@@ -1,23 +1,36 @@
 import React, { useContext } from "react";
-import { X, ThumbsDown, XSquare } from "lucide-react";
+import {
+  X,
+  ThumbsDown,
+  XSquare,
+  ThumbsUp,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { OrgRejectById } from "../../api/organization";
-import { useNavigate } from "react-router-dom";
-import UserContext from "../../context/UserContext";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RejectModal = ({
   showRejectionModal,
   handleCloseRejectionModal,
   orgById,
   setOpenForm,
+  refetch,
 }) => {
-  const { user, setUser } = useContext(UserContext);
   const { mutate: rejection, isPending } = useMutation({
     mutationKey: ["rejection"],
     mutationFn: () => OrgRejectById(orgById),
     onSuccess: () => {
       handleCloseRejectionModal();
-      setUser(true);
+      refetch();
+      toast.success("Rejection done successfully!", {
+        style: { background: "white", color: "NavyMain" },
+        progressStyle: { background: "#FF0000" },
+        icon: <XCircle size={24} strokeWidth={2} color="#FF0000" />,
+      });
     },
   });
   return (

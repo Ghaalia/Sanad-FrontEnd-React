@@ -63,14 +63,15 @@ const CreateEvent = () => {
             handleDraftsClick={handleDraftsClick}
           />
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
               {events?.map((el, index) => (
                 <DraftEventItem event={el} key={`organization-${index}`} />
               ))}
             </div>
           </div>
         </div>
-        <div className="h-full md:min-h-screen p-8 md:pt-[100px] ">
+
+        <div className="h-full md:min-h-screen p-8 md:pt-[80px] ">
           <div className="w-full h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white rounded-lg p-4">
             <CreateEventForm />
           </div>

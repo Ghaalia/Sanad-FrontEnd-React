@@ -1,15 +1,19 @@
 import React from "react";
 import { Search } from "lucide-react";
 
-const UsersSearchBar = () => {
+const BlockedUsersSearchBar = ({ onSearch }) => {
+  const handleSearch = (event) => {
+    const query = event.target.value;
+    onSearch(query);
+  };
   return (
-    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center border bg-white bg-opacity-30 p-2 rounded-full">
+    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center bg-white bg-opacity-30 p-2 rounded-full">
       <input
         type="text"
         id="search"
         className=" text-white w-full h-full bg-transparent px-4 focus:outline-none "
         placeholder="Search Users"
-        // onChange={handleSearch}
+        onChange={handleSearch}
       />
       <span>
         <Search
@@ -23,4 +27,4 @@ const UsersSearchBar = () => {
   );
 };
 
-export default UsersSearchBar;
+export default BlockedUsersSearchBar;

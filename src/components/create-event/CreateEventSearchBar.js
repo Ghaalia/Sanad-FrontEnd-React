@@ -3,7 +3,7 @@ import React from "react";
 
 const CreateEventSearchBar = () => {
   return (
-    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center border bg-white bg-opacity-30 p-2 rounded-full">
+    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center bg-white bg-opacity-30 p-2 rounded-full">
       <input
         type="text"
         id="search"

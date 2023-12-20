@@ -1,26 +1,27 @@
-import { CheckCircle2, PauseCircle } from "lucide-react";
+import { CalendarCheck, PersonStanding } from "lucide-react";
 import React from "react";
 
-const RequestsAndAccepted = ({
-  requests,
-  accepted,
-  handleRequestsClick,
-  handleAcceptedClick,
+const TotalEventsAndUsersFilterOrg = ({
+  orgById,
+  events,
+  volunteers,
+  handleEventsClick,
+  handleVolunteersClick,
 }) => {
   return (
-    <div className="w-full h-[50px] flex flex-row gap-4 md:w-full shadow-sm shadow-black  rounded-full p-1 items-center">
+    <div className="w-full h-[50px] flex flex-row gap-4 md:w-full shadow-sm shadow-black rounded-full p-1 items-center">
       <div
         className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
-          requests
+          events
             ? "bg-RedMain border-RedMain text-white"
             : "border-transparent text-[#4D497D]"
         }`}
-        onClick={handleAcceptedClick}
+        onClick={handleEventsClick}
       >
-        Requests
+        Events
         <span>
-          <PauseCircle
-            color={requests ? "white" : "#4D497D"}
+          <CalendarCheck
+            color={events ? "white" : "#4D497D"}
             size={20}
             strokeWidth={2}
           />
@@ -28,16 +29,16 @@ const RequestsAndAccepted = ({
       </div>
       <div
         className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
-          accepted
+          volunteers
             ? "bg-RedMain border-RedMain text-white"
             : "border-transparent text-[#4D497D]"
         }`}
-        onClick={handleRequestsClick}
+        onClick={handleVolunteersClick}
       >
-        Accepted
+        Volunteers
         <span>
-          <CheckCircle2
-            color={accepted ? "white" : "#4D497D"}
+          <PersonStanding
+            color={volunteers ? "white" : "#4D497D"}
             size={20}
             strokeWidth={2}
           />
@@ -47,4 +48,4 @@ const RequestsAndAccepted = ({
   );
 };
 
-export default RequestsAndAccepted;
+export default TotalEventsAndUsersFilterOrg;

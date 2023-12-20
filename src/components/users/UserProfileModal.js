@@ -1,67 +1,57 @@
 import React, { useState } from "react";
-import defaultProfilePhoto from "../../assets/all-users/default-profile.svg";
-import {
-  Mail,
-  Phone,
-  XCircle,
-  Check,
-  X,
-  CheckCheck,
-  Ban,
-  Undo2,
-} from "lucide-react";
 import { BASE_URL } from "../../api";
 import AgeCalculation from "./AgeCalculation";
 import { useMutation } from "@tanstack/react-query";
-import { userBlockById } from "../../api/users";
+import { userBlockById, userUnBlockedById } from "../../api/users";
+import { Ban, Phone, Mail, Undo2, X, CheckCircle } from "lucide-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserProfileModal = ({
   userById,
   showUserProfileModal,
-  handleAcceptedUser,
-  handleRejectedUser,
-  acceptedUserShow,
-  rejectedUserShow,
   handleCloseModal,
+  refetch,
 }) => {
+  const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
   const age = AgeCalculation(userById?.dob);
-  const [isButtonClicked, setButtonClicked] = useState(false);
 
-  const handleButtonClick = () => {
-    setButtonClicked(!isButtonClicked);
-  };
-
-  const { mutate: block, isPending } = useMutation({
+  const { mutate: block } = useMutation({
     mutationKey: ["block"],
     mutationFn: () => userBlockById(userById),
     onSuccess: () => {
-      //Close modal
-    },
-    onError: (error) => {
-      console.log(error.response.data.message);
+      handleCloseModal();
+      refetch();
+      toast.success("Block done successfully!", {
+        style: { background: "white", color: "NavyMain" },
+        progressStyle: { background: "#FF0000" },
+        icon: <Ban size={24} strokeWidth={2} color="#FF0000" />,
+      });
     },
   });
-  // const profielImage = async (user) => {
-  //   if (!userById?.image.includes("http")) {
-  //     return `${BASE_URL}${userById?.image}`;
-  //   } else {
-  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
-  //   }
-  // };
-  // const profileImage = async (userById) => {
-  //   if (!(userById?.image && userById?.image.includes("http"))) {
-  //     return `${BASE_URL}${userById?.image}`;
-  //   } else {
-  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
-  //   }
-  // };
-  // const profileImage = async (userById) => {
-  //   if (!(userById?.image && userById?.image.includes("http"))) {
-  //     return `${BASE_URL}${userById?.image}`;
-  //   } else {
-  //     return "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg";
-  //   }
-  // };
+
+  const { mutate: Unblock } = useMutation({
+    mutationKey: ["Unblock"],
+    mutationFn: () => userUnBlockedById(userById),
+    onSuccess: () => {
+      handleCloseModal();
+      refetch();
+      toast.success("UnBlock done successfully!", {
+        style: { background: "white", color: "NavyMain" },
+        progressStyle: { background: "#4CAF50" },
+        icon: <CheckCircle size={24} strokeWidth={2} color="#4CAF50" />,
+      });
+    },
+  });
+
+  const openConfirmationModal = () => {
+    setConfirmationModalOpen(true);
+  };
+
+  const closeConfirmationModal = () => {
+    setConfirmationModalOpen(false);
+  };
 
   return (
     <div>
@@ -82,24 +72,12 @@ const UserProfileModal = ({
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
                   className="w-full  "
-                  // src={
-                  //   `${BASE_URL}/${userById?.image}` ||
-                  //   "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
-                  // }
-                  // src={
-                  //   userById?.image
-                  //     ? `${BASE_URL}/${userById.image}`
-                  //     : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
-                  // }
                   src={
                     userById?.image
                       ? `${BASE_URL}/${userById.image}`
                       : require(".././../assets/all-users/profileimg.png")
                   }
-                  // src={userById?.image}
-                  // src={profileImage}
-                  // alt="UserProfile"
-                  // src={profileImage(userById)}
+                  alt="Profile"
                 />
               </div>
               <div className="w-full flex justify-center items-center">
@@ -111,7 +89,6 @@ const UserProfileModal = ({
                     <div className="text-white text-md ">Age</div>
                     <p className="font-semibold text-sm">{age}</p>
                   </div>
-
                   <div className="flex gap-2 text-center">
                     <div className="text-white text-md ">Gender</div>
                     <p className="font-semibold text-sm">
@@ -176,13 +153,10 @@ const UserProfileModal = ({
               </div>
               <div className="h-[1px] w-full bg-NavyMain bg-opacity-40"></div>
               <div className="w-full h-fit flex flex-row gap-4 px-8 py-2">
-                {userById?.isBlocked == "false" ? (
+                {userById?.isBlocked === "false" ? (
                   <div
                     className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
-                    onClick={() => {
-                      handleRejectedUser();
-                      handleButtonClick();
-                    }}
+                    onClick={openConfirmationModal}
                   >
                     Block
                     <span>
@@ -196,12 +170,9 @@ const UserProfileModal = ({
                 ) : (
                   <div
                     className="border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white w-full h-[30px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer"
-                    onClick={() => {
-                      handleRejectedUser();
-                      handleButtonClick();
-                    }}
+                    onClick={openConfirmationModal}
                   >
-                    UnBlock
+                    Unblock
                     <span>
                       <Undo2
                         className="text-cecece hover:text-white"
@@ -212,39 +183,39 @@ const UserProfileModal = ({
                   </div>
                 )}
               </div>
-              <>
-                {rejectedUserShow ? (
-                  <div className="w-full h-fit">
-                    <label
-                      htmlFor="description"
-                      className="block text-Grey3 text-sm font-medium mb-2"
-                    >
-                      Reason of Rejection
-                    </label>
-                    <textarea
-                      id="ReasonOfRejection"
-                      // value={description}
-                      // onChange={handleDesciptionChange}
-                      className="w-full px-4 py-2 border border-[#cecece] rounded-md focus:outline-none focus:ring-1 focus:ring-[#910808]"
-                      rows={6}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
 
-                {isButtonClicked && (
-                  <div
-                    onClick={() => {
-                      block();
-                    }}
-                    className="text-white flex justify-center items-center gap-2 w-full text-center rounded-full font-bold text-1xl p-2 pb-2 h-[50px] bg-NavyMain hover:bg-RedMain"
-                  >
-                    Confirm
-                    <CheckCheck />
+              {isConfirmationModalOpen && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-white p-4 rounded-md shadow-md">
+                    <p>
+                      Are you sure you want to{" "}
+                      {userById?.isBlocked === "false" ? "block" : "unblock"}{" "}
+                      this user?
+                    </p>
+                    <div className="flex justify-end gap-4 mt-4">
+                      <button
+                        onClick={() => {
+                          if (userById?.isBlocked === "false") {
+                            block();
+                          } else {
+                            Unblock();
+                          }
+                          closeConfirmationModal();
+                        }}
+                        className="text-white bg-NavyMain px-4 py-2 rounded-full"
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        onClick={closeConfirmationModal}
+                        className="text-NavyMain border border-NavyMain px-4 py-2 rounded-full"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                )}
-              </>
+                </div>
+              )}
             </div>
           </div>
           <div />

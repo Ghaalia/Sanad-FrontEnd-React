@@ -30,10 +30,6 @@ const DraftEventDetails = ({ eventById }) => {
             </div>
             <div className="flex flex-wrap gap-1">
               <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
             </div>
           </div>
           <div className="flex flex-col gap-2 justify-center">

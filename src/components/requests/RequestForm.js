@@ -30,8 +30,8 @@ const RequestForm = ({
   // };
 
   return (
-    <div className="h-full  md:min-h-screen p-8 ">
-      <div className="relative h-[80%] max-w-full max-h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 ">
+    <div className=" h-full  md:min-h-screen pt-[100px] px-8 ">
+      <div className="relative h-[90%] max-w-full max-h-full flex flex-col text-center gap-4 bg-white rounded-lg p-4 ">
         <X
           className="cursor-pointer absolute top-5 right-5 hover:bg-white hover:rounded-full"
           onClick={() => setOpenForm(false)}

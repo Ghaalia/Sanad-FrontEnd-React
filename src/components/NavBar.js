@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import sanadLogo from "../assets/navbar/sanad_white_logo.svg";
-import { CircleUserRound, LogOut } from "lucide-react";
+import { ChevronsLeft, CircleUserRound, LogOut } from "lucide-react";
 import UserContext from "../context/UserContext";
 import { logout } from "../api/auth";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleGoBack = () => {
+    navigate(-1); // Go back to the previous page
+  };
 
   const handleLogout = () => {
     logout();
@@ -23,6 +28,16 @@ const NavBar = () => {
     zIndex: 999,
   };
 
+  // List of paths where you want to hide the BackButton
+  const hiddenBackButtonPaths = [
+    "/requests",
+    "/all_organizations",
+    "/all_users",
+    "/all_events",
+    "/profile",
+    "/create_event",
+  ];
+
   return (
     <div
       className="bg-RedMain min-w-full h-[80px] flex flex-row justify-center drop-shadow-[0_10px_10px_rgba(0,0,0,0.60)] md:drop-shadow-[0_10px_10px_rgba(0,0,0,0.40)]"
@@ -33,8 +48,17 @@ const NavBar = () => {
       </ul>
       <ul className="w-full flex flex-row items-end overflow-x-scroll no-scrollbar">
         <li className="w-full flex flex-row lg:gap-10 gap-6 lg:justify-center justify-start px-10">
-          {/* ******************************* */}
-
+          {!hiddenBackButtonPaths.includes(location.pathname) && (
+            <div className="h-[80px] font-medium w-fit flex items-end pb-3 border-transparent">
+              <span
+                onClick={handleGoBack}
+                className="flex gap-2 text-white px-4 hover:bg-white hover:bg-opacity-20 hover:px-4 hover:rounded-full"
+              >
+                <ChevronsLeft />
+                Back
+              </span>
+            </div>
+          )}
           {user.isAdmin ? (
             <>
               <NavLink

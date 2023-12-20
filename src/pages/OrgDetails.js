@@ -28,6 +28,8 @@ import CurrentEventItem from "../components/events/CurrentEventItem";
 import PastEventItem from "../components/events/PastEventItem";
 import AcceptedUserItem from "../components/event-details/AcceptedUserItem";
 import ImageModal from "../components/profile/ImageModal";
+import BlockOrgModal from "../components/organizations.js/BlockOrgModal";
+import UnBlockOrgModal from "../components/organizations.js/UnBlockOrgModal";
 
 const OrgDetails = () => {
   const { orgId } = useParams();
@@ -43,26 +45,14 @@ const OrgDetails = () => {
 
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [showUnBlockModal, setShowUnBlockModal] = useState(false);
 
-  const { mutate: UnBlock, isPending: isPending1 } = useMutation({
-    mutationKey: ["UnBlock"],
-    mutationFn: () => OrgApproveById(orgById),
-    onSuccess: () => {
-      handleCloseModal();
-      // setUser(true);
-    },
-  });
-
-  const { mutate: Block, isPending: isPending2 } = useMutation({
-    mutationKey: ["Block"],
-    mutationFn: () => OrgRejectById(orgById),
-    onSuccess: () => {
-      handleCloseModal();
-      // setUser(true);
-    },
-  });
-
-  const { data: orgById, isLoading } = useQuery({
+  const {
+    data: orgById,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["orgById"],
     queryFn: () => getOrganizationsById(orgId),
   });
@@ -124,12 +114,33 @@ const OrgDetails = () => {
     setRejectedUserShow(false);
   };
 
+  // Open Block Modal
+  const handleOpenBlockModal = () => {
+    setShowBlockModal(true);
+  };
+
+  // Close Block Modal
+  const handleCloseBlockModal = () => {
+    setShowBlockModal(false);
+  };
+
+  // Open UnBlock Modal
+  const handleOpenUnBlockModal = () => {
+    setShowUnBlockModal(true);
+  };
+
+  // Close UnBlock Modal
+  const handleCloseUnBlockModal = () => {
+    setShowUnBlockModal(false);
+  };
+
   return (
     <div className="bg-NavyMain min-h-screen pt-[80px] md:px-[120px]">
       <div className="w-full h-full pt-8 px-8 flex flex-col gap-4 items-center">
         <h1 className="text-white font-semibold text-2xl ">
           Organization Profile
         </h1>
+
         <div className="min-h-screen lg:grid lg:grid-cols-2 flex flex-col gap-3 ">
           {/* Div Number 1 Profile and license */}
           <div className="flex flex-col py-10 md:h-screen items-center">
@@ -213,7 +224,7 @@ const OrgDetails = () => {
                 </div>
                 {orgById?.isAccepted == "Accepted" ? (
                   <div
-                    onClick={Block}
+                    onClick={handleOpenBlockModal}
                     className=" border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white gap-3 w-[100px] h-[30px] text-center rounded-full flex justify-center font-semibold items-center border-2 cursor-pointer"
                   >
                     Block
@@ -227,7 +238,7 @@ const OrgDetails = () => {
                   </div>
                 ) : (
                   <div
-                    onClick={UnBlock}
+                    onClick={handleOpenUnBlockModal}
                     className=" border-[#cecece] text-[#cecece] hover:bg-RedMain hover:border-RedMain hover:text-white gap-3 w-[100px] h-[30px] text-center rounded-full flex justify-center font-semibold items-center border-2 cursor-pointer"
                   >
                     UnBlock
@@ -298,6 +309,20 @@ const OrgDetails = () => {
           handleCloseImageModal={handleCloseImageModal}
         />
       )}
+
+      <BlockOrgModal
+        handleCloseBlockModal={handleCloseBlockModal}
+        showBlockModal={showBlockModal}
+        orgById={orgById}
+        refetch={refetch}
+      />
+
+      <UnBlockOrgModal
+        handleCloseUnBlockModal={handleCloseUnBlockModal}
+        showUnBlockModal={showUnBlockModal}
+        orgById={orgById}
+        refetch={refetch}
+      />
     </div>
   );
 };
