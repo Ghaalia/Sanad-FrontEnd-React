@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getParticipationsbyId } from "../../api/users";
 import { BASE_URL } from "../../api";
 
-<<<<<<< HEAD
 const RequestsUserItem = ({
   refetch,
 
@@ -15,44 +14,43 @@ const RequestsUserItem = ({
   console.log(Requetsparticipation);
 
   setParticipation(Requetsparticipation);
-=======
-const RequestsUserItem = ({ handleOpenModal, participation }) => {
->>>>>>> 18dec
-  return (
-    <div
-      onClick={handleOpenModal}
-      className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black"
-    >
-      <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
-        <img
-          src={
-            Requetsparticipation?.user?.image
-              ? `${BASE_URL}/${Requetsparticipation?.user?.image}`
-              : require(".././../assets/all-users/profileimg.png")
-          }
-        />
-      </div>
-      <div className="flex w-full flex-col justify-around">
-        <div className="text-white font-semibold text-[18px]">
-          {Requetsparticipation?.user?.first_name}
-          {Requetsparticipation?.user?.last_name}
+  const RequestsUserItem = ({ handleOpenModal, participation }) => {
+    return (
+      <div
+        onClick={handleOpenModal}
+        className="w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black"
+      >
+        <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
+          <img
+            src={
+              Requetsparticipation?.user?.image
+                ? `${BASE_URL}/${Requetsparticipation?.user?.image}`
+                : require(".././../assets/all-users/profileimg.png")
+            }
+          />
         </div>
-        <div className="flex flex-col md:justify-between">
-          <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
-            <span className="flex items-center gap-1 justify-between">
-              Gender - {Requetsparticipation?.user?.gender}
-            </span>
+        <div className="flex w-full flex-col justify-around">
+          <div className="text-white font-semibold text-[18px]">
+            {Requetsparticipation?.user?.first_name}
+            {Requetsparticipation?.user?.last_name}
           </div>
-          <div className="text-white text-opacity-50 font-normal text-xs flex gap-4">
-            phone number: {Requetsparticipation?.user?.phone_number}
+          <div className="flex flex-col md:justify-between">
+            <div className="text-white font-semibold text-[14px] flex gap-4 md:justify-start">
+              <span className="flex items-center gap-1 justify-between">
+                Gender - {Requetsparticipation?.user?.gender}
+              </span>
+            </div>
+            <div className="text-white text-opacity-50 font-normal text-xs flex gap-4">
+              phone number: {Requetsparticipation?.user?.phone_number}
+            </div>
           </div>
         </div>
+        <div className=" w-fit h-full px-4 flex items-center">
+          <PauseCircle size={28} strokeWidth={2} className="text-white" />
+        </div>
       </div>
-      <div className=" w-fit h-full px-4 flex items-center">
-        <PauseCircle size={28} strokeWidth={2} className="text-white" />
-      </div>
-    </div>
-  );
+    );
+  };
 };
 
 export default RequestsUserItem;
