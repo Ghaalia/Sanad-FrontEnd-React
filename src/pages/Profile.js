@@ -23,6 +23,7 @@ const Profile = () => {
   const [showRejectionReason, setShowRejectionReason] = useState(false);
 
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  const [participation, setParticipation] = useState(false);
 
   //Events and volunteers filter
   const handleEventsClick = () => {
@@ -108,7 +109,10 @@ const Profile = () => {
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
+                <AcceptedUserItem
+                  setParticipation={setParticipation}
+                  handleOpenModal={handleOpenModal}
+                />
               </div>
             </div>
           )}

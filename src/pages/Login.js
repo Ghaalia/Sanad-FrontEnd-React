@@ -92,7 +92,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="h-1/2  lg:pt-[180px] lg:pb-[180px] flex justify-center items-center px-[50px] lg:h-full lg:w-1/2 lg:px-[220px]">
+        <div className="h-1/2 lg:pt-[180px] lg:pb-[180px] flex lg:justify-center lg:items-center px-[50px] lg:h-screen lg:w-1/2 lg:px-[180px]">
           <form
             // onSubmit={handleSubmit}
             className="w-full flex flex-col gap-4 justify-center items-center"

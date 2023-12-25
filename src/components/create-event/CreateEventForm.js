@@ -210,7 +210,7 @@ const CreateEventForm = () => {
             <div className="text-NavyLight text-start font-medium">
               Choose Category
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-wrap gap-1">
               {/* <CategoryList
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
@@ -236,9 +236,13 @@ const CreateEventForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2 justify-center">
-            <div className="text-NavyLight text-start font-medium">
-              Location
+            <div className="flex flex-col  text-start ">
+              <div className="text-NavyLight font-medium ">Location</div>
+              <div className=" text-NavyLight text-xs items-baseline">
+                Note: Just click to drop a pin
+              </div>
             </div>
+
             <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
               {/* <img className="w-full" src={mapDemo} alt="SVG" /> */}
               {/* <div id="map"></div> */}

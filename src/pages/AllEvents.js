@@ -90,13 +90,13 @@ const AllEvents = () => {
           <EventsSearchBar />
         </div>
         {acceptClicked ? (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="w-full grid grid-row-2 sm:grid-row-1 lg:grid-cols-2 gap-3">
             {events?.map((el) => (
               <CurrentEventItem event={el} key={el._id} />
             ))}
           </div>
         ) : (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="w-full grid grid-row-2 sm:grid-row-1 lg:grid-cols-2 gap-3">
             <PastEventItem />
           </div>
         )}

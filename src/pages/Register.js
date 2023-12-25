@@ -61,7 +61,6 @@ const Register = () => {
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
     onSuccess: () => {
-      // navigate("/");
       setUser(checktoken());
       setSuccessMessage("Your account is pending approval.");
     },

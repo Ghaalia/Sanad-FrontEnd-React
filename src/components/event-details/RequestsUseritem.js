@@ -4,10 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getParticipationsbyId } from "../../api/users";
 import { BASE_URL } from "../../api";
 
-<<<<<<< HEAD
 const RequestsUserItem = ({
   refetch,
-
   handleOpenModal,
   Requetsparticipation,
   setParticipation,
@@ -15,9 +13,6 @@ const RequestsUserItem = ({
   console.log(Requetsparticipation);
 
   setParticipation(Requetsparticipation);
-=======
-const RequestsUserItem = ({ handleOpenModal, participation }) => {
->>>>>>> 18dec
   return (
     <div
       onClick={handleOpenModal}
