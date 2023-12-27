@@ -17,8 +17,10 @@ import EndTimePicker from "./EndTimePicker";
 import StartDatePicker from "./StartDatePicker";
 import EndDatePicker from "./EndDatePicker";
 import Location from "./Location";
+import { getUserToken } from "../../api/auth";
 
 const CreateEventForm = () => {
+  const token = getUserToken();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
@@ -111,6 +113,11 @@ const CreateEventForm = () => {
         setShowEventAddedMessage(false);
       }, 3000);
       // navigate("/homepage");
+    },
+    config: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
   });
 
