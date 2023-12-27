@@ -66,7 +66,7 @@ const CreateEventForm = () => {
     color: "#F5574E",
     border: "solid #F5574E 1px",
     borderRadius: 40,
-    padding: 2,
+    padding: "2px 10px",
     marginTop: 10,
   };
 
@@ -84,7 +84,7 @@ const CreateEventForm = () => {
         style={style}
         onClick={() => handleCategorySelect(category._id)}
       >
-        {category.category_name}
+        {category?.category_name}
       </div>
     );
   });

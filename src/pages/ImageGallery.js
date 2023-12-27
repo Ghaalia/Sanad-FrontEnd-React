@@ -25,12 +25,6 @@ const ImageGallery = () => {
         newSelectedImages[category].delete(index);
       }
 
-      updateImageSelection(imageId, isSelected) // Update selection status in the backend
-        .then(() => console.log(`Image ${imageId} selection updated`))
-        .catch((error) =>
-          console.error(`Error updating selection for image ${imageId}:`, error)
-        );
-
       return newSelectedImages;
     });
   };
