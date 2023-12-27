@@ -4,7 +4,7 @@ import { BASE_URL } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 
 const AcceptedOrgItem = ({ organization }) => {
-  // console.log(`${BASE_URL}/${organization?.logo}`);
+  console.log(`${BASE_URL}/${organization?.logo}`);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -18,7 +18,7 @@ const AcceptedOrgItem = ({ organization }) => {
     >
       <div className="bg-white w-[80px] text-NavyMain h-[80px] text-sm p-6 flex justify-center items-center text-center ">
         <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
-          <img className="w-[100%]" src={`${organization?.logo}`} />
+          <img className="w-[100%]" src={`${BASE_URL}/${organization?.logo}`} />
         </div>
       </div>
       <div className="flex w-full flex-col justify-around">
