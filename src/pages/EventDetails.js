@@ -60,10 +60,6 @@ const EventDetails = () => {
     // Your logic for handling rejected user
   };
 
-  const handleAcceptedUser = () => {
-    // Your logic for handling accepted user
-  };
-
   return (
     <div className="min-w-screen h-screen bg-NavyMain lg:px-[100px]">
       <div className="h-[100vh] mt-[80px] lg:grid lg:grid-cols-2 flex flex-col">
