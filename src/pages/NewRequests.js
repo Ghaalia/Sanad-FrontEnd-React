@@ -67,7 +67,7 @@ const NewRequests = () => {
       <div className="h-screen mt-[80px] grid md:grid-cols-2 grid-rows-2">
         <div className="h-full md:min-h-screen p-8 lg:p-11 flex flex-col gap-6 items-center">
           <h1 className="text-white font-semibold text-2xl">
-            Organizations Requests
+            Organization Requests
           </h1>
           <div className="text-white w-full h-[40px] md:h-[50px] flex items-center bg-white bg-opacity-30 p-2 rounded-full shadow-sm shadow-black ">
             <input

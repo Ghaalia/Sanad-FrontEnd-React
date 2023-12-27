@@ -13,7 +13,7 @@ const center = {
   lng: 47.9044274,
 };
 
-const Location = () => {
+const Location = ({ setLocation }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCwZtkvVKSzedzs4SKvEamWEVG6q-Zdh8o",
@@ -33,6 +33,8 @@ const Location = () => {
   const [markerPosition, setMarkerPosition] = useState(center);
 
   const onMapClick = (e) => {
+    setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+
     const clickedLatLng = {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
