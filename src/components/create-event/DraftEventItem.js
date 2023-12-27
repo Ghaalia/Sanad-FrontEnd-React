@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api";
 
 const DraftEventItem = ({ event }) => {
   const navigate = useNavigate();
@@ -14,8 +15,16 @@ const DraftEventItem = ({ event }) => {
       onClick={handleClick}
       className="w-full h-[200px] flex flex-col  bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black"
     >
-      <div className="bg-white w-full text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
-        Event Image
+      <div className="bg-white w-full overflow-hidden text-NavyMain h-[80%] text-sm  flex justify-center items-center text-center ">
+        {/* <img{event?.event_image} />  */}
+        <img
+          className="w-full object-cover"
+          src={
+            event?.event_image
+              ? `${BASE_URL}/${event?.event_image}`
+              : require("../../assets/event-details/default-event.png")
+          }
+        />
       </div>
       <div className="flex w-full h-[20%] justify-between px-8 items-center">
         <div className="text-white font-semibold text-[18px]">

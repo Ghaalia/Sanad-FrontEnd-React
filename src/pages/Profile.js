@@ -82,7 +82,7 @@ const Profile = () => {
     <div className="w-screen h-min-h-screen  pt-[80px]  md:px-[120px] bg-NavyMain lg:px-[100px] ">
       <div className=" min-h-screen lg:grid lg:grid-cols-2 flex flex-col">
         <div className="h-full md:min-h-screen">
-          <div className="w-full h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4">
+          <div className="w-[40%] h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4 fixed ">
             <OrgProfileDetails />
           </div>
         </div>

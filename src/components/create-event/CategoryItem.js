@@ -1,6 +1,7 @@
 import React from "react";
 
 const CategoryItem = ({ category, selectedCategory, setSelectedCategory }) => {
+  console.log(category);
   const handleCategoryClick = () => {
     // Toggle the selected category
     if (selectedCategory === category._id) {

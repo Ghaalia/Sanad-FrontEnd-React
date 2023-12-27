@@ -52,7 +52,7 @@ const CreateEvent = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredEvents = myEvents.filter((event) =>
+  const filteredEvents = myEvents?.filter((event) =>
     event.event_title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

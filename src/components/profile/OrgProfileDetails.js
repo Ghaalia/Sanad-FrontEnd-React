@@ -81,9 +81,7 @@ const OrgProfileDetails = () => {
                 <span className="text-NavyLight font-semibold ">
                   Total Volunteers
                 </span>
-                <span className="text-[30px] text-NavyMain font-medium">
-                  80
-                </span>
+                <span className="text-[30px] text-NavyMain font-medium">0</span>
               </div>
               <div className="w-[45%] h-full rounded-3xl flex flex-col justify-center items-center bg-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.20)] ">
                 <CalendarCheckIcon className=" text-NavyLight" size={30} />
@@ -96,7 +94,7 @@ const OrgProfileDetails = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 justify-center">
+            {/* <div className="flex flex-col gap-2 justify-center">
               <div className="text-NavyLight items-center flex gap-1 text-start font-medium">
                 <MapPin size={20} />
                 Location
@@ -104,7 +102,7 @@ const OrgProfileDetails = () => {
               <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
                 <img className="w-full" src={mapDemo} alt="SVG" />
               </div>
-            </div>
+            </div> */}
 
             <div className="flex  gap-1 justify-between items-center mt-2 border-2 bg-white border-NavyLight hover:border-NavyLight  hover:bg-NavyLight text-NavyLight hover:text-white cursor-pointer px-2 py-1 rounded-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)]">
               <div className="flex items-center gap-2 text-start font-medium">
