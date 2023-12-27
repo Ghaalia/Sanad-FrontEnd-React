@@ -29,17 +29,18 @@ const ImageGallery = () => {
     });
   };
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["images"],
     queryFn: () => getImages(userId),
   });
 
   const mutation = useMutation({
     mutationKey: "sendSelectedImages",
-    mutationFn: (data) =>
-      sendSelectedImages(userId, data.selectedImages, data.unselectedImages),
+    mutationFn: ({ userId, preparedData }) =>
+      sendSelectedImages(userId, preparedData),
     onSuccess: (data) => {
       console.log("Images sent successfully:", data);
+      refetch();
     },
     onError: (error) => {
       console.error("Error sending images:", error);
@@ -62,7 +63,7 @@ const ImageGallery = () => {
     });
 
     console.log("Sending data:", preparedData);
-    mutation.mutate(preparedData);
+    mutation.mutate({ userId, preparedData });
   };
 
   // const handleImageSelection = () => {
@@ -98,20 +99,22 @@ const ImageGallery = () => {
         >
           <div className="text-[18px]">{categoryData.category}</div>
           <div className="flex flex-wrap justify-between gap-4">
-            {categoryData.imageData.map((image, imageIndex) => (
-              <DonatedPhoto
-                key={imageIndex}
-                image={image}
-                index={imageIndex}
-                category={categoryData.category}
-                onSelect={(index, isSelected) =>
-                  handleSelectImage(categoryData.category, index, isSelected)
-                }
-                isSelected={selectedImages[categoryData.category]?.has(
-                  imageIndex
-                )}
-              />
-            ))}
+            {categoryData.imageData.map((image, imageIndex) =>
+              image.isSelected ? null : (
+                <DonatedPhoto
+                  key={imageIndex}
+                  image={image.image}
+                  index={imageIndex}
+                  category={categoryData.category}
+                  onSelect={(index, isSelected) =>
+                    handleSelectImage(categoryData.category, index, isSelected)
+                  }
+                  isSelected={selectedImages[categoryData.category]?.has(
+                    imageIndex
+                  )}
+                />
+              )
+            )}
           </div>
         </div>
       ))}
