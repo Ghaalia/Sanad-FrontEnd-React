@@ -9,6 +9,8 @@ import EventsFilter from "../components/profile/EventsFilter";
 import CurrentEventItem from "../components/events/CurrentEventItem";
 import PastEventItem from "../components/events/PastEventItem";
 import TotalEventsAndUsersFilterOrg from "../components/organizations.js/TotalEventsAndUserFilterOrg";
+import { useQuery } from "@tanstack/react-query";
+import { getOrgEvent } from "../api/organization";
 
 const Profile = () => {
   const [events, setEvents] = useState(true);
@@ -23,6 +25,12 @@ const Profile = () => {
   const [showRejectionReason, setShowRejectionReason] = useState(false);
 
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+  const [participation, setParticipation] = useState(false);
+
+  const { data: myEvents, isLoading } = useQuery({
+    queryKey: ["myEvents"],
+    queryFn: () => getOrgEvent(),
+  });
 
   //Events and volunteers filter
   const handleEventsClick = () => {
@@ -74,7 +82,7 @@ const Profile = () => {
     <div className="w-screen h-min-h-screen  pt-[80px]  md:px-[120px] bg-NavyMain lg:px-[100px] ">
       <div className=" min-h-screen lg:grid lg:grid-cols-2 flex flex-col">
         <div className="h-full md:min-h-screen">
-          <div className="w-full h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4">
+          <div className="w-[40%] h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4 fixed ">
             <OrgProfileDetails />
           </div>
         </div>
@@ -100,15 +108,20 @@ const Profile = () => {
               />
               <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
                 <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-                  <CurrentEventItem />
-                  <PastEventItem />
+                  {myEvents?.map((el, index) => (
+                    <CurrentEventItem event={el} key={`myEvent-${index}`} />
+                  ))}
+                  {/* <PastEventItem /> */}
                 </div>
               </div>
             </>
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-                <AcceptedUserItem handleOpenModal={handleOpenModal} />
+                <AcceptedUserItem
+                  setParticipation={setParticipation}
+                  handleOpenModal={handleOpenModal}
+                />
               </div>
             </div>
           )}

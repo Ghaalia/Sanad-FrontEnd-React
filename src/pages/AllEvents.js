@@ -2,17 +2,20 @@ import React, { useEffect } from "react";
 import { ClipboardList, History } from "lucide-react";
 import { useState } from "react";
 import CurrentEventItem from "../components/events/CurrentEventItem";
-import EventsSearchBar from "../components/events/EventsSearchBar";
 import PastEventItem from "../components/events/PastEventItem";
 import { useQuery } from "@tanstack/react-query";
 import { getAllEvents } from "../api/event";
+import CurrentEventsSearch from "../components/events/CurrentEventsSearch";
+import PastEventsSearch from "../components/events/PastEventsSearch";
 
 const AllEvents = () => {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
-  const [acceptClicked, setAcceptClicked] = useState(true);
+  const [currentClicked, setCurrentClicked] = useState(true);
   const [deletedClicked, setDeletedClicked] = useState(false);
   const [AcceptedShow, setAcceptedShow] = useState(false);
+  const [currentSearchQuery, setCurrentSearchQuery] = useState("");
+  const [pastSearchQuery, setPastSearchQuery] = useState("");
 
   const { data: events, isloading } = useQuery({
     queryKey: ["events"],
@@ -30,20 +33,40 @@ const AllEvents = () => {
   //   <CurrentEventItem event={event} key={event._id} />
   // ));
 
-  const event = events?.map((el, index) => {
-    <CurrentEventItem event={el} key={`event-${index}`} />;
-  });
+  const event = events?.map((el, index) => (
+    <CurrentEventItem event={el} key={`event-${index}`} />
+  ));
 
-  const handleAcceptClick = () => {
-    setAcceptClicked(true);
+  const handleCurrentClick = () => {
+    setCurrentClicked(true);
     setDeletedClicked(false);
     setAcceptedShow(true);
+    setCurrentSearchQuery("");
   };
 
-  const handleDeletedClick = () => {
+  const handlePastClick = () => {
     setDeletedClicked(true);
-    setAcceptClicked(false);
+    setCurrentClicked(false);
+    setPastSearchQuery("");
   };
+
+  const handleCurrentSearch = (query) => {
+    setCurrentSearchQuery(query);
+  };
+
+  const handlePastSearch = (query) => {
+    setPastSearchQuery(query);
+  };
+
+  const filteredCurrentEvents = events?.filter((event) =>
+    event.event_title.toLowerCase().includes(currentSearchQuery.toLowerCase())
+  );
+
+  const filteredPastEvents = events?.filter(
+    (event) =>
+      event.event_title.toLowerCase().includes(pastSearchQuery.toLowerCase()) &&
+      event.isPosted === "true"
+  );
 
   return (
     <div className="bg-NavyMain min-h-screen py-[80px] md:px-[120px]">
@@ -54,16 +77,16 @@ const AllEvents = () => {
           <div className="w-full h-[50px] flex flex-row gap-4  md:w-[600px] shadow-md shadow-black rounded-full p-1 items-center">
             <div
               className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
-                acceptClicked
+                currentClicked
                   ? "bg-RedMain border-RedMain text-white"
                   : "border-transparent text-[#4D497D]"
               }`}
-              onClick={handleAcceptClick}
+              onClick={handleCurrentClick}
             >
               Current
               <span>
                 <ClipboardList
-                  color={acceptClicked ? "white" : "#4D497D"}
+                  color={currentClicked ? "white" : "#4D497D"}
                   size={20}
                   strokeWidth={2}
                 />
@@ -75,7 +98,7 @@ const AllEvents = () => {
                   ? "bg-RedMain border-RedMain text-white"
                   : "border-transparent text-[#4D497D]"
               }`}
-              onClick={handleDeletedClick}
+              onClick={handlePastClick}
             >
               Past
               <span>
@@ -87,17 +110,23 @@ const AllEvents = () => {
               </span>
             </div>
           </div>
-          <EventsSearchBar />
+          {currentClicked ? (
+            <CurrentEventsSearch onSearch={handleCurrentSearch} />
+          ) : (
+            <PastEventsSearch onSearch={handlePastSearch} />
+          )}
         </div>
-        {acceptClicked ? (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {events?.map((el) => (
-              <CurrentEventItem event={el} key={el._id} />
+        {currentClicked ? (
+          <div className="w-full grid grid-row-2 sm:grid-row-1 lg:grid-cols-2 gap-3">
+            {filteredCurrentEvents?.map((el, index) => (
+              <CurrentEventItem event={el} key={`events-${index}`} />
             ))}
           </div>
         ) : (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            <PastEventItem />
+          <div className="w-full grid grid-row-2 sm:grid-row-1 lg:grid-cols-2 gap-3">
+            {filteredPastEvents?.map((el, index) => (
+              <PastEventItem event={el} key={`events-${index}`} />
+            ))}
           </div>
         )}
       </div>

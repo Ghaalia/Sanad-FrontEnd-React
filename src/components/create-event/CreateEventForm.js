@@ -17,15 +17,17 @@ import EndTimePicker from "./EndTimePicker";
 import StartDatePicker from "./StartDatePicker";
 import EndDatePicker from "./EndDatePicker";
 import Location from "./Location";
+import { getUserToken } from "../../api/auth";
 
 const CreateEventForm = () => {
+  const token = getUserToken();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
   const [volunteers, setVolunteers] = useState("");
   const [address, setAddress] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
-
+  const [location, setLocation] = useState({});
   const [startDay, setStartDay] = useState("");
   const [startMonth, setStartMonth] = useState("");
   const [startYear, setStartYear] = useState("");
@@ -66,7 +68,7 @@ const CreateEventForm = () => {
     color: "#F5574E",
     border: "solid #F5574E 1px",
     borderRadius: 40,
-    padding: 2,
+    padding: "2px 10px",
     marginTop: 10,
   };
 
@@ -84,7 +86,7 @@ const CreateEventForm = () => {
         style={style}
         onClick={() => handleCategorySelect(category._id)}
       >
-        {category.category_name}
+        {category?.category_name}
       </div>
     );
   });
@@ -99,10 +101,11 @@ const CreateEventForm = () => {
         event_end_date: formattedEndDate,
         event_start_time: startTime,
         event_end_time: endTime,
-        no_of_volunteer: volunteers,
+        no_of_volunteer: volunteerCounter,
         description,
         event_address: address,
         event_category: selectedCategory,
+        location_coordinates: location,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["createEvent"]);
@@ -111,6 +114,11 @@ const CreateEventForm = () => {
         setShowEventAddedMessage(false);
       }, 3000);
       // navigate("/homepage");
+    },
+    config: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
   });
 
@@ -210,7 +218,7 @@ const CreateEventForm = () => {
             <div className="text-NavyLight text-start font-medium">
               Choose Category
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-wrap gap-1">
               {/* <CategoryList
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
@@ -236,13 +244,17 @@ const CreateEventForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2 justify-center">
-            <div className="text-NavyLight text-start font-medium">
-              Location
+            <div className="flex flex-col  text-start ">
+              <div className="text-NavyLight font-medium ">Location</div>
+              <div className=" text-NavyLight text-xs items-baseline">
+                Note: Just click to drop a pin
+              </div>
             </div>
+
             <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
               {/* <img className="w-full" src={mapDemo} alt="SVG" /> */}
               {/* <div id="map"></div> */}
-              <Location />
+              <Location setLocation={setLocation} />
             </div>
           </div>
           <div className="flex flex-row justify-between items-center">

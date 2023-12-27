@@ -8,12 +8,18 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllCategories } from "../api/category";
 import { createOneEvent, getAllEvents } from "../api/event";
+import { getUserToken } from "../api/auth";
+import { getOrgEvent } from "../api/organization";
+import PastEventItem from "../components/events/PastEventItem";
 
 const CreateEvent = () => {
+  const token = getUserToken();
   const [drafts, setDrafts] = useState(true);
   const [posted, setPosted] = useState(false);
 
   const [eventInfo, setEventInfo] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+
   const navigate = useNavigate();
 
   const handleChnage = (e) => {
@@ -26,16 +32,29 @@ const CreateEvent = () => {
   const queryClient = useQueryClient();
   const [type, setType] = useState();
 
-  const { data: events, isloading } = useQuery({
-    queryKey: ["events"],
-    queryFn: () => getAllEvents(),
+  const { data: myEvents, isloading } = useQuery({
+    queryKey: ["myEvents"],
+    queryFn: () => getOrgEvent(),
   });
 
-  const { data: create_mutate } = useMutation({
-    mutationKey: ["createEvent"],
-    mutationFn: () => createOneEvent({ ...eventInfo, category: type }),
-    onSuccess: () => {},
-  });
+  // const { data: create_mutate } = useMutation({
+  //   mutationKey: ["createEvent"],
+  //   mutationFn: () => createOneEvent({ ...eventInfo, category: type }),
+  //   onSuccess: () => {},
+  //   config: {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   },
+  // });
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredEvents = myEvents?.filter((event) =>
+    event.event_title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handlePostClick = () => {
     setDrafts(true);
@@ -55,7 +74,7 @@ const CreateEvent = () => {
             Small Act,
             <span className="font-bold">Big Impact</span>
           </h1>
-          <CreateEventSearchBar />
+          <CreateEventSearchBar onSearch={handleSearch} />
           <DraftsAndPosted
             drafts={drafts}
             posted={posted}
@@ -63,11 +82,19 @@ const CreateEvent = () => {
             handleDraftsClick={handleDraftsClick}
           />
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-            <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-              {events?.map((el, index) => (
-                <DraftEventItem event={el} key={`organization-${index}`} />
-              ))}
-            </div>
+            {posted ? (
+              <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
+                {filteredEvents?.map((el, index) => (
+                  <PastEventItem event={el} key={`myEvents-${index}`} />
+                ))}
+              </div>
+            ) : (
+              <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
+                {myEvents?.map((el, index) => (
+                  <DraftEventItem event={el} key={`myEvents-${index}`} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

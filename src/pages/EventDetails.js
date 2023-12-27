@@ -18,10 +18,10 @@ const EventDetails = () => {
   const [accepted, setAccepted] = useState(false);
   const [participation, setParticipation] = useState(null);
 
-  const { data: users } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => getAllUsers(),
-  });
+  // const { data: users } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: () => getAllUsers(),
+  // });
 
   const {
     data: eventById,
@@ -58,10 +58,6 @@ const EventDetails = () => {
 
   const handleRejectedUser = () => {
     // Your logic for handling rejected user
-  };
-
-  const handleAcceptedUser = () => {
-    // Your logic for handling accepted user
   };
 
   return (

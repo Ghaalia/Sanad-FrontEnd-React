@@ -1,19 +1,18 @@
 import { Search } from "lucide-react";
 import React from "react";
 
-const CreateEventSearchBar = ({ onSearch }) => {
+const PastEventsSearch = ({ onSearch }) => {
   const handleSearch = (event) => {
     const query = event.target.value;
     onSearch(query);
   };
-
   return (
-    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center bg-white bg-opacity-30 p-2 rounded-full">
+    <div className="text-white w-full h-[40px] md:h-[50px] flex items-center  bg-white bg-opacity-30 p-2 rounded-full">
       <input
         type="text"
         id="search"
         className=" text-white w-full h-full bg-transparent px-4 focus:outline-none "
-        placeholder="Search Events"
+        placeholder="Search Past Events"
         onChange={handleSearch}
       />
       <span>
@@ -28,4 +27,4 @@ const CreateEventSearchBar = ({ onSearch }) => {
   );
 };
 
-export default CreateEventSearchBar;
+export default PastEventsSearch;

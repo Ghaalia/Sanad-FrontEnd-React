@@ -71,7 +71,7 @@ const UserProfileModal = ({
               </div>
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
-                  className="w-full  "
+                  className="w-[100px] "
                   src={
                     userById?.image
                       ? `${BASE_URL}/${userById.image}`

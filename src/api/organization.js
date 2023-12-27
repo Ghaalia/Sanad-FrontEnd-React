@@ -25,10 +25,16 @@ const getOrganizationsById = async (orgId) => {
   return res.data;
 };
 
+const getOrgEvent = async () => {
+  const res = await instance.get(`/api/org/myevents`);
+  return res.data;
+};
+
 export {
   getProfile,
   getAllOrganizations,
   OrgApproveById,
   OrgRejectById,
   getOrganizationsById,
+  getOrgEvent,
 };

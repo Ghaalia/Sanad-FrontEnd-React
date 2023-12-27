@@ -57,7 +57,7 @@ const Login = () => {
   });
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-center ">
+    <div className="w-full h-screen flex justify-center items-start">
       <div className="flex w-full h-full flex-col lg:flex-row md:flex-col ">
         <div className="flex flex-col justify-between h-1/2 lg:w-1/2 md:w-full lg:min-h-screen bg-NavyMain ">
           <div className="w-full flex justify-end">
@@ -92,10 +92,10 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="h-1/2  lg:pt-[180px] lg:pb-[180px] flex justify-center items-center px-[50px] lg:h-full lg:w-1/2 lg:px-[220px]">
+        <div className="h-1/2 lg:pb-[180px] flex md:justify-center md:items-center px-[50px] md:h-screen lg:w-1/2 md:px-[80px]">
           <form
             // onSubmit={handleSubmit}
-            className="w-full flex flex-col gap-4 justify-center items-center"
+            className="w-full flex flex-col gap-4 justify-center   items-center"
           >
             <div className="w-full flex flex-col gap-2">
               <label
