@@ -5,14 +5,12 @@ const getImages = async (userId) => {
   return res.data;
 };
 
-const sendSelectedImages = async (userId, selectedImages, unselectedImages) => {
+const sendSelectedImages = async (userId, data) => {
   try {
+    console.log(data);
     const response = await instance.post(
-      `/images/selected-unselected/${userId}`,
-      {
-        selectedImages,
-        unselectedImages,
-      }
+      `/update-image-selection/${userId}`,
+      data
     );
     return response.data;
   } catch (error) {

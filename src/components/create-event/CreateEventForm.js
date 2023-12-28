@@ -27,7 +27,7 @@ const CreateEventForm = () => {
   const [volunteers, setVolunteers] = useState("");
   const [address, setAddress] = useState("");
   const [selectedCategory, setSelectedCategory] = useState([]);
-
+  const [location, setLocation] = useState({});
   const [startDay, setStartDay] = useState("");
   const [startMonth, setStartMonth] = useState("");
   const [startYear, setStartYear] = useState("");
@@ -68,7 +68,7 @@ const CreateEventForm = () => {
     color: "#F5574E",
     border: "solid #F5574E 1px",
     borderRadius: 40,
-    padding: 2,
+    padding: "2px 10px",
     marginTop: 10,
   };
 
@@ -86,7 +86,7 @@ const CreateEventForm = () => {
         style={style}
         onClick={() => handleCategorySelect(category._id)}
       >
-        {category.category_name}
+        {category?.category_name}
       </div>
     );
   });
@@ -101,10 +101,11 @@ const CreateEventForm = () => {
         event_end_date: formattedEndDate,
         event_start_time: startTime,
         event_end_time: endTime,
-        no_of_volunteer: volunteers,
+        no_of_volunteer: volunteerCounter,
         description,
         event_address: address,
         event_category: selectedCategory,
+        location_coordinates: location,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["createEvent"]);
@@ -253,7 +254,7 @@ const CreateEventForm = () => {
             <div className="w-full h-[200px] text-NavyLight overflow-hidden flex justify-center items-start border-[1px] rounded-md border-NavyLight">
               {/* <img className="w-full" src={mapDemo} alt="SVG" /> */}
               {/* <div id="map"></div> */}
-              <Location />
+              <Location setLocation={setLocation} />
             </div>
           </div>
           <div className="flex flex-row justify-between items-center">

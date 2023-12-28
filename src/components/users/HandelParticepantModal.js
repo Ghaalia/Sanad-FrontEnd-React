@@ -70,14 +70,14 @@ const HandelParticepantModal = ({
                 onClick={handleCloseModal}
               >
                 <X
-                  className="text-white hover:text-RedMain hover:bg-white hover:rounded-full fixed top-0 z-50  "
+                  className="text-white hover:text-RedMain hover:bg-white hover:rounded-full fixed top-2 left-2 z-50  "
                   size={20}
                   strokeWidth={1}
                 />
               </div>
               <div className="w-full flex flex-col gap-4 text-center h-full items-center justify-center">
                 <img
-                  className="w-full  "
+                  className="h-[100px]   "
                   // src={
                   //   `${BASE_URL}/${userById?.image}` ||
                   //   "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
@@ -124,10 +124,18 @@ const HandelParticepantModal = ({
             </div>
             <div className="w-full h-full flex flex-col gap-3 px-4 py-4 ">
               <div className="flex gap-4">
-                <div className="shadow-lg shadow-Gray3  flex w-[150px] h-[80px] justify-center text-NavyMain bg-Grey0 rounded-xl items-center"></div>
+                <div className="shadow-lg shadow-Gray3  flex w-[150px] h-[80px] justify-center text-NavyMain bg-Grey0 rounded-xl items-center">
+                  <div className="w-fit flex flex-col text-center text-white text-sm font-semibold">
+                    <div className="text-Grey3 text-sm ">Participated in</div>
+                    <div className="text-NavyMain font-semibold text-2xl">
+                      {participation?.user?.volunteer_points || 0}
+                    </div>
+                    <div className="text-Grey3 text-sm ">organizations</div>
+                  </div>
+                </div>
                 <div className="shadow-lg shadow-Gray3 flex w-[150px] h-[80px] justify-center text-NavyMain bg-Grey0 rounded-xl items-center">
                   <div className="w-fit flex flex-col text-center text-white text-sm font-semibold">
-                    <div className="text-Grey3 text-sm ">Total Volunteers</div>
+                    <div className="text-Grey3 text-sm ">Volunteered</div>
                     <div className="text-NavyMain font-semibold text-2xl">
                       {participation?.user?.volunteer_points || 0}
                     </div>

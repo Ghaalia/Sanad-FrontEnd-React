@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import defultEventImage from "../../assets/all-events/DefultEventImage.webp";
+import { BASE_URL } from "../../api";
 
 const DraftEventItem = ({ event }) => {
   const navigate = useNavigate();

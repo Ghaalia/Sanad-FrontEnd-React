@@ -29,7 +29,13 @@ const deleteCategory = async (categoryId) => {
   return data;
 };
 
+const getCategoryById = async (categoryId) => {
+  const { data } = await instance.get(`/categoryID`, categoryId);
+  return data;
+};
+
 export {
+  getCategoryById,
   getAllCategories,
   getCategoryId,
   createCategory,
