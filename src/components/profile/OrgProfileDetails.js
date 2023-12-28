@@ -41,7 +41,7 @@ const OrgProfileDetails = () => {
         <div className="w-full flex flex-col gap-6">
           <div className="w-full h-full text-NavyLight flex justify-center items-start rounded-md gap-6 ">
             <img
-              className="w-[160px] h-[160px] rounded-full drop-shadow-md "
+              className="w-[170px] h-[160px] rounded-full drop-shadow-md "
               src={`${BASE_URL}/${profile?.logo}`}
               alt="SVG"
             />

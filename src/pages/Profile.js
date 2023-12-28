@@ -82,7 +82,7 @@ const Profile = () => {
     <div className="w-screen h-min-h-screen  pt-[80px]  md:px-[120px] bg-NavyMain lg:px-[100px] ">
       <div className=" min-h-screen lg:grid lg:grid-cols-2 flex flex-col">
         <div className="h-full md:min-h-screen">
-          <div className="w-[40%] h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4 fixed ">
+          <div className="fixed w-[40%] h-full lg:px-[50px] flex flex-col text-center gap-4 bg-white p-4">
             <OrgProfileDetails />
           </div>
         </div>
@@ -118,10 +118,10 @@ const Profile = () => {
           ) : (
             <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
               <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-                <AcceptedUserItem
+                {/* <AcceptedUserItem
                   setParticipation={setParticipation}
                   handleOpenModal={handleOpenModal}
-                />
+                /> */}
               </div>
             </div>
           )}

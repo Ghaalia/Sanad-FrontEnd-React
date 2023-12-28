@@ -141,9 +141,9 @@ const OrgDetails = () => {
           Organization Profile
         </h1>
 
-        <div className="min-h-screen lg:grid lg:grid-cols-2 flex flex-col gap-3 ">
+        <div className="min-h-screen lg:grid lg:grid-cols-2 flex flex-col gap-2 ">
           {/* Div Number 1 Profile and license */}
-          <div className="flex flex-col py-10 md:h-screen items-center">
+          <div className="flex flex-col py-7 md:h-screen items-center">
             {/* Profile Info */}
 
             <div className="bg-white w-[90%] h-full text-NavyLight flex flex-col justify-center items-center rounded-md py-3">
@@ -156,7 +156,7 @@ const OrgDetails = () => {
                   />
                 </div>
 
-                <div className="flex flex-col ">
+                <div className="flex flex-col  w-[50%]">
                   <div className=" relative flex items-center ">
                     {orgById?.isAccepted == "Accepted" ? (
                       <Dot
@@ -172,7 +172,7 @@ const OrgDetails = () => {
                       />
                     )}
 
-                    <h1 className=" text-NavyLight font-semibold text-2xl italic ">
+                    <h1 className=" text-NavyLight font-semibold text-2xl italic flex-wrap ">
                       {orgById?.name}
                     </h1>
                   </div>

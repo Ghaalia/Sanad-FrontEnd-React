@@ -17,7 +17,7 @@ const DraftsAndPosted = ({
         }`}
         onClick={handlePostClick}
       >
-        Drafts
+        Event Drafts
         <span>
           <PauseCircle
             color={drafts ? "white" : "#4D497D"}
@@ -26,7 +26,7 @@ const DraftsAndPosted = ({
           />
         </span>
       </div>
-      <div
+      {/* <div
         className={`w-full h-[40px] md:h-[40px] text-center rounded-full flex gap-4 px-4 justify-center font-semibold items-center border-2 cursor-pointer ${
           posted
             ? "bg-RedMain border-RedMain text-white"
@@ -42,7 +42,7 @@ const DraftsAndPosted = ({
             strokeWidth={2}
           />
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };
