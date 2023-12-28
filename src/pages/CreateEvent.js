@@ -52,7 +52,7 @@ const CreateEvent = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredEvents = myEvents.filter((event) =>
+  const filteredEvents = myEvents?.filter((event) =>
     event.event_title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -67,9 +67,9 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="min-w-screen h-screen bg-NavyMain lg:px-[100px]">
-      <div className="h-[100vh] mt-[80px] lg:grid lg:grid-cols-2 flex flex-col">
-        <div className="h-full md:min-h-screen p-8 lg:p-11 flex flex-col gap-6 items-center">
+    <div className="min-w-screen h-screen bg-NavyMain lg:px-[80px]">
+      <div className="h-[90vh] mt-[60px] lg:grid lg:grid-cols-2 flex flex-col">
+        <div className="h-full md:min-h-screen p-6 lg:p-11 flex flex-col gap-6 items-center">
           <h1 className="flex gap-2 text-white font-normal text-2xl">
             Small Act,
             <span className="font-bold">Big Impact</span>
@@ -82,19 +82,19 @@ const CreateEvent = () => {
             handleDraftsClick={handleDraftsClick}
           />
           <div className=" w-full h-full flex flex-col overflow-y-scroll overflow-hidden no-scrollbar">
-            {posted ? (
+            {/* {posted ? (
               <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
                 {filteredEvents?.map((el, index) => (
                   <PastEventItem event={el} key={`myEvents-${index}`} />
                 ))}
               </div>
-            ) : (
-              <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
-                {myEvents?.map((el, index) => (
-                  <DraftEventItem event={el} key={`myEvents-${index}`} />
-                ))}
-              </div>
-            )}
+            ) : ( */}
+            <div className="w-full grid grid-row-1 sm:grid-row-2 gap-3">
+              {myEvents?.map((el, index) => (
+                <DraftEventItem event={el} key={`myEvents-${index}`} />
+              ))}
+            </div>
+            {/* )} */}
           </div>
         </div>
 

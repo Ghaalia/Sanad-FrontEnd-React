@@ -4,7 +4,7 @@ import { BASE_URL } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 
 const AcceptedOrgItem = ({ organization }) => {
-  // console.log(`${BASE_URL}/${organization?.logo}`);
+  console.log(`${BASE_URL}/${organization?.logo}`);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,9 +16,12 @@ const AcceptedOrgItem = ({ organization }) => {
       onClick={handleClick}
       className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black"
     >
-      <div className="bg-white w-[80px] text-NavyMain h-[80px] text-sm p-6 flex justify-center items-center text-center ">
-        <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
-          <img className="w-[100%]" src={`${organization?.logo}`} />
+      <div className=" w-[80px] text-NavyMain h-[80px] flex justify-center items-center text-center ">
+        <div className="bg-white w-[150px] h-[150px] justify-center ">
+          <img
+            className="object-contain h-full"
+            src={`${BASE_URL}/${organization?.logo}`}
+          />
         </div>
       </div>
       <div className="flex w-full flex-col justify-around">
@@ -37,7 +40,7 @@ const AcceptedOrgItem = ({ organization }) => {
                   className="border border-1 rounded-full"
                 />
               </span>
-              On Going | 2
+              On Going | 1
             </span>
             <span className="flex items-center gap-1">
               <span>
@@ -48,7 +51,7 @@ const AcceptedOrgItem = ({ organization }) => {
                   className="border border-1 rounded-full"
                 />
               </span>
-              Finished | 10
+              Finished | 0
             </span>
           </div>
           <div className="text-white text-opacity-50 font-normal text-xs flex gap-4">

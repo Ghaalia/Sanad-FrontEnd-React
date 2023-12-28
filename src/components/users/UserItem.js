@@ -20,27 +20,19 @@ const UserItem = ({ user, setUserById }) => {
       }}
       className="hover:cursor-pointer w-full h-[80px] flex gap-4 bg-white bg-opacity-30 rounded-full overflow-hidden shadow-md shadow-black "
     >
-      <div className="bg-white w-[80px] text-NavyMain h-[80px] rounded-full text-sm p-6 flex justify-center items-center text-center ">
+      <div className=" text-NavyMain w-[100px] h-full rounded-full  flex justify-center items-center text-center ">
         {/* User Profile */}
-
         <img
-          className="round-full w-[100%]"
-          // src={
-          //   user?.image
-          //     ? `${BASE_URL}/${user.image}`
-          //     : "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
-          // }
+          className="object-contain h-full"
           src={
             user?.image
               ? `${BASE_URL}/${user.image}`
               : require("../../assets/all-users/profileimg.png")
           }
-          // src={user?.image ?? `${BASE_URL}/${user.image}`}
-          // src={user?.image || ""}
-          // src={`${BASE_URL}${user.image}`}
           alt="UserProfile"
         />
       </div>
+
       <div className="flex w-full flex-col justify-around">
         <div className="text-white font-semibold text-[18px]">
           {user?.first_name} {user?.last_name}

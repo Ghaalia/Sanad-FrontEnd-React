@@ -11,14 +11,17 @@ const RequestCompanyItem = ({ organization, setOrgById, setOpenForm }) => {
       className="hover: cursor-pointer"
     >
       <div className="w-full h-[79px] flex gap-4 bg-white bg-opacity-30 rounded-lg overflow-hidden shadow-md shadow-black">
-        <div className="w-[150px] h-[150px] text-sm justify-center items-center text-center ">
-          <img className="w-[100%]" src={`${BASE_URL}/${organization.logo}`} />
+        <div className="w-[120px] h-full bg-white left-5 ">
+          <img
+            className="w-[90%] ml-1 mt-1"
+            src={`${BASE_URL}/${organization.logo}`}
+          />
         </div>
         <div className="flex w-full flex-col justify-around">
           <div className="text-white font-semibold">
             {organization.name || "test"}
           </div>
-          <div className="text-white font-normal text-xs flex gap-4">
+          <div className="text-gray-300 font-normal text-xs flex gap-4">
             Request Date: 20 / 2 / 2024
             <span>Time: 2:00 PM</span>
           </div>
